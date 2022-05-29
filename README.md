@@ -1,1 +1,1 @@
-# Projekt-sksy
+# Project-sksy
