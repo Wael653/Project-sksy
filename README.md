@@ -12,7 +12,7 @@ Create a new virtual environment by running:
 python -m venv env
 
 Activate your virtual environment:
-env\Scripts\activate
+env\Scripts\activate.bat
 
 Install django in the virtual environment:
 pip install django
