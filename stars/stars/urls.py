@@ -15,7 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from starsApp import views
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.index, name='index'),
+    path('index/', views.index, name='index'),
+    path('impressum/', views.imprint, name='imprint'),
+    path('nutzer/', views.user, name='user'),
+    path('reservierungen/', views.reservations, name='reservations'),
+    path('support/', views.support, name='support'),
 ]
