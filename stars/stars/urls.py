@@ -24,6 +24,7 @@ urlpatterns = [
     path('impressum/', views.imprint, name='imprint'),
     path('nutzer/', views.user, name='user'),
     path('reservierungen/', views.reservations, name='reservations'),
+    path('reservierungen/meinereservierung/<int:r_id>', views.reservations, name='reservations'),
     path('support/', views.support, name='support'),
     path('arbeitsplaetze/', views.arbeitsplaetze, name='arbeitsplaetze'),
 ]
