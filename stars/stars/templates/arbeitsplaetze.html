@@ -2,6 +2,40 @@
 {% block title %}Stars-Arbeitsplätze{% endblock %}
 {% block content %}
     <article>
+        <table class="table table-responsive table-striped table-hover table-bordered">
+
+                        <thead>
+
+                          <tr>
+                            <th scope="col" style="width: 50%">Name des Arbeitsplatzes</th>
+                            <th scope="col" style="width: 25%">Beschreibung des Arbeitsplatzes</th>
+                            <th scope="col" style="width: 15%">Erstellungsdatum</th>
+                            <th scope="col" style="width: 15%">Status des Arbeitsplatzes</th>
+                            <th scope="col" style="width: 10%">Reservieren</th>
+                          </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                        {% for w in workplaces %}
+                          <tr>
+                            <td scope="row">{{ w.title }}</td>
+                            <td>{{w.description}}</td>
+                            <td>{{w.creation_date}}</td>
+                            <td>{% if w.state == 1 %}
+                                {{'Reserviert'}}
+                                {% else %}
+                                {{'Frei'}}
+                                {% endif %}
+                            </td>
+                            <td><a href="" class="btn btn-success" role="button">R</a></td>
+                          </tr>
+                        {% endfor %}
+
+                        </tbody>
+
+                    </table>
     </article>
 {% endblock %}
 
