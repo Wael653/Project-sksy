@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404
 from django.forms.models import model_to_dict
+
 from .forms import UserForm
+
 
 # Create your views here.
 def index(request):
@@ -18,6 +20,7 @@ def reservations(request):
 
 def support(request):
     return render(request, 'support.html')
+
 
 def register(request):
     if request.method == 'POST':
