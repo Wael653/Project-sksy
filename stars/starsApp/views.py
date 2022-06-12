@@ -1,8 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404
-from django.shortcuts import render
 from django.forms.models import model_to_dict
 from .models import Workplace
+
+from .forms import UserForm
+
 
 # Create your views here.
 def index(request):
@@ -20,5 +22,19 @@ def reservations(request):
 def support(request):
     return render(request, 'support.html')
 
+
 def arbeitsplaetze(request):
     return render(request, 'arbeitsplaetze.html', {'workplaces': Workplace.objects.all()})
+
+def register(request):
+    if request.method == 'POST':
+        form = UserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('index')
+    else:
+        form = UserForm()
+    return render(request, 'registrieren.html', {'form': form})
+
+def login(request):
+    return render(request, 'login.html')
