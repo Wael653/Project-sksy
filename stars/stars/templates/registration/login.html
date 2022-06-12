@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}STARS: Login{% endblock %}
+
+
+
+{% block content %}
+
+<div class="login">
+
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+
+    <h1 class="display-4">Login</h1>
+
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Log In</button>
+    </form>
+    
+</div>
+
+{% endblock content %}
