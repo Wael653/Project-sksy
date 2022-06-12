@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404
-from django.forms.models import model_to_dict
+from django.forms.models import model_to_dict, Contact
 from .forms import UserForm
 from .models import Contact
 
