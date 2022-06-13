@@ -1,9 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404
 from django.forms.models import model_to_dict
-
 from .forms import UserForm
-
+from .models import Contact
 
 # Create your views here.
 def index(request):
@@ -19,8 +18,19 @@ def reservations(request):
     return render(request, 'reservierungen.html')
 
 def support(request):
-    return render(request, 'support.html')
-
+     if request.method == "POST":
+            contact = Contact()
+            contact.name = request.POST['name']
+            contact.subject = request.POST['subject']
+            from_email= request.POST['email']
+            message = request.POST['message']
+            contact.save()
+            return HttpResponse("<h1 style = font-family:Verdana> Thanks, your message was successfully submitted.</h1>")
+     else:
+        return render(request, 'support.html')
+    
+def arbeitsplaetze(request):
+    return render(request, 'arbeitsplaetze.html')
 
 def register(request):
     if request.method == 'POST':
