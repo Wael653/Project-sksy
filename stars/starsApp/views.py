@@ -26,8 +26,8 @@ def support(request):
             message = request.POST['message']
             contact.save()
             return HttpResponse("<h1 style = font-family:Verdana> Thanks, your message was successfully submitted.</h1>")
-    else:
-        return render(request, "support.html")
+     else:
+        return render(request, 'support.html')
     
 
 

@@ -8,3 +8,9 @@ class Contact(models.Model):
     message = models.TextField()
     def __str__(self):
         return self.name
+
+class Workplace(models.Model):
+    title = models.CharField(max_length=30)
+    description = models.CharField(max_length=160)
+    creation_date = models.DateTimeField()
+    state = models.PositiveIntegerField(default=0, validators=[MaxValueValidator(1)])
