@@ -19,8 +19,10 @@ def reservations(request):
     return render(request, 'reservierungen.html')
 
 def support(request):
-    return render(request, 'support.html')
-
+        return render(request, 'support.html')
+    
+def arbeitsplaetze(request):
+    return render(request, 'arbeitsplaetze.html')
 
 def register(request):
     if request.method == 'POST':
