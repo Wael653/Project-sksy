@@ -29,7 +29,8 @@ def support(request):
     else:
         return render(request, "support.html")
     
-
+def arbeitsplaetze(request):
+    return render(request, 'arbeitsplaetze.html')
 
 def register(request):
     if request.method == 'POST':
