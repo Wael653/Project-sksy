@@ -26,10 +26,18 @@ def support(request):
             message = request.POST['message']
             contact.save()
             return HttpResponse("<h1 style = font-family:Verdana> Thanks, your message was successfully submitted.</h1>")
+<<<<<<< HEAD
     else:
         return render(request, "support.html")
     
 
+=======
+     else:
+        return render(request, 'support.html')
+    
+def arbeitsplaetze(request):
+    return render(request, 'arbeitsplaetze.html')
+>>>>>>> main
 
 def register(request):
     if request.method == 'POST':

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -55,6 +56,10 @@
 		  </div>
 		</div>
 	  </nav>
+=======
+﻿{% extends 'base.html' %}
+
+>>>>>>> main
 
 	<div class="contact1">
 		<div class="container-contact1">
@@ -62,6 +67,7 @@
 				<img src= "{%static "images/img-01.png" %}" alt="IMG">
 			</div>
 
+<<<<<<< HEAD
 			<form class="contact1-form validate-form" method="post" action = "#">
 				{% csrf_token %}
 				<span class="contact1-form-title">
@@ -133,3 +139,72 @@
 
 </body>
 </html>
+=======
+{% block content %}
+	<article>
+	
+		<section class="mb-4">
+
+			<h2 class="h1-responsive font-weight-bold text-center my-4">Kontaktiert uns gerne!</h2>
+		
+			<p class="text-center w-responsive mx-auto mb-5">
+				Habt ihr Fragen oder Probleme mit STARS, dann schickt uns gerne durch das nachfolgende Kontaktformular eine Nachricht. Wir werden
+				uns werktags innerhalb von 48 Stunden bei euch zurückmelden.
+			</p>
+
+			<div class="row">
+
+				<div class="col-12 mb-0 mb-5">
+					<form id="contact-form" name="contact-form" action="mail.php" method="POST">
+
+						<div class="row">
+
+							<div class="col-6">
+								<div class="form mb-0">
+									<input type="text" id="name" name="name" class="form-control">
+									<label for="name" class="">Voller Name</label>
+								</div>
+							</div>
+						
+							<div class="col-6">
+								<div class="form mb-0">
+									<input type="text" id="email" name="email" class="form-control">
+									<label for="email" class="">E-Mail-Adresse</label>
+								</div>
+							</div>
+
+						</div>
+					
+						<div class="row">
+							<div class="col">
+								<div class="form mb-0">
+									<input type="text" id="subject" name="subject" class="form-control">
+									<label for="subject" class="">Betreff</label>
+								</div>
+							</div>
+						</div>
+					
+						<div class="row">
+
+							<div class="col">
+
+								<div class="form">
+									<textarea type="text" id="message" name="message" rows="2" class="form-control textarea"></textarea>
+									<label for="message">Deine Nachricht</label>
+								</div>
+							</div>
+						</div>
+
+					</form>
+
+					<div class="text-center text-left">
+						<a class="btn btn-info" onclick="document.getElementById('contact-form').submit();">Send</a>
+					</div>
+					<div class="status"></div>
+				</div>
+			</div>
+		</section>
+	
+	</article>
+{% endblock %}
+>>>>>>> main
