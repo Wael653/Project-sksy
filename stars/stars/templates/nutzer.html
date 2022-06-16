@@ -5,6 +5,13 @@
 
 {% block content %}
     <article>
-        Platzhalter für den Inhalt der Nutzer Seite
+        {% if current_user == None%}
+        <h1>Bitte logge dich ein</h1>
+        {% else %}
+        <h1>Benutzername: {{current_user.username}}</h1>
+        <p>Vorname: {{current_user.first_name}}</p>
+        <p>Nachname: {{current_user.last_name}}</p>
+        <p>E-Mail: {{current_user.email}}</p>
+        {%endif%}
     </article>
 {% endblock %}

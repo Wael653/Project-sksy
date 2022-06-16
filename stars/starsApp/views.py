@@ -1,3 +1,4 @@
+from django.contrib.auth import authenticate
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404
 from django.forms.models import model_to_dict
@@ -12,7 +13,7 @@ def imprint(request):
     return render(request, 'impressum.html')
 
 def user(request):
-    return render(request, 'nutzer.html')
+    return render(request, 'nutzer.html', {'current_user': request.user})
 
 def reservations(request):
     return render(request, 'reservierungen.html')
