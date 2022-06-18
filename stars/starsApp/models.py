@@ -11,7 +11,7 @@ class Contact(models.Model):
         return self.name
 
 class Workplace(models.Model):
-    title = models.CharField(max_length=30)
-    description = models.CharField(max_length=160)
-    creation_date = models.DateTimeField()
-    state = models.PositiveIntegerField(default=0, validators=[MaxValueValidator(1)])
+    nummer = models.PositiveIntegerField()
+    geraete = models.CharField(max_length=160)
+    anzahlPersonen = models.PositiveIntegerField(default=1)
+    sonstiges = models.CharField(max_length=160)
