@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404
 from django.forms.models import model_to_dict
 from .forms import UserForm
-from .models import Contact
+from .models import Contact, Workplace
 
 # Create your views here.
 def index(request):
@@ -30,7 +30,8 @@ def support(request):
         return render(request, 'support.html')
     
 def arbeitsplaetze(request):
-    return render(request, 'arbeitsplaetze.html')
+    context = {'workplaces' : Workplace.objects.all()}
+    return render(request, 'arbeitsplaetze.html', context)
 
 def register(request):
     if request.method == 'POST':
