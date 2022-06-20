@@ -1,8 +1,8 @@
 from django.forms import ModelForm
-from django.db import models
-
-from .models import User, Workplace
-
+from .models import User
+from django import forms
+from django.conf import settings
+from django.core.mail import send_mail
 
 class UserForm(ModelForm):
      class Meta:
