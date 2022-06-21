@@ -6,6 +6,10 @@ from .forms import UserForm, ProfileForm, PasswordForm, ReservationForm
 from .models import Contact, Reservation, Workplace
 
 
+from django.views.generic import FormView, TemplateView
+from .forms import ContactForm
+from django.urls import reverse_lazy
+
 # Create your views here.
 def index(request):
     return render(request, 'index.html')
@@ -37,18 +41,28 @@ def reservieren(request):
         return render(request, 'reservieren.html', {'form': form})
 
 
-def support(request):
-    if request.method == "POST":
-        contact = Contact()
-        contact.name = request.POST['name']
-        contact.subject = request.POST['subject']
-        from_email = request.POST['email']
-        message = request.POST['message']
-        contact.save()
-        return HttpResponse("<h1 style = font-family:Verdana> Thanks, your message was successfully submitted.</h1>")
-    else:
-        return render(request, 'support.html')
+#def support(request):
+     #if request.method == "POST":
+      #      contact = Contact()
+       #     contact.name = request.POST['name']
+         #   contact.subject = request.POST['subject']
+        #    from_email= request.POST['email']
+          #  message = request.POST['message']
+          #  contact.save()
+           # return HttpResponse("<h1 style = font-family:Verdana> Thanks, your message was successfully submitted.</h1>")
+     #else:
+      #  return render(request, 'support.html')
 
+
+def support(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            form.send()
+            return HttpResponse("<h1> Die Anfrage wurde erfolgreich versendet!</h1>")
+    else:
+        form = ContactForm()
+    return render(request, 'support.html', {'form': form})
 
 def arbeitsplaetze(request):
     return render(request, 'arbeitsplaetze.html')

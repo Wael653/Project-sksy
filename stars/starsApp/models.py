@@ -19,7 +19,6 @@ class Workplace(models.Model):
     geraete = models.CharField(max_length=160)
     anzahlPersonen = models.PositiveIntegerField(default=1)
     sonstiges = models.CharField(max_length=160)
-
     def __str__(self):
         return str(self.nummer)
 
@@ -29,4 +28,3 @@ class Reservation(models.Model):
     wp = models.ForeignKey(Workplace, on_delete=models.PROTECT)
     von = models.DateTimeField()
     bis = models.DateTimeField()
-
