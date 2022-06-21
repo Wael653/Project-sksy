@@ -4,7 +4,31 @@
 {% block title %}{{block.super}} Nutzer{% endblock %}
 
 {% block content %}
-    <article>
-        Platzhalter für den Inhalt der Nutzer Seite
-    </article>
+    {% if current_user.id is None %}
+        <h1>Bitte logge dich ein.</h1>
+    {% else %}
+<div class="card" style="width: 40rem;">
+    <div class="card-header">
+        Kontoinformation:
+    </div>
+    <img src="https://cdn.pixabay.com/photo/2017/10/07/07/27/thumbs-up-2825687_960_720.jpg" class="card-img-top" alt="Thumps Up">
+    <div class="card-body">
+        <h1 class="card-title">Benutzername: {{current_user.username}}</h1>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Vorname: {{current_user.first_name}}</li>
+            <li class="list-group-item">Nachname: {{current_user.last_name}}</li>
+            <li class="list-group-item">E-Mail: {{current_user.email}}</li>
+            <li class="list-group-item">Letzer Login: {{current_user.last_login}}</li>
+            <li class="list-group-item">Kontoerstellung: {{current_user.date_joined}}</li>
+        </ul>
+    </div>
+    <div class="card-footer">
+        <a href="{% url 'profile' %}" class="card-link">Profil ändern</a>
+        <a href="{% url 'password' %}" class="card-link">Passwort zurücksetzen</a>
+        <div class="text-end">
+            <a href="{% url 'logout' %}" class="btn btn-info">Logout</a>
+        </div>
+    </div>
+    {%endif%}
+</div>
 {% endblock %}
