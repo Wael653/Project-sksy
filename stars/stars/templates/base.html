@@ -14,14 +14,12 @@
     <div class="container">
 
 
-        <header
-            class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-            <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
-                <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
-                    <use xlink:href="#bootstrap" />
-                </svg>
+        <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
 
-            </a>
+            <div class="col-3 ms-2 ps-1 align-items-center">
+                {% load static %}
+                <img class="img-fluid" src="{% static 'stars_logo.png' %}" alt="STARS-Logo">
+            </div>
 
             <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
                 <li><a href="{% url 'index' %}" class="nav-link px-2 link-dark">Home</a></li>
@@ -30,6 +28,7 @@
                 <li><a href="{% url 'arbeitsplaetze' %}" class="nav-link px-2 link-dark">Arbeitsplätze</a></li>
                 <li><a href="{% url 'support' %}" class="nav-link px-2 link-dark">Hilfe</a></li>
             </ul>
+
 
             <div class="col-md-3 text-end">
                 {% if user.is_authenticated %}
@@ -46,8 +45,6 @@
                     <a href="{% url 'register' %}">Registrieren</a>
                 {% endif %}
                 </div>
-
-            </div>
         </header>
 
         <div class="row">
@@ -55,7 +52,6 @@
 
             <div
                 class="col bg-light d-flex align-items-center justify-content-center border-start border-white border-5">
-
 
                 {% block content %}
                 {% endblock %}
@@ -65,12 +61,10 @@
 
         <div class="row">
 
-            <div class="d-flex mt-3 align-items-center justify-content-center bg-dark text-white">
+            <div class="d-flex my-3 align-items-center justify-content-center bg-dark text-white">
                 <a href="{% url 'imprint' %}" class="link-light">Impressum</a>
             </div>
-
         </div>
-
     </div>
 
 
