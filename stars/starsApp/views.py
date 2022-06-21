@@ -1,7 +1,8 @@
+from django.contrib.auth import authenticate
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404
 from django.forms.models import model_to_dict
-from .forms import UserForm
+from .forms import UserForm, ProfileForm, PasswordForm
 from .models import Contact
 
 from django.views.generic import FormView, TemplateView
@@ -16,7 +17,7 @@ def imprint(request):
     return render(request, 'impressum.html')
 
 def user(request):
-    return render(request, 'nutzer.html')
+    return render(request, 'nutzer.html', {'current_user': request.user})
 
 def reservations(request):
     return render(request, 'reservierungen.html')
@@ -61,3 +62,22 @@ def register(request):
 
 def login(request):
     return render(request, 'login.html')
+
+def logout(request):
+    return render(request, 'logout.html')
+
+def change_profile(request):
+    form = ProfileForm(request.POST or None, instance=request.user)
+    if form.is_valid():
+        form.save()
+        return redirect('user')
+    else:
+        return render(request, 'setting_profile.html', {'form': form})
+
+def change_password(request):
+    form = PasswordForm(request.POST or None, instance=request.user)
+    if form.is_valid():
+        form.save()
+        return redirect('user')
+    else:
+        return render(request, 'setting_password.html', {'form': form})
