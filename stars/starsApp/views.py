@@ -4,7 +4,8 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404
 from django.forms.models import model_to_dict
 from .forms import UserForm, ProfileForm, PasswordForm
-from .models import Contact
+from .models import Contact, Workplace
+
 
 from django.views.generic import FormView, TemplateView
 from .forms import ContactForm
@@ -49,7 +50,8 @@ def support(request):
 
     
 def arbeitsplaetze(request):
-    return render(request, 'arbeitsplaetze.html')
+    context = {'workplaces' : Workplace.objects.all()}
+    return render(request, 'arbeitsplaetze.html', context)
 
 def register(request):
     if request.method == 'POST':

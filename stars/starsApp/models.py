@@ -12,6 +12,6 @@ class Contact(models.Model):
 
 class Workplace(models.Model):
     nummer = models.PositiveIntegerField()
-    geraete = models.CharField(max_length=160)
+    geraete = models.CharField(max_length=160, null=True)
     anzahlPersonen = models.PositiveIntegerField(default=1)
-    sonstiges = models.CharField(max_length=160)
+    sonstiges = models.CharField(max_length=160, null=True)
