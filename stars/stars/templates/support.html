@@ -1,9 +1,33 @@
-﻿﻿{% extends 'base.html' %}
+﻿{% extends 'base.html' %}
+
 
 {% block title %}{{block.super}} Support{% endblock %}
 
 {% block content %}
-    <article>
-        Platzhalter für den Inhalt der Support Seite
-    </article>
+	<article>
+	
+		<section class="mb-4">
+
+			<h2 class="h1-responsive font-weight-bold text-center my-4">Kontaktiert uns gerne!</h2>
+		
+			<p class="text-center w-responsive mx-auto mb-5">
+				Habt ihr Fragen oder Probleme mit STARS, dann schickt uns gerne durch das nachfolgende Kontaktformular eine Nachricht. Wir werden
+				uns werktags innerhalb von 48 Stunden bei euch zurückmelden.
+			</p>
+
+			<div class="row">
+
+				<div class="col-12 mb-0 mb-5">
+
+					<form action="" method="post">
+						{% csrf_token %}
+						{{form.as_p}}
+						<button class="btn btn-success my-3" type="submit">Senden</button>
+					</form>
+
+				</div>
+			</div>
+		</section>
+	
+	</article>
 {% endblock %}
