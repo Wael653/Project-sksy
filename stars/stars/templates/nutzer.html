@@ -23,10 +23,11 @@
         </ul>
     </div>
     <div class="card-footer">
-        <a href="{% url 'profile' %}" class="card-link">Profil ändern</a>
-        <a href="{% url 'password' %}" class="card-link">Passwort zurücksetzen</a>
         <div class="text-end">
-            <a href="{% url 'logout' %}" class="btn btn-info">Logout</a>
+            <a href="{% url 'profile' %}" class="btn btn-info">Profil ändern</a>
+            <a href="{% url 'password' %}" class="btn btn-info">Passwort zurücksetzen</a>
+            <a href="{% url 'delete-user' current_user.username %}" class="btn btn-danger">Profil löschen</a>
+            <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
         </div>
     </div>
     {%endif%}

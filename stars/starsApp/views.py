@@ -1,9 +1,12 @@
 from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404
 from django.forms.models import model_to_dict
 from .forms import UserForm, ProfileForm, PasswordForm, ReservationForm
 from .models import Contact, Reservation, Workplace
+
+
 
 
 from django.views.generic import FormView, TemplateView
@@ -65,7 +68,8 @@ def support(request):
     return render(request, 'support.html', {'form': form})
 
 def arbeitsplaetze(request):
-    return render(request, 'arbeitsplaetze.html')
+    context = {'workplaces' : Workplace.objects.all()}
+    return render(request, 'arbeitsplaetze.html', context)
 
 
 def register(request):
@@ -103,4 +107,10 @@ def change_password(request):
         return redirect('user')
     else:
         return render(request, 'setting_password.html', {'form': form})
+
+
+def delete_User(request, nutzername):
+    user = User.objects.get(username = nutzername)
+    user.delete()
+    return redirect('index')
 

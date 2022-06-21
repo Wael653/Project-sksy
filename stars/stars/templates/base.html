@@ -29,11 +29,21 @@
                 <li><a href="{% url 'support' %}" class="nav-link px-2 link-dark">Hilfe</a></li>
             </ul>
 
-                <div class="col-md-3 text-end">
 
-                    <a class="btn btn-info me-2" href="{% url 'login' %}">Login</a>
-                    <a class="btn btn-info" href="{% url 'register' %}">Registrieren</a>
+            <div class="col-md-3 text-end">
+                {% if user.is_authenticated %}
+                <p>Hi {{ user.username }}!
+                <a href="{% url 'logout' %}" class="btn btn-outline-info me-2">Log Out</a></p>
 
+                
+                {% else %}
+                <div class="btn btn-outline-info me-2">
+                    <a href="{% url 'login' %}">Login</a>
+                </div>
+
+                <div class="btn btn-info">
+                    <a href="{% url 'register' %}">Registrieren</a>
+                {% endif %}
                 </div>
         </header>
 

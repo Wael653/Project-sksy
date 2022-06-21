@@ -1,7 +1,26 @@
 {% extends 'base.html' %}
 {% block title %}Stars-Arbeitsplätze{% endblock %}
 {% block content %}
-    <article>
-    </article>
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Nummer</th>
+        <th scope="col">Geräte</th>
+        <th scope="col">Anzahl Personen</th>
+        <th scope="col">Sonstiges</th>
+      </tr>
+    </thead>
+
+    <tbody>
+    {% for eachworkplace in workplaces %}
+        <tr>
+            <th scope="row">{{eachworkplace.nummer}}</th>
+            <td>{{eachworkplace.geraete}}</td>
+            <td>{{eachworkplace.anzahlPersonen}}</td>
+            <td>{{eachworkplace.sonstiges}}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+  </table>        
 {% endblock %}
 
