@@ -1,0 +1,15 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}{{block.super}} Reservation{% endblock %}
+
+{% block content %}
+    <article>
+        <h3>Benutzer: {{request.user}}</h3>
+        <form method="POST">
+            {% csrf_token %}
+            {{form.as_p}}
+            <br>
+            <input type="submit" value ="Reservation bestätigen"/>
+        </form>
+    </article>
+{% endblock %}

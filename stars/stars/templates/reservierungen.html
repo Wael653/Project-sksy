@@ -5,7 +5,83 @@
 
 
 {% block content %}
-    <article>
-        Platzhalter für den Inhalt der Reservierung Seite
-    </article>
+    {% if request.user.id is None %}
+        <h1>Bitte logge dich ein.</h1>
+    {% else %}
+<!-- Reservation -->
+<div class="container">
+  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseReservation" aria-expanded="false" aria-controls="collapseReservation">
+    Reservierungen: &#10149;
+  </button>
+</div>
+
+<div class="collapse" id="collapseReservation" style="width: 120%">
+  <div class="card card-body">
+    <div id="accordionReservation">
+        {% for r in reservations %}
+    <div class="card">
+        <div class="card-header" id="headRes{{r.id}}">
+            <h5 class="mb-2">
+            <button class="btn btn-primary collapsed" data-bs-toggle="collapse" data-bs-target="#collapseRes{{r.id}}" aria-expanded="false" aria-controls="collapseRes{{r.id}}">
+            Reservierung: {{r.id}}&#9662;
+            </button>
+            </h5>
+        </div>
+    <div id="collapseRes{{r.id}}" class="collapse" aria-labelledby="headRes{{r.id}}" data-parent="#accordionReservation">
+        <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">User: {{r.user}}</li>
+            <li class="list-group-item">Von: {{r.von}}</li>
+            <li class="list-group-item">Bis: {{r.bis}}</li>
+            <li class="list-group-item">Arbeitsplatz: {{r.wp.nummer}}</li>
+        </ul>
+        </div>
+    </div>
+    </div>
+        {% endfor %}
+    </div>
+
+        </div>
+</div>
+
+<!-- Workplace -->
+<div class="container">
+  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWorkplace" aria-expanded="false" aria-controls="collapseWorkplace">
+    Arbeitsplätze: &#10149;
+  </button>
+</div>
+
+<div class="collapse" id="collapseWorkplace" style="width: 150%">
+  <div class="card card-body">
+    <div id="accordionWorkplace">
+        {% for w in workplaces %}
+    <div class="card">
+        <div class="card-header" id="headWP{{w.id}}">
+            <h5 class="mb-2">
+            <button class="btn btn-primary collapsed" data-bs-toggle="collapse" data-bs-target="#collapseWP{{w.id}}" aria-expanded="false" aria-controls="collapseWP{{w.id}}">
+            Arbeitsplatz: {{w.nummer}} &#9662;
+            </button>
+            </h5>
+        </div>
+    <div id="collapseWP{{w.id}}" class="collapse" aria-labelledby="headWP{{w.id}}" data-parent="#accordionWorkplace">
+        <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Geräte: {{w.geraete}}</li>
+            <li class="list-group-item">Anzahl der Personen: {{w.anzahlPersonen}}</li>
+            <li class="list-group-item">Sonstiges: {{w.sonstiges}}</li>
+            <li class="list-group-item">
+                <a href="{% url 'reservieren' %}" class="btn btn-Success">
+                    Reservieren: &#10149;
+                </a>
+            </li>
+        </ul>
+        </div>
+    </div>
+    </div>
+        {% endfor %}
+    </div>
+
+        </div>
+</div>
+    {% endif %}
 {% endblock %}
