@@ -6,7 +6,7 @@ Python needs to be installed
 Build Steps (for Windows):
 
 Download the source code from the repository into a directory of your choice:
-git clone https://github.com/Wael653/Project-sksy
+`git clone https://github.com/Wael653/Project-sksy`
 
 Create a new virtual environment by running:
 `python -m venv env`
