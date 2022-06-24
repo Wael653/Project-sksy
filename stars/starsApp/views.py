@@ -13,6 +13,7 @@ from django.views.generic import FormView, TemplateView
 from .forms import ContactForm
 from django.urls import reverse_lazy
 
+
 # Create your views here.
 def index(request):
     return render(request, 'index.html')
