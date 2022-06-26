@@ -1,0 +1,125 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+@font-face {
+    font-family: 'Pensum';
+    src: url("/static/fonts/PensumDisplay-Black.otf");
+}
+
+@font-face {
+    font-family: 'Questrial';
+    src: url("/static/fonts/Questrial-Regular.ttf");
+}
+
+.f1 {
+    color: #FEFAE0;
+    font-family: Questrial;
+}
+
+.bar {
+    background: #606c38;
+    z-index: 1;
+    position: relative;
+}
+
+a:hover {
+    color: #283618 !important;
+}
+
+.nav-link {
+    color: #FEFAE0 !important;
+}
+
+.btn-outline-info:hover {
+    color: #BC6C25 !important;
+    background-color: #DDA15E !important;
+    border-color: #DDA15E !important;
+}
+
+.btn-info:hover {
+    color: #BC6C25 !important;
+    background-color: #DDA15E !important;
+    border-color: #DDA15E !important;
+}
+
+.btn-info {
+    font-family: Questrial;
+    color: #FEFAE0 !important;
+    background-color: #283618 !important;
+    border-color: #283618 !important;
+}
+
+.btn-outline-info {
+    font-family: Questrial;
+    color: #FEFAE0 !important;
+    border-color: #283618 !important;
+}
+
+.btn-secondary {
+    font-family: Questrial;
+    color: #FEFAE0 !important;
+    border-color: #606c38 !important;
+    background-color: #606c38;
+}
+
+.btn-secondary:hover {
+    color: #BC6C25 !important;
+    background-color: #DDA15E !important;
+    border-color: #DDA15E !important;
+}
+
+.centered-content {
+    width: 100%;
+    display: flex;
+    height: 80vh;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+}
+
+.content {
+    font-family: Pensum;
+    font-size: 70px;
+    color: FEFAE0;
+    text-shadow: 4px 4px 8px black;
+    line-height: 80px;
+}
+
+.cover {
+    background-size: cover;
+    background-position: center;
+    top: 0;
+    height: 80vh;
+    width: 100%;
+    position: relative;
+    background-image: url('/static/images/home-1.jpeg');
+}
+
+.box {
+    top: 0;
+    height: 80vh;
+    width: 100%;
+    position: relative;
+    background-color: #283618;
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+}
+
+.textbox-headline {
+    width: 100%;
+    font-family: Questrial;
+    font-weight: 800;
+    font-size: 50px;
+    color: #FEFAE0;
+    line-height: 65px;
+
+}
+
+/* noch anpassen in base */
+body {
+    text-align: center;
+}

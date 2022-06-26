@@ -15,7 +15,8 @@ from django.urls import reverse_lazy
 
 # Create your views here.
 def index(request):
-    return render(request, 'index.html')
+    context = {'workplaces' : Workplace.objects.all()}
+    return render(request, 'index.html', context)
 
 
 def imprint(request):
