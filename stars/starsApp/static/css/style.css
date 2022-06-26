@@ -119,7 +119,12 @@ a:hover {
 
 }
 
+.aligncenter {
+    text-align: center;
+}
+
 /* noch anpassen in base */
 body {
     text-align: center;
+    margin:auto;
 }
