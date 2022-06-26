@@ -3,8 +3,8 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404
 from django.forms.models import model_to_dict
-from .forms import UserForm, ProfileForm, PasswordForm, ReservationForm
-from .models import Contact, Reservation, Workplace
+from .forms import UserForm, ProfileForm, PasswordForm, ReservationForm, LoginForm
+from .models import Reservation, Workplace
 
 
 
@@ -85,7 +85,8 @@ def register(request):
 
 
 def login(request):
-    return render(request, 'login.html')
+    form = LoginForm()
+    return render(request, 'registration/login.html', {'form': form})
 
 
 def logout(request):
@@ -114,4 +115,9 @@ def delete_User(request, nutzername):
     user = User.objects.get(username = nutzername)
     user.delete()
     return redirect('index')
+
+def myreg(request):
+     #return HttpResponse("You're voting on question")
+    return render(request, 'myregist.html', {})
+
 

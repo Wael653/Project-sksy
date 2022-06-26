@@ -1,3 +1,4 @@
+from tkinter.ttk import Style
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
@@ -10,22 +11,47 @@ from django.core.mail import send_mail
 from django.conf import settings
 
 class UserForm(UserCreationForm):
-    first_name = forms.CharField()
-    last_name = forms.CharField()
-    email = forms.EmailField()
+    password1 = forms.CharField(
+        label="Passwort",
+        strip=False,
+        widget=forms.PasswordInput
+    )
+    password2 = forms.CharField(
+        label="Passwort",
+        strip=False,
+        widget=forms.PasswordInput
+    )
+    first_name = forms.CharField(max_length = 50, label = "Vorname")
+    last_name = forms.CharField(max_length= 50, label = "Nachname")
+    username = forms.CharField(max_length= 100, label = "Benutzername")
+    email = forms.EmailField(max_length = 50, label = "E-Mail-Adresse")
 
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'username', 'email', 'password1', 'password2')
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['first_name'].widget.attrs.update({'class': 'form-control', 'style': "width: 700px", 'required': 'True'})
+        self.fields['last_name'].widget.attrs.update({'class': 'form-control', 'style': "width: 700px", 'required': 'True'})
+        self.fields['username'].widget.attrs.update({'class': 'form-control', 'aria-describedby':'emailHelp'})
+        self.fields['email'].widget.attrs.update({'class': 'form-control', 'placeholder': "name@example.com", 'required': 'True'}) 
+        self.fields['password1'].widget.attrs['class'] = 'form-control'
+        self.fields['password2'].widget.attrs.update({'class': 'form-control', 'aria-describedby':'emailHelp'})
+
+class LoginForm(forms.Form):
+      username = forms.CharField(label = "Benutzername", widget=forms.TextInput(attrs = {'class': 'form-control', 'style': "width: 700px"}))
+      password = forms.CharField(label = "Passwort", widget=forms.PasswordInput(attrs = {'class': 'form-control', 'style': "width: 700px"}))
 
 
 
 class ContactForm(forms.Form):
 
-    name = forms.CharField(max_length=120)
-    email = forms.EmailField(label='E-Mail-Adresse')
-    betreff = forms.CharField(max_length=120)
-    nachricht = forms.CharField(widget=forms.Textarea)
+    vorname = forms.CharField(max_length=120, widget = forms.TextInput(attrs = {"class": "form-control", "style": "margin: 0 0 0 0"}), required = True )
+    nachname = forms.CharField(max_length=120, widget = forms.TextInput(attrs = {"class": "form-control", "style": "margin: 0 0 0 0"}), required = True )
+    email = forms.EmailField(label='E-Mail-Adresse', max_length = 80, widget = forms.EmailInput(attrs = {"class": "form-control"}), required = True)
+    betreff = forms.CharField(max_length=120, widget = forms.TextInput(attrs = {"class": "form-control"}) )
+    nachricht = forms.CharField(widget = forms.Textarea(attrs = {"class": "form-control", "rows": 5 }), required= True)
 
     def get_info(self):
         """
