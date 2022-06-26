@@ -1,10 +1,23 @@
-﻿﻿{% extends 'base.html' %}
-
-
+{% extends 'base.html' %}
 {% block title %}{{block.super}} Startseite{% endblock %}
 
 {% block content %}
-    <article>
-        Platzhalter für den Inhalt der Startseite
-    </article>
+
+{% load static %}
+
+<body>
+    <div class="cover">
+        <div class="centered-content">
+            <p class="content">Reserviere bequem deinen Arbeitsplatz</p>
+        </div>
+    </div>
+
+    <div class="box">
+        <p class="textbox-headline">Noch verfügbare Plätze:<br>{{workplaces.count}}<br>
+            <a class="btn btn-secondary btn-lg mt-3 " href="{% url 'login' %}">Jetzt buchen!</a>
+        </p>
+    </div>
+
+</body>
+
 {% endblock %}
