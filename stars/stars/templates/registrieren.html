@@ -1,12 +1,18 @@
 ﻿{% extends 'base.html' %}
 {% block title %}Stars-Register{% endblock %}
 {% block content %}
-    <article>
-      <form method="POST">
-        {% csrf_token %} 
-        {{form.as_p}}
-        <br>
-        <input type="submit" value ="Register"/> 
-      </form>
-    </article>
+<article>
+  <form method="POST">
+    <div class="card-header">
+      <h3>Registrieren:</h3>
+    </div>
+    <br>
+    {% csrf_token %}
+    {{form.as_p}}
+    <br>
+    <div class="card-footer">
+      <button type="submit" , class="btn btn-info">Registrieren</button>
+    </div>
+  </form>
+</article>
 {% endblock %}
