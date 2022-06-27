@@ -1,19 +1,18 @@
 {% extends 'base.html' %}
 {% block title %}STARS: Login{% endblock %}
-{% block content %}
+{% block content_2 %}
 
-<div class="login">
-
+<section class="mb-5">
+  <br>
     {% if messages %}
-    <ul>
         {% for message in messages %}
-        <li>{{ message }}</li>
+        <div class="alert alert-warning" role="alert" style="margin: 0 2% 0 0 ">
+          {{ message }}
+        </div>
         {% endfor %}
-    </ul>
     {% endif %}
 
-    <section class="mb-4">
-        <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4" style="color: rgb(49, 151, 139)">Einloggen</p> 
+        <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4 pensum_font" style="color: rgb(49, 151, 139)">Einloggen</p> 
 
         <div class = "form-group">
           <form method="post">
@@ -31,4 +30,4 @@
         </div>
         
   </section>
-{% endblock content %}
+{% endblock %}

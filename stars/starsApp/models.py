@@ -2,7 +2,6 @@ from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator
 from django.db import models
 
-
 class Workplace(models.Model):
     nummer = models.PositiveIntegerField()
     geraete = models.CharField(max_length=160, null=True)

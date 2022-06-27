@@ -21,7 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
     path('index/', views.index, name='index'),
-    path('myregist', views.myreg, name = 'myregs'),    
     path('impressum/', views.imprint, name='imprint'),
     path('nutzer/', views.user, name='user'),
     path('nutzer/delete/<nutzername>', views.delete_User, name='delete-user'),
@@ -34,6 +33,6 @@ urlpatterns = [
     path('settings/profile/', views.change_profile, name='profile'),
     path('settings/password/', views.change_password, name='password'),
     path("accounts/", include("django.contrib.auth.urls")),
-    path('accounts/login_user/', views.login, name="login"),
+    path("accounts/user_login", views.login, name='login')
 
 ]

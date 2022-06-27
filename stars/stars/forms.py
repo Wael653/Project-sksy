@@ -15,4 +15,3 @@ class UserForm(ModelForm):
      class Meta:
          model = User
          fields = ['name','place', 'password', 'user_id']
-

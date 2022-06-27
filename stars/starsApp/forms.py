@@ -1,4 +1,3 @@
-from tkinter.ttk import Style
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
@@ -52,6 +51,7 @@ class ContactForm(forms.Form):
     email = forms.EmailField(label='E-Mail-Adresse', max_length = 80, widget = forms.EmailInput(attrs = {"class": "form-control"}), required = True)
     betreff = forms.CharField(max_length=120, widget = forms.TextInput(attrs = {"class": "form-control"}) )
     nachricht = forms.CharField(widget = forms.Textarea(attrs = {"class": "form-control", "rows": 5 }), required= True)
+
 
     def get_info(self):
         """
