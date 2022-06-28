@@ -125,6 +125,14 @@ a:hover {
 
 /* noch anpassen in base */
 body {
-    text-align: center;
+  /*     text-align: center; */ 
     margin:auto;
+} 
+
+.pensum_font {
+    font-family: Pensum
+}
+
+.itemcenter {
+    align-items: center
 }

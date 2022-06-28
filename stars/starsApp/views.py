@@ -1,16 +1,12 @@
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404
 from django.forms.models import model_to_dict
-from .forms import UserForm, ProfileForm, PasswordForm, ReservationForm
-from .models import Contact, Reservation, Workplace
-
-
-
-
+from .forms import UserForm, ProfileForm, PasswordForm, ReservationForm, LoginForm, ContactForm
+from .models import Reservation, Workplace
+from django.contrib import messages
 from django.views.generic import FormView, TemplateView
-from .forms import ContactForm
 from django.urls import reverse_lazy
 
 
@@ -45,26 +41,13 @@ def reservieren(request):
     else:
         return render(request, 'reservieren.html', {'form': form})
 
-
-#def support(request):
-     #if request.method == "POST":
-      #      contact = Contact()
-       #     contact.name = request.POST['name']
-         #   contact.subject = request.POST['subject']
-        #    from_email= request.POST['email']
-          #  message = request.POST['message']
-          #  contact.save()
-           # return HttpResponse("<h1 style = font-family:Verdana> Thanks, your message was successfully submitted.</h1>")
-     #else:
-      #  return render(request, 'support.html')
-
-
 def support(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
             form.send()
-            return HttpResponse("<h1> Die Anfrage wurde erfolgreich versendet!</h1>")
+            return render(request, 'message_support.html')
+            
     else:
         form = ContactForm()
     return render(request, 'support.html', {'form': form})
@@ -79,23 +62,40 @@ def register(request):
         form = UserForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('index')
+            messages.info(request, ("Nutzer wurde erfolgreich erstellet. Bitte logge dich ein!"))
+            return redirect('login') 
+        else:
+            {'form': form}
     else:
         form = UserForm()
     return render(request, 'registrieren.html', {'form': form})
 
 
-def login(request):
-    return render(request, 'login.html')
+def login_user(request):
+    if request.method == "POST": 
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username = username, password = password)
+        if user is not None:
+            login(request, user)
+            return redirect('user')
+        else:   
+            messages.error(request, ("Einloggen fehlgeschlagen, ungültiger Benutzername oder Passwort."))
+            return redirect('login')
+    else:
+        form = LoginForm()       
+        return render(request, 'registration/login.html', {'form': form})
 
 
-def logout(request):
-    return render(request, 'logout.html')
+def logout_user(request):
+        logout(request)
+        messages.success(request, ("Du bist ausgeloggt"))
+        return redirect('login')   
 
 
 def change_profile(request):
     form = ProfileForm(request.POST or None, instance=request.user)
-    if form.is_valid():
+    if form.is_valid(): 
         form.save()
         return redirect('user')
     else:

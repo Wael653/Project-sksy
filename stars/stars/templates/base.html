@@ -64,7 +64,13 @@
     {% block content %}
     {% endblock %}
 
-
+    <div class="row">
+        <div class="col bg-light d-flex align-items-center justify-content-center border-start border-white border-5">
+            {% block content_2 %}
+            {% endblock %}
+        </div>
+    
+    </div>
     <nav class="navbar navbar-dark">
         <div class="container-fluid">
             <a href="{% url 'imprint' %}" class="nav-brand nav-link mx-auto f1">Impressum</a>
