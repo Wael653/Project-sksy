@@ -1,31 +1,47 @@
 {% extends 'base.html' %}
 {% block title %}STARS: Login{% endblock %}
-{% block content %}
+{% block content_2 %}
 
-<div class="login">
-
+<section class="mb-5">
+  <br>
+  <div class = "container">
     {% if messages %}
-    <ul>
         {% for message in messages %}
-        <li>{{ message }}</li>
+            {% if message.level == 40 %} 
+              <div class="alert alert-warning" role="alert" style="margin: 0 2% 0 0 ">
+                {{ message }}
+                <button type="button" class="btn-close " aria-label="Close" data-bs-dismiss = "alert" style="margin-left: 100px"></button>
+              </div>
+            {% elif message.level == 25 %}
+              <div class="alert alert-info" role="alert" style="margin: 0 2% 0 0%">
+                {{message}}
+                <button type="button" class="btn-close " aria-label="Close" data-bs-dismiss = "alert" style="margin-left: 440px"></button>
+              </div>
+            {% else %}
+              <div class="alert alert-success" role="alert" style="margin: 0 2% 0 0">
+              {{message}}
+              <button type="button" class="btn-close " aria-label="Close" data-bs-dismiss = "alert" style="margin-left: 190px"></button>
+              </div>
+            {% endif %}
         {% endfor %}
-    </ul>
     {% endif %}
-    
+  </div>
+        <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4 pensum_font" style="color: rgb(49, 151, 139)">Einloggen</p> 
 
-    <div class="card-header">
-      <h3>Login:</h3>
-    </div>
-
-    <form method="post">
-      <br>
-      {% csrf_token %}
-      {{ form.as_p }}
-      <div class="card-footer">
-        <button type="submit" , class="btn btn-info">Login</button>
-      </div>
-    </form>
-    
-</div>
-
-{% endblock content %}
+        <div class = "form-group">
+          <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">     
+              {% for field in form %}
+                <b>{{field.label_tag}}</b>  
+                {{ field }}
+              </div>
+              {% endfor %}
+              <br>             
+              <button class="btn btn-success my-3" type="submit" style="background-color: rgb(49, 151, 139)">Einloggen</button>
+          </form>
+          <p class = 'text-center'>Hast du noch kein Konto? <a href="{% url 'register' %}" class="loginhere-link" style="color: rgb(49, 151, 139)"><b> hier registrieren</b></a></p>
+        </div>
+        
+  </section>
+{% endblock %}
