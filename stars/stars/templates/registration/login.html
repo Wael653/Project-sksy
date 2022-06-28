@@ -25,6 +25,7 @@
             {% endif %}
         {% endfor %}
     {% endif %}
+
   </div>
         <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4 pensum_font" style="color: rgb(49, 151, 139)">Einloggen</p> 
 
@@ -45,3 +46,21 @@
         
   </section>
 {% endblock %}
+   
+
+    <div class="card-header">
+      <h3>Login:</h3>
+    </div>
+
+    <form method="post">
+      <br>
+      {% csrf_token %}
+      {{ form.as_p }}
+      <div class="card-footer">
+        <button type="submit" , class="btn btn-info">Login</button>
+      </div>
+    </form>
+    
+</div>
+
+{% endblock content %}

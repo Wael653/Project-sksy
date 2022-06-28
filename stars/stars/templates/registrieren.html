@@ -1,5 +1,6 @@
-﻿{% extends 'base.html' %}
+{% extends 'base.html' %}
 {% block title %}Stars-Register{% endblock %}
+
 {% block content_2 %}
 
     <article>    
@@ -49,4 +50,20 @@
             <p class = 'text-center'>Bist du schon registriert? <a href="{% url 'login' %}" class="loginhere-link" style="color: rgb(49, 151, 139)"><b>hier einloggen</b></a></p>  
       </section>     
     </article>
+
+{% block content %}
+<article>
+  <form method="POST">
+    <div class="card-header">
+      <h3>Registrieren:</h3>
+    </div>
+    <br>
+    {% csrf_token %}
+    {{form.as_p}}
+    <br>
+    <div class="card-footer">
+      <button type="submit" , class="btn btn-info">Registrieren</button>
+    </div>
+  </form>
+</article>
 {% endblock %}

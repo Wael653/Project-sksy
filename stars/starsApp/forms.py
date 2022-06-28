@@ -104,5 +104,5 @@ class ReservationForm(ModelForm):
 
         labels = {
             'user': ('Benutzer'),
-            'wp': ('Arbeitzplatz'),
+            'wp': ('Arbeitsplatz'),
         }
