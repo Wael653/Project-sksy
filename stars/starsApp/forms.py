@@ -10,7 +10,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 
 my_default_errors = {
-    'invalid': 'Gib eine gültige Email-Adresse ein'
+    'invalid': 'Gib eine gültige Email-Adresse ein.'
 }
 
 class UserForm(UserCreationForm):
