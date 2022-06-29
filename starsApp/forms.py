@@ -9,7 +9,12 @@ from django.forms.forms import Form
 from django.core.mail import send_mail
 from django.conf import settings
 
+my_default_errors = {
+    'invalid': 'Gib eine gültige Email-Adresse ein'
+}
+
 class UserForm(UserCreationForm):
+    error_messages = {'password_mismatch': "Die beiden Passwortfelder stimmten nicht überein", 'duplicate_username': "fdsfdsfsdf."}
     password1 = forms.CharField(
         label="Passwort",
         strip=False,
@@ -19,11 +24,13 @@ class UserForm(UserCreationForm):
         label="Passwort",
         strip=False,
         widget=forms.PasswordInput
+    
+
     )
     first_name = forms.CharField(max_length = 50, label = "Vorname")
     last_name = forms.CharField(max_length= 50, label = "Nachname")
     username = forms.CharField(max_length= 100, label = "Benutzername")
-    email = forms.EmailField(max_length = 50, label = "E-Mail-Adresse")
+    email = forms.EmailField(max_length = 50, label = "E-Mail-Adresse", error_messages = my_default_errors)
 
     class Meta:
         model = User
@@ -48,7 +55,7 @@ class ContactForm(forms.Form):
 
     vorname = forms.CharField(max_length=120, widget = forms.TextInput(attrs = {"class": "form-control", "style": "margin: 0 0 0 0"}), required = True )
     nachname = forms.CharField(max_length=120, widget = forms.TextInput(attrs = {"class": "form-control", "style": "margin: 0 0 0 0"}), required = True )
-    email = forms.EmailField(label='E-Mail-Adresse', max_length = 80, widget = forms.EmailInput(attrs = {"class": "form-control"}), required = True)
+    email = forms.EmailField(label='E-Mail-Adresse', max_length = 80, widget = forms.EmailInput(attrs = {"class": "form-control"}), required = True, error_messages= my_default_errors)
     betreff = forms.CharField(max_length=120, widget = forms.TextInput(attrs = {"class": "form-control"}) )
     nachricht = forms.CharField(widget = forms.Textarea(attrs = {"class": "form-control", "rows": 5 }), required= True)
 

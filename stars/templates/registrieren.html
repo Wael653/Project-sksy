@@ -14,32 +14,45 @@
                           <b>{{ field.label_tag }}</b>
                           {{ field }}
                           <div id="emailHelp" class="form-text">Erforderlich. 100 Zeichen oder weniger. Nur Buchstaben, Ziffern und @/./+/-/_.</div>
+                          {% for error in field.errors %}
+                            <p style="color:red">{{error}}</p>
+                          {% endfor %}
                       </div>
                     {% elif field == form.password1 %}
                       <div class="mb-3">
-                        <b>{{ field.label_tag }}</b>
-                        {{ field }}
-                        <br>
-                        <ul>
-                          <li>Dein Passwort darf deinen anderen persönlichen Daten nicht zu ähnlich sein.</li>
-                          <li>Dein Passwort muss mindestens 8 Zeichen enthalten.</li>
-                          <li>Dein Passwort darf kein allgemein verwendetes Passwort sein.</li>                                    
-                          <li>Dein Passwort darf nicht vollständig numerisch sein.</li>
-                        </ul>
+                          <b>{{ field.label_tag }}</b>
+                          {{ field }}
+                          {% for error in field.errors %}
+                              <p style="color:red">{{error}}</p>
+                          {% endfor %}
+                          <br>
+                          <ul>
+                            <li>Dein Passwort darf deinen anderen persönlichen Daten nicht zu ähnlich sein.</li>
+                            <li>Dein Passwort muss mindestens 8 Zeichen enthalten.</li>
+                            <li>Dein Passwort darf kein allgemein verwendetes Passwort sein.</li>                                    
+                            <li>Dein Passwort darf nicht vollständig numerisch sein.</li>
+                          </ul>
                       </div>
                     {% elif field == form.password2 %}
-                      <b>{{ field.label_tag }}</b>
-                      {{ field }}
-                      <div id="emailHelp" class="form-text">Gib bitte zur Bestätigung dasselbe Passwort wie zuvor ein.</div>
-                    {% else %}
                       <div class="mb-3">
                         <b>{{ field.label_tag }}</b>
                         {{ field }}
+                        <div id="emailHelp" class="form-text">Gib bitte zur Bestätigung dasselbe Passwort wie zuvor ein.</div> 
+                        {% for error in field.errors %}
+                          <br>
+                          <p style="color:red">{{error}}</p>
+                        {% endfor %}
+                      </div>
+                      {% else %}
+                      <div class="mb-3">
+                        <b>{{ field.label_tag }}</b>
+                        {{ field }}
+                        {% for error in field.errors %}
+                          <p style="color:red">{{error}}</p>
+                        {% endfor %}
                       </div>
                     {% endif %} 
-                    {% for error in field.errors %}
-                        <p style="color:red">{{error}}</p>
-                    {% endfor %}
+                  
                 {% endfor %}
                 <br>
                 <button class="btn btn-success my-3" type="submit" style="background-color: rgb(49, 151, 139)">Registrieren</button>   

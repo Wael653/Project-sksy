@@ -31,8 +31,11 @@
 									<div class="mb-4">
 										<b>{{ field.label_tag }}</b>
 										{{ field }}
+										{% for error in field.errors %}
+                                 		  <p style="color:rgb(188, 83, 23)">{{error}}</p>
+						    			{% endfor %}
 								    </div>
-								{% endif %}
+								{% endif %}								
 							{% endfor %}
 						<button class="btn btn-success my-3" type="submit" style="background-color: rgb(49, 151, 139)">Senden</button>
 					</form>
