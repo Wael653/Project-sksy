@@ -3,7 +3,6 @@
 
 {% block content %}
 
-{% load static %}
 
 <body>
     <div class="cover">
@@ -13,7 +12,7 @@
     </div>
 
     <div class="box">
-        <p class="textbox-headline">Noch verfügbare Plätze:<br>{{workplaces.count}}<br>
+        <p class="textbox-headline aligncenter">Noch verfügbare Plätze:<br>{{workplaces.count}}<br>
             <a class="btn btn-secondary btn-lg mt-3 " href="{% url 'login' %}">Jetzt buchen!</a>
         </p>
     </div>
