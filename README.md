@@ -72,3 +72,7 @@ The database system of PostgreSQL is used:
 - Install PostgreSQL
 - Create a User named starsuser with the Password `stars123` and a Database named `starsdb`
 - Connect starsuser and starsdb
+
+## Used Apps:
+`star_ratings`, an app to create star rating fields more easily -> `https://django-star-ratings.readthedocs.io/en/latest/`
+run `pip install django-star-ratings` to install, further installation hints can be found at the link
