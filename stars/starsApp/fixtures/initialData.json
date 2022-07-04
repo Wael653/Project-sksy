@@ -1,0 +1,359 @@
+[
+    {
+      "model": "starsApp.unit",
+      "pk": 1,
+      "fields": {
+        "name": "VW Bibliothek",
+        "straße": "Straße des 17. Juni",
+        "hausnummer": "135",
+        "postleitzahl": "10623",
+        "etage": 0
+      }
+    },
+    {
+      "model": "starsApp.unit",
+      "pk": 2,
+      "fields": {
+        "name": "Management Bibliothek",
+        "straße": "Straße des 17. Juni",
+        "hausnummer": "135",
+        "postleitzahl": "10623",
+        "etage": 0
+      }
+    },
+    {
+      "model": "starsApp.roomdevice",
+      "pk": 1,
+      "fields": {
+        "bezeichnung": "Beamer",
+        "anzahl": 1
+      }
+    },
+    {
+      "model": "starsApp.roomdevice",
+      "pk": 2,
+      "fields": {
+        "bezeichnung": "Mikrofon",
+        "anzahl": 1
+      }
+    },
+    {
+      "model": "starsApp.room",
+      "pk": 1,
+      "fields": {
+        "nummer": "1",
+        "unit": 1,
+        "geraete": [
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "model": "starsApp.room",
+      "pk": 2,
+      "fields": {
+        "nummer": "1",
+        "unit": 2,
+        "geraete": [
+          1
+        ]
+      }
+    },
+    {
+      "model": "starsApp.workplacedevice",
+      "pk": 1,
+      "fields": {
+        "bezeichnung": "Steckdose",
+        "anzahl": 1
+      }
+    },
+    {
+      "model": "starsApp.workplacedevice",
+      "pk": 2,
+      "fields": {
+        "bezeichnung": "Mikroskop",
+        "anzahl": 1
+      }
+    },
+    {
+      "model": "starsApp.workplace",
+      "pk": 1,
+      "fields": {
+        "nummer": 1,
+        "anzahlPersonen": 1,
+        "sonstiges": "-",
+        "raum": 1,
+        "barrierefrei": true,
+        "geraete": [
+          1
+        ]
+      }
+    },
+    {
+      "model": "starsApp.workplace",
+      "pk": 2,
+      "fields": {
+        "nummer": 2,
+        "anzahlPersonen": 1,
+        "sonstiges": "-",
+        "raum": 1,
+        "barrierefrei": true,
+        "geraete": [
+          1,2
+        ]
+      }
+    },
+    {
+      "model": "starsApp.workplace",
+      "pk": 3,
+      "fields": {
+        "nummer": 3,
+        "anzahlPersonen": 1,
+        "sonstiges": "-",
+        "raum": 1,
+        "barrierefrei": true,
+        "geraete": [
+          2
+        ]
+      }
+    },
+    {
+      "model": "starsApp.workplace",
+      "pk": 4,
+      "fields": {
+        "nummer": 4,
+        "anzahlPersonen": 1,
+        "sonstiges": "-",
+        "raum": 1,
+        "barrierefrei": true,
+        "geraete": [
+          
+        ]
+      }
+    },
+    {
+      "model": "starsApp.workplace",
+      "pk": 5,
+      "fields": {
+        "nummer": 5,
+        "anzahlPersonen": 1,
+        "sonstiges": "-",
+        "raum": 1,
+        "barrierefrei": true,
+        "geraete": [
+          1
+        ]
+      }
+    },
+    {
+      "model": "starsApp.workplace",
+      "pk": 6,
+      "fields": {
+        "nummer": 6,
+        "anzahlPersonen": 1,
+        "sonstiges": "-",
+        "raum": 1,
+        "barrierefrei": true,
+        "geraete": [
+          1
+        ]
+      }
+    },
+    {
+      "model": "starsApp.workplace",
+      "pk": 7,
+      "fields": {
+        "nummer": 7,
+        "anzahlPersonen": 1,
+        "sonstiges": "-",
+        "raum": 1,
+        "barrierefrei": true,
+        "geraete": [
+          1
+        ]
+      }
+    },
+    {
+      "model": "starsApp.workplace",
+      "pk": 8,
+      "fields": {
+        "nummer": 8,
+        "anzahlPersonen": 1,
+        "sonstiges": "-",
+        "raum": 1,
+        "barrierefrei": true,
+        "geraete": [
+          1
+        ]
+      }
+    },
+    {
+      "model": "starsApp.workplace",
+      "pk": 9,
+      "fields": {
+        "nummer": 9,
+        "anzahlPersonen": 1,
+        "sonstiges": "-",
+        "raum": 1,
+        "barrierefrei": true,
+        "geraete": [
+          1
+        ]
+      }
+    },
+    {
+      "model": "starsApp.workplace",
+      "pk": 10,
+      "fields": {
+        "nummer": 10,
+        "anzahlPersonen": 1,
+        "sonstiges": "-",
+        "raum": 1,
+        "barrierefrei": true,
+        "geraete": [
+          1
+        ]
+      }
+    },
+    {
+      "model": "starsApp.workplace",
+      "pk": 11,
+      "fields": {
+        "nummer": 11,
+        "anzahlPersonen": 1,
+        "sonstiges": "-",
+        "raum": 1,
+        "barrierefrei": true,
+        "geraete": [
+          1
+        ]
+      }
+    },
+    {
+      "model": "starsApp.workplace",
+      "pk": 12,
+      "fields": {
+        "nummer": 12,
+        "anzahlPersonen": 1,
+        "sonstiges": "-",
+        "raum": 1,
+        "barrierefrei": true,
+        "geraete": [
+          1
+        ]
+      }
+    },
+    {
+      "model": "starsApp.workplace",
+      "pk": 13,
+      "fields": {
+        "nummer": 13,
+        "anzahlPersonen": 1,
+        "sonstiges": "-",
+        "raum": 1,
+        "barrierefrei": true,
+        "geraete": [
+          1
+        ]
+      }
+    },
+    {
+      "model": "starsApp.workplace",
+      "pk": 14,
+      "fields": {
+        "nummer": 14,
+        "anzahlPersonen": 1,
+        "sonstiges": "-",
+        "raum": 1,
+        "barrierefrei": true,
+        "geraete": [
+          1
+        ]
+      }
+    },
+    {
+      "model": "starsApp.workplace",
+      "pk": 15,
+      "fields": {
+        "nummer": 15,
+        "anzahlPersonen": 1,
+        "sonstiges": "-",
+        "raum": 1,
+        "barrierefrei": true,
+        "geraete": [
+          1
+        ]
+      }
+    },
+    {
+      "model": "starsApp.workplace",
+      "pk": 16,
+      "fields": {
+        "nummer": 16,
+        "anzahlPersonen": 1,
+        "sonstiges": "-",
+        "raum": 1,
+        "barrierefrei": true,
+        "geraete": [
+          1
+        ]
+      }
+    },
+    {
+      "model": "starsApp.workplace",
+      "pk": 17,
+      "fields": {
+        "nummer": 17,
+        "anzahlPersonen": 1,
+        "sonstiges": "-",
+        "raum": 1,
+        "barrierefrei": true,
+        "geraete": [
+          1
+        ]
+      }
+    },
+    {
+      "model": "starsApp.workplace",
+      "pk": 18,
+      "fields": {
+        "nummer": 18,
+        "anzahlPersonen": 1,
+        "sonstiges": "-",
+        "raum": 1,
+        "barrierefrei": true,
+        "geraete": [
+          1
+        ]
+      }
+    },
+    {
+      "model": "starsApp.workplace",
+      "pk": 19,
+      "fields": {
+        "nummer": 19,
+        "anzahlPersonen": 1,
+        "sonstiges": "-",
+        "raum": 1,
+        "barrierefrei": true,
+        "geraete": [
+          1
+        ]
+      }
+    },
+    {
+      "model": "starsApp.workplace",
+      "pk": 20,
+      "fields": {
+        "nummer": 20,
+        "anzahlPersonen": 1,
+        "sonstiges": "-",
+        "raum": 1,
+        "barrierefrei": true,
+        "geraete": [
+          1
+        ]
+      }
+    }
+  ]

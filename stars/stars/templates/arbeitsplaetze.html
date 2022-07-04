@@ -15,7 +15,20 @@
     {% for eachworkplace in workplaces %}
         <tr>
             <th scope="row">{{eachworkplace.nummer}}</th>
-            <td>{{eachworkplace.geraete}}</td>
+            <!-- <td>{{eachworkplace.geraete}}</td> -->
+            <td>
+              {% for device in eachworkplace.geraete.all %}
+                {% if eachworkplace.geraete.all|length >= 2 %}
+                  {% if forloop.last %}
+                    {{device}}
+                  {%else%}
+                    {{device}},
+                  {% endif %}
+                {%else%}
+                  {{device}}
+                {% endif %}
+              {% endfor %}
+            </td>
             <td>{{eachworkplace.anzahlPersonen}}</td>
             <td>{{eachworkplace.sonstiges}}</td>
         </tr>
