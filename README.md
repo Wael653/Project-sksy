@@ -67,6 +67,20 @@ python manage.py makemigrations
 ```
 python manage.py migrate
 ```
+<details><summary>If all of this is not helping, try the following steps as well:</summary>
+<p>
+- Run your PostgreSQL admin tool and delete all tables starting with `starsApp` manually
+
+- delete the 0001_initial.py file in the migrations folder
+- Run the following command to create migrations for those changes
+```
+python manage.py makemigrations
+```
+- Run following command to apply those changes to the database
+```
+python manage.py migrate
+```
+</p>
 
 The database system of PostgreSQL is used:
 - Install PostgreSQL
