@@ -47,12 +47,12 @@ python manage.py loaddata initialData.json
 
 ## Hints for Developers:
 
-The database system of PostgreSQL is used:
+### The database system of PostgreSQL is used:
 - Install PostgreSQL
 - Create a User named starsuser with the Password `stars123` and a Database named `starsdb`
 - Connect starsuser and starsdb
 
-changing something on the models:
+### Changing something on the models:
 - Change your models (in models.py)
 - Run the following command to create migrations for those changes
 ```
@@ -63,7 +63,7 @@ python manage.py makemigrations
 python manage.py migrate
 ```
 
-<details><summary>If the models are still not properly created try the following steps:</summary>
+<details><summary>### If the models are still not properly created try the following steps:</summary>
 <p>
 
 - Run 
@@ -81,7 +81,7 @@ python manage.py migrate
 ```
   </p>
  </details>
-<details><summary>If all of this is not helping, try the following steps as well:</summary>
+<details><summary>### If all of this is not helping, try the following steps as well:</summary>
 <p>
 - Run your PostgreSQL admin tool and delete all tables starting with `starsApp` manually
 
