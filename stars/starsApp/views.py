@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404
 from django.forms.models import model_to_dict
 from .forms import UserForm, ProfileForm, PasswordForm, ReservationForm, LoginForm, ContactForm
-from .models import Reservation, Workplace
+from .models import Reservation, Workplace, Unit, Room
 from django.contrib import messages
 from django.views.generic import FormView, TemplateView
 from django.urls import reverse_lazy
@@ -53,7 +53,7 @@ def support(request):
     return render(request, 'support.html', {'form': form})
 
 def arbeitsplaetze(request):
-    context = {'workplaces' : Workplace.objects.all()}
+    context = {'workplaces' : Workplace.objects.all(), 'units' : Unit.objects.all(), 'rooms': Room.objects.all()}
     return render(request, 'arbeitsplaetze.html', context)
 
 
