@@ -63,7 +63,7 @@ python manage.py makemigrations
 python manage.py migrate
 ```
 
-<details><summary>If the models are still not properly created try the following steps:</summary>
+<details><summary><h3>If the models are still not properly created try the following steps:</h3></summary>
 <p>
 
 - Run 
