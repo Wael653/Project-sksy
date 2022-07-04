@@ -63,7 +63,7 @@ python manage.py makemigrations
 python manage.py migrate
 ```
 
-<details><summary>### If the models are still not properly created try the following steps:</summary>
+<details><summary>If the models are still not properly created try the following steps:</summary>
 <p>
 
 - Run 
@@ -81,7 +81,7 @@ python manage.py migrate
 ```
   </p>
  </details>
-<details><summary>### If all of this is not helping, try the following steps as well:</summary>
+<details><summary><h3>If all of this is not helping, try the following steps as well:</h3></summary>
 <p>
 - Run your PostgreSQL admin tool and delete all tables starting with `starsApp` manually
 
