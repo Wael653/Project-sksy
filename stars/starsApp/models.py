@@ -17,13 +17,20 @@ class Workplace(models.Model):
     geraete = models.CharField(max_length=160, null=True)
     anzahlPersonen = models.PositiveIntegerField(default=1)
     sonstiges = models.CharField(max_length=160)
+
+    class Meta:
+        ordering =['nummer']
+
     def __str__(self):
         return str(self.nummer)
 
 
 class Reservation(models.Model):
-    user = models.ForeignKey(User, on_delete=models.PROTECT)
-    wp = models.ForeignKey(Workplace, on_delete=models.PROTECT)
-    von = models.DateTimeField()
-    bis = models.DateTimeField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    wp = models.ManyToManyField(Workplace)
+    date = models.DateField()
+    time = models.PositiveIntegerField(validators=[MaxValueValidator(14)])
     sonstiges = models.CharField(max_length=160, null=True)
+
+    class Meta:
+        ordering = ['user']
