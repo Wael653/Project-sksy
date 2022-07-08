@@ -8,8 +8,8 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404
 from django.forms.models import model_to_dict
 
-from .forms import UserForm, ProfileForm, PasswordForm, ReservationForm, LoginForm, ContactForm
-from .models import Contact, Reservation, Workplace
+from .forms import UserForm, ProfileForm, PasswordForm, LoginForm, ContactForm
+from .models import Reservation, Workplace
 from django.contrib import messages
 
 from django.views.generic import FormView, TemplateView
