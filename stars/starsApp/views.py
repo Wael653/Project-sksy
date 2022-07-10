@@ -1,7 +1,11 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
+<<<<<<< Updated upstream
 from django.http import HttpResponse, Http404, JsonResponse
+=======
+from django.http import HttpResponse, Http404,JsonResponse
+>>>>>>> Stashed changes
 from django.forms.models import model_to_dict
 from .forms import UserForm, ProfileForm, PasswordForm, ReservationForm, LoginForm, ContactForm
 from .models import Reservation, Workplace, Unit, Room
@@ -55,7 +59,7 @@ def support(request):
 
 def arbeitsplaetze(request):
     context = {'workplaces' : Workplace.objects.all(), 'units' : Unit.objects.all(), 'rooms': Room.objects.all()}
-    return render(request, 'arbeitsplaetze.html', context)
+    return render(request, 'arbeitsplaetze_ajax.html', context)
 
 
 def register(request):
