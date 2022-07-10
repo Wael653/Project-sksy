@@ -1,39 +1,45 @@
 {% extends 'base.html' %}
 {% block title %}Stars-Arbeitsplätze{% endblock %}
 {% block content %}
-<table class="table">
-    <thead>
-      <tr>
-        <th scope="col">Nummer</th>
-        <th scope="col">Geräte</th>
-        <th scope="col">Anzahl Personen</th>
-        <th scope="col">Sonstiges</th>
-      </tr>
-    </thead>
+{% load static %}
+<body>
+  
 
-    <tbody>
-    {% for eachworkplace in workplaces %}
-        <tr>
-            <th scope="row">{{eachworkplace.nummer}}</th>
-            <!-- <td>{{eachworkplace.geraete}}</td> -->
-            <td>
-              {% for device in eachworkplace.geraete.all %}
-                {% if eachworkplace.geraete.all|length >= 2 %}
-                  {% if forloop.last %}
-                    {{device}}
-                  {%else%}
-                    {{device}},
-                  {% endif %}
-                {%else%}
-                  {{device}}
-                {% endif %}
-              {% endfor %}
-            </td>
-            <td>{{eachworkplace.anzahlPersonen}}</td>
-            <td>{{eachworkplace.sonstiges}}</td>
-        </tr>
-    {% endfor %}
-    </tbody>
-  </table>        
+    <div class="background-cover"> 
+        <p class="textbox-headline aligncenter pt-5">Wähle einen Platz zum Reservieren aus</p><br>
+        <div class="aligncenter">
+        <select id="dropdown">
+          <option selected>Wähle ein Gebäude</option>
+          {% for eachunit in units %}
+          <option>{{eachunit.name}}</option>
+          {% endfor%}
+        </select>
+        <select id="dropdown" class="mx-2">
+          <option selected>Wähle einen Raum</option>
+         
+          {% for eachroom in rooms %}
+          
+          <option>{{eachroom.nummer}}</option>
+          {% endfor%}
+        </select>
+        </div>  
+        <br><br>
+        <div class="door doorText mx-auto">EXIT</div>
+        {% for eachworkplace in workplaces %}
+        {% if forloop.counter0|divisibleby:5 %}
+        <div class="row itemcenter justify-content-center">
+          <div class="seat">{{eachworkplace.workplaces}}</div>
+          {% else %}
+          <br><br>
+          <div class="seat">{{eachworkplace.workplaces}}</div>
+          {% endif%}
+          {% endfor %}
+        </div>
+    </div>
+
+
+  <div class="box">
+  </div> 
+</body>
+
 {% endblock %}
-
