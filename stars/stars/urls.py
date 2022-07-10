@@ -25,7 +25,9 @@ urlpatterns = [
     path('nutzer/', views.user, name='user'),
     path('nutzer/delete/<nutzername>', views.delete_User, name='delete-user'),
     path('reservierungen/', views.reservations, name='reservations'),
-    path('reservieren/', views.reservieren, name='reservieren'),
+    path('reservierungen/timeslots/<int:wp_nr>', views.timeslots, name='timeslots'),
+    path('reservierungen/reservieren/<int:time_slot>/<int:wp_nr>', views.reserve, name='reserve'),
+    path('reservierungen/reservieren/delete/<int:r_id>', views.delete_reserve, name='delete_reserve'),
     path('support/', views.support, name='support'),
     path('arbeitsplaetze/', views.arbeitsplaetze, name='arbeitsplaetze'),
     path('registrieren/', views.register, name='register'),
@@ -33,6 +35,8 @@ urlpatterns = [
     path('settings/password/', views.change_password, name='password'),
     path('logout/', views.logout_user, name='logout'),
     path("accounts/", include("django.contrib.auth.urls")),
-    path("accounts/login_user", views.login_user, name='login')
+    path("accounts/login_user", views.login_user, name='login'),
+    path("arbeitsplaetze/rate/<int:wp_id>", views.rating, name='wp-rate'),
+
 
 ]

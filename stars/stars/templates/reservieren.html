@@ -1,15 +1,24 @@
 ﻿{% extends 'base.html' %}
 
-{% block title %}{{block.super}} Reservation{% endblock %}
+{% block title %}{{block.super}} Reservation-Slots{% endblock %}
 
 {% block content %}
-    <article>
-        <h3>Benutzer: {{request.user}}</h3>
-        <form method="POST">
-            {% csrf_token %}
-            {{form.as_p}}
-            <br>
-            <input type="submit" value ="Reservation bestätigen"/>
-        </form>
+    <article class="a-article">
+        {% if set_res %}
+        <h3>Such dir eine Zeitspanne aus.</h3>
+        {% for r in set_res %}
+        <p>
+        <a class="container" href="{% url 'reserve' r wp.nummer %}" >
+            {% for key,value in slots_times.items %}
+            {% if key == r %}
+            Zeit: {{value}}
+            {% endif %}
+            {% endfor %}
+        </a>
+        </p>
+        {% endfor %}
+                {% else %}
+        <h5>Keine Slots mehr verfügbar.</h5>
+        {% endif %}
     </article>
 {% endblock %}

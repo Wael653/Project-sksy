@@ -1,26 +1,49 @@
 {% extends 'base.html' %}
 {% block title %}Stars-Arbeitsplätze{% endblock %}
-{% block content %}
-<table class="table">
-    <thead>
-      <tr>
-        <th scope="col">Nummer</th>
-        <th scope="col">Geräte</th>
-        <th scope="col">Anzahl Personen</th>
-        <th scope="col">Sonstiges</th>
-      </tr>
-    </thead>
 
-    <tbody>
-    {% for eachworkplace in workplaces %}
-        <tr>
-            <th scope="row">{{eachworkplace.nummer}}</th>
-            <td>{{eachworkplace.geraete}}</td>
-            <td>{{eachworkplace.anzahlPersonen}}</td>
-            <td>{{eachworkplace.sonstiges}}</td>
-        </tr>
-    {% endfor %}
-    </tbody>
-  </table>        
+{% block content %}
+
+
+  {% if request.user.id is None %}
+              <h1 class = "aligncenter">Bitte logge dich ein.</h1>
+  {% else %}
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Nummer</th>
+            <th scope="col">Geräte</th>
+            <th scope="col">Anzahl Personen</th>
+            <th scope="col">Sonstiges</th>
+            <th scope="col">Bewertungen</th>
+          </tr>
+        </thead>
+
+        <tbody>
+        {% for eachworkplace in workplaces %}
+            <tr>
+              
+                <td scope="row">{{eachworkplace}}</td>
+                <td>              
+                  {% for device in eachworkplace.geraete.all %}
+                    {% if forloop.last %}
+                      {{device}}
+                    {% else %}
+                      {{device}},
+                    {% endif %}
+                  {% endfor %}
+
+                </td>
+                <td>{{eachworkplace.anzahlPersonen}}</td>
+                <td>{{eachworkplace.sonstiges}}</td>
+                <td>
+                  <form action ="{% url 'wp-rate' eachworkplace.id  %}">
+                  <button class="btn btn-success material-icons" type="submit" style="background-color: #606c38; margin: 0 0 0 20px;">star</button>
+                  </form>
+                </td>  
+            </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+  {% endif %}        
 {% endblock %}
 

@@ -87,8 +87,8 @@ DATABASES = {
         'PASSWORD': 'stars123',
         'HOST': 'localhost',
         'PORT': '5432',
-       #'ENGINE': 'django.db.backends.sqlite3',
-       #'NAME': BASE_DIR/ 'db.sqlite3',
+      # 'ENGINE': 'django.db.backends.sqlite3',
+      # 'NAME': BASE_DIR/ 'db.sqlite3',
     }
 }
 
@@ -115,15 +115,15 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'de-DE'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Berlin'
 
-USE_I18N = True
+DATETIME_FORMAT= 'd.m.y, H:i'
 
-USE_L10N = True
+USE_L10N = False
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)

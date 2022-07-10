@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+
+{% block title %}{{block.super}} Rating {% endblock %}
+
+{% load static %}
+
+{% block content %}
+
+<style>
+  .toast2{
+  border-radius: 10px;
+  border: 2px solid #73AD21;
+  width: 35%;
+  
+  }
+
+  
+</style>
+
+
+
+<div style="margin: 2% 2%">
+  <h1 style="color: #606c38">Workplace: {{wp}}</h1>
+</br>
+</br>
+    <h5 >Teile deine Erfahrung, um anderen zu helfen<h5>
+    <form method="post">
+        {% csrf_token %}
+        <div class="rating">
+        
+        <input type="radio" id="rate1" name="rating" value="5"/>
+        <label for="rate1"></label>
+
+        <input type="radio" id="rate2" name="rating" value="4"/>
+        <label for="rate2"></label>
+
+        <input type="radio" id="rate3" name="rating" value="3"/>
+        <label for="rate3"></label>
+
+        <input type="radio" id="rate4" name="rating" value="2"/>
+        <label for="rate4"></label>
+
+        <input type="radio" id="rate5" name="rating" value="1"/>
+        <label for="rate5"></label>
+        </div>
+        <br/>
+        <br/>
+        <br/>
+        <div class="form-floating">
+            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" name="comment"></textarea>
+            <label for="floatingTextarea" style="opacity: .6; font-size: medium;">Schreibe deinen Kommentar ...</label>
+        </div>
+        <br/>
+        <button onclick="func()" class="btn btn-success my-3" type="submit" style="background-color: #606c38">bewerten</button>
+    </form>
+    </div>
+
+    {% if messages  %}
+        {% for message in messages %}
+          {% if message.level == 25 %} 
+            <div class="alert alert-success" role="alert" style="margin: -40px 0px 0px 330px; width: 40%;">
+                {{ message }}
+                <button type="button" class="btn-close " aria-label="Close" data-bs-dismiss = "alert" style="margin-left: 340px"></button>
+            </div>
+          {% elif message.level ==  30 %}
+            <div class="alert alert-warning" role="alert" style="margin: -40px 0 0 330px; width: 40%;">
+                {{ message }}
+            <button type="button" class="btn-close " aria-label="Close" data-bs-dismiss = "alert" style="margin-left: 330px"></button>
+            </div>
+          {% elif message.level == 40 %}
+            <div class="alert alert-danger" role="alert" style="margin: -40px 0 0 330px; width: 45%;">
+                {{ message }}
+               <button type="button" class="btn-close " aria-label="Close" data-bs-dismiss = "alert" style="margin-left: 25px"></button> 
+            </div>
+          {% else %}
+            <div class="alert alert-dark" role="alert" style="margin: -40px 0 0 250px; width: 69%;">
+                {{message}}
+                <button type="button" class="btn-close " aria-label="Close" data-bs-dismiss = "alert" style="margin-left: 50px"></button>
+            </div>
+          {% endif %}
+        {% endfor %}
+    {% endif %}
+<br/>
+<br/>
+
+<h4 style="color: #606c38; margin: 2% 2%">Bewertungen:</h4>
+</br>
+
+{% for review in previous_reviews %}
+  <fieldset style="margin: 1% 2%">
+    <div class="toast2" data-bs-autohide="false" style="border-color: #606c38;">
+        <div class="toast-header">
+          {% if review.user.username == 'jasper32' %}
+            <img = src="{% static 'images/1282.png' %}" class = "rounded float-start" width="30" height="30">
+          {% elif review.user.username == 'Ahmed21' %}
+            <img = src="{% static 'images/chess.png' %}" class="rounded float-start" width="30" height="30">
+            {% elif review.user.username == 'Marry_9' %}
+            <img = src="{% static 'images/m999.png' %}" class="rounded float-start" width="30" height="30">
+            {% else %}
+            <img = src="{% static 'images/anonymous.jpg' %}" class="rounded float-start" width="30" height="30">
+          {% endif %}
+          <strong class="mr-auto" style="margin-left: 10px">{{review.user}}</strong>
+          <small class="text-muted" style="margin-left: 310px">{{review.created_at}}</small>
+        </div>
+        <div class="toast-body">
+          {{review.text}}
+        </div>
+        <div style= "margin-left: 450px; color: #606c38">
+        <i class = "material-icons">star</i>
+        <i> {{review.rate}} / 5<i>
+        </div>
+    </div>
+  </fieldset>
+</br>
+{% endfor %}
+
+</br>
+<script>
+  let myAlert = document.querySelector('.toast');
+  let bsAlert = new bootstrap.Toast(myAlert); 
+  bsAlert.show();
+</script> 
+{% endblock %}

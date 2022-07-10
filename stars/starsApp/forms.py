@@ -99,17 +99,6 @@ class PasswordForm(UserCreationForm):
         fields = ('password1', 'password2')
 
 
-class ReservationForm(ModelForm):
-    class Meta:
-        model = Reservation
-        fields = ('user', 'wp', 'von', 'bis')
 
-        widgets = {
-            'von': SelectDateWidget(),
-            'bis': SelectDateWidget(),
-        }
 
-        labels = {
-            'user': ('Benutzer'),
-            'wp': ('Arbeitzplatz'),
-        }
+

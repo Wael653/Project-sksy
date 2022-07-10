@@ -1,87 +1,117 @@
 {% extends 'base.html' %}
 
 
-{% block title %}{{block.super}} Reservierung{% endblock %}
+{% block title %}{{block.super}} Reservierungen{% endblock %}
 
 
 {% block content %}
-    {% if request.user.id is None %}
-        <h1 class = "aligncenter">Bitte logge dich ein.</h1>
-    {% else %}
-<!-- Reservation -->
-<div class="container">
-  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseReservation" aria-expanded="false" aria-controls="collapseReservation">
-    Reservierungen: &#10149;
-  </button>
+
+        {% if request.user.id is None %}
+            <h1 class = "aligncenter">Bitte logge dich ein.</h1>
+        {% else %}
+<div class="a-article">
+    <!-- Reservation -->
+    <h3>Deine Reservierungen:</h3>
+    <!-- Button trigger modal for Reservation -->
+    {% for r in reservations %}
+    <p style="border: thin solid green">
+        <p style="margin-right: 40%;">
+            ({{r.id}}) Reservierung des Arbeitsplatzes
+            {% for res_wp in r.wp.all %}
+            {{res_wp}}
+            {% endfor %}
+            <a class="container" type="button" data-bs-toggle="modal" data-bs-target="#reservationModal{{r.id}}">
+                &#9432;
+            </a>
+            :
+            <p>
+                {% for key,value in slots.items %}
+                {% if key == r.time %}
+                Zeit: {{value}}
+                {% endif %}
+                {% endfor %}
+            </p>
+        </p>
+    </p>
+
+    <!-- Modal for Reservation -->
+    <div class="modal fade" id="reservationModal{{r.id}}" tabindex="-1" aria-labelledby="reservationModalLabel{{r.id}}" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="reservationModalLabel{{r.id}}">Reservierung: {{r.id}}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
+          </div>
+          <div class="modal-body">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">User: {{r.user}}</li>
+                <li class="list-group-item">Arbeitsplatz:
+                    {% for wpr in r.wp.all %}
+                    {{wpr}}
+                    {% endfor %}
+                </li>
+                <li class="list-group-item">Tag: {{r.date|date:"D, d M Y"}}</li>
+                <li class="list-group-item">Zeit:
+                    {% for key,value in slots.items %}
+                    {% if key == r.time %}
+                    {{value}}
+                    {% endif %}
+                    {% endfor %}
+                </li>
+            </ul>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schließen</button>
+            <a href="{% url 'delete_reserve' r.id %}" type="button" class="btn btn-danger">Reservierung stornieren</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <h5>Keine Reservierungen vorhanden.</h5>
+    {% endfor %}
+
+    <!-- Workplace -->
+    <h3>Verfügbare Arbeitsplätze:</h3>
+    <!-- Button trigger modal for Workplaces -->
+    {% for w in workplaces %}
+    <p style="border: thin solid #606c38">
+        <p>
+            Arbeitsplatz: {{w}}
+            <a class="container" type="button"  data-bs-toggle="modal" data-bs-target="#workplaceModal{{w.id}}">
+            &#9432
+            </a>
+        </p>
+        <p>
+            <a href="{% url 'timeslots' w.nummer %}">
+            &#9654; Hier klicken für das Reservieren des Arbeitsplatzes {{w}} &#9664;
+            </a>
+        </p>
+    </p>
+    <!-- Modal for Workplaces-->
+    <div class="modal fade" id="workplaceModal{{w.id}}" tabindex="-1" aria-labelledby="workplaceModalLabel{{w.id}}" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="workplaceModalLabel{{w.id}}">Arbeitsplatz: {{w}}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
+          </div>
+          <div class="modal-body">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Geräte: {{w.geraete}}</li>
+                <li class="list-group-item">Anzahl der Personen: {{w.anzahlPersonen}}</li>
+                <li class="list-group-item">Sonstiges: {{w.sonstiges}}</li>
+            </ul>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schließen</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <h5>Keine Arbeitzplätze vorhanden.</h5>
+    {% endfor %}
+        {% endif %}
 </div>
-
-<div class="collapse" id="collapseReservation" style="width: 120%">
-  <div class="card card-body">
-    <div id="accordionReservation">
-        {% for r in reservations %}
-    <div class="card">
-        <div class="card-header" id="headRes{{r.id}}">
-            <h5 class="mb-2">
-            <button class="btn btn-primary collapsed" data-bs-toggle="collapse" data-bs-target="#collapseRes{{r.id}}" aria-expanded="false" aria-controls="collapseRes{{r.id}}">
-            Reservierung: {{r.id}}&#9662;
-            </button>
-            </h5>
-        </div>
-    <div id="collapseRes{{r.id}}" class="collapse" aria-labelledby="headRes{{r.id}}" data-parent="#accordionReservation">
-        <div class="card-body">
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">User: {{r.user}}</li>
-            <li class="list-group-item">Von: {{r.von}}</li>
-            <li class="list-group-item">Bis: {{r.bis}}</li>
-            <li class="list-group-item">Arbeitsplatz: {{r.wp.nummer}}</li>
-        </ul>
-        </div>
-    </div>
-    </div>
-        {% endfor %}
-    </div>
-
-        </div>
-</div>
-
-<!-- Workplace -->
-<div class="container">
-  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWorkplace" aria-expanded="false" aria-controls="collapseWorkplace">
-    Arbeitsplätze: &#10149;
-  </button>
-</div>
-
-<div class="collapse" id="collapseWorkplace" style="width: 150%">
-  <div class="card card-body">
-    <div id="accordionWorkplace">
-        {% for w in workplaces %}
-    <div class="card">
-        <div class="card-header" id="headWP{{w.id}}">
-            <h5 class="mb-2">
-            <button class="btn btn-primary collapsed" data-bs-toggle="collapse" data-bs-target="#collapseWP{{w.id}}" aria-expanded="false" aria-controls="collapseWP{{w.id}}">
-            Arbeitsplatz: {{w.nummer}} &#9662;
-            </button>
-            </h5>
-        </div>
-    <div id="collapseWP{{w.id}}" class="collapse" aria-labelledby="headWP{{w.id}}" data-parent="#accordionWorkplace">
-        <div class="card-body">
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">Geräte: {{w.geraete}}</li>
-            <li class="list-group-item">Anzahl der Personen: {{w.anzahlPersonen}}</li>
-            <li class="list-group-item">Sonstiges: {{w.sonstiges}}</li>
-            <li class="list-group-item">
-                <a href="{% url 'reservieren' %}" class="btn btn-Success">
-                    Reservieren: &#10149;
-                </a>
-            </li>
-        </ul>
-        </div>
-    </div>
-    </div>
-        {% endfor %}
-    </div>
-
-        </div>
-</div>
-    {% endif %}
 {% endblock %}
