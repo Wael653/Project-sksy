@@ -1,25 +1,13 @@
 
-
 from datetime import date, datetime
-
-from datetime import date
-
-
-
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.forms.models import model_to_dict
-
 from .forms import UserForm, ProfileForm, PasswordForm, LoginForm, ContactForm
 from .models import Reservation, Workplace, Review
-
-
-from .forms import UserForm, ProfileForm, PasswordForm, LoginForm, ContactForm
-from .models import Reservation, Workplace
 from django.contrib import messages
-
 from django.views.generic import FormView, TemplateView
 from django.urls import reverse_lazy, reverse
 
