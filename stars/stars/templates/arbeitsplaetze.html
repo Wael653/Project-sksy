@@ -5,25 +5,21 @@
 
 <body>
 
-
+  {% csrf_token %}
   <div class="background-cover">
     <p class="textbox-headline aligncenter pt-5">Wähle einen Platz zum Reservieren aus</p><br>
     <div class="aligncenter">
-      <select id="dropdown">
+      <select id="unit-list" class="dropdown">
         <option selected>Wähle ein Gebäude</option>
         {% for eachunit in units %}
-        <option>{{eachunit.name}}</option>
+        <option value="{{eachunit.id}}">{{eachunit.name}}</option>
         {% endfor%}
       </select>
-      <select id="dropdown" class="mx-2">
-        <option selected>Wähle einen Raum</option>
-
-        {% for eachroom in rooms %}
-
-        <option>{{eachroom}}</option>
-        {% endfor%}
+      <select id="room-dropdown" class="dropdown">
+        <option selected disabled>Wähle einen Raum</option>
       </select>
     </div>
+    
     <br><br>
     <div class="door doorText mx-auto">EXIT</div>
     {% for eachworkplace in workplaces %}
@@ -38,55 +34,33 @@
     </div>
   </div>
 
+</body>
+{% endblock content %}
 
-  {% csrf_token %}
-  <div class="col-md-6">
-    <div class="textbox-headline aligncenter pt-5">
-      <label for="inputStatus">Unit</label>
-      <select id="unit-list" class="form-control-sm custom-select">
-        <option selected disabled>Choose a Unit</option>
-        {% for eachunit in units %}
-        <option value="{{eachunit.id}}">{{eachunit.name}}</option>
-        {% endfor %}
-      </select>
-    </div>
-  </div>
-  <div class="col-md-6">
-    <div class="textbox-headline aligncenter pt-5">
-      <label for="inputStatus">Room</label>
-      <select id="room-dropdown" class="form-control-sm custom-select" name="room">
-        <option selected disabled>Choose a room</option>
-      </select>
-    </div>
-  </div>
-  {% block javascript %}
-  <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
-    crossorigin="anonymous"></script>
+{% block javascript %}
   <script>
+  $(document).ready(function(){
     $("#unit-list").change(function () {
-      const unitId = $(this).val();  // get the selected subject ID from the HTML dropdown list 
-      $.ajax({                       // initialize an AJAX request
-        type: "POST",
-        url: '{% url "index" %}',
-        data: {
-          'unit_id': unitId,       // add the unit id to the POST parameters
-          'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
-        },
-        success: function (data) {   // `data` is from `get_rooms_ajax` view function
-          let html_data = '<option value="">---------</option>';
-          data.forEach(function (data) {
-            html_data += `<option value="${data.id}">${data.nummer}</option>`
-          });
-          $("#room-dropdown").html(html_data); // replace the contents of the topic input with the data that came from the server
-        }
-      });
+    const unitId = $(this).val();  // get the selected subject ID from the HTML dropdown list 
+    console.log(unitId);
+    $.ajax({                       // initialize an AJAX request
+      type: "POST",
+      url: '{% url "get_rooms_ajax" %}',
+      data: {
+        'unit_id': unitId,       // add the unit id to the POST parameters
+        'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
+      },
+      success: function (data) {   // `data` is from `get_rooms_ajax` view function
+        let html_data = '<option value="">---------</option>';
+        data.forEach(function (data) {
+          html_data += `<option value="${data.id}">${data.nummer}</option>`
+        });
+        $("#room-dropdown").html(html_data); // replace the contents of the topic input with the data that came from the server
+      }
+      
     });
+    $( "#msg" ).append( "<li>Request Complete.</li>" );
+  });
+  }); 
   </script>
   {% endblock javascript %}
-
-
-  <div class="box">
-  </div>
-</body>
-
-{% endblock %}

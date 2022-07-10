@@ -171,7 +171,7 @@ body {
     color: #283618;  
 }
 
-#dropdown{
+.dropdown{
     display: box;
     width: auto;
     padding: 0.2rem 0.5rem;
