@@ -1,13 +1,14 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, JsonResponse
 from django.forms.models import model_to_dict
 from .forms import UserForm, ProfileForm, PasswordForm, ReservationForm, LoginForm, ContactForm
 from .models import Reservation, Workplace, Unit, Room
 from django.contrib import messages
 from django.views.generic import FormView, TemplateView
 from django.urls import reverse_lazy
+
 
 
 # Create your views here.
@@ -116,3 +117,13 @@ def delete_User(request, nutzername):
     user.delete()
     return redirect('index')
 
+def get_rooms_ajax(request):
+    if request.method == "POST":
+        print("Testlog")
+        unit_id = request.POST['unit_id']
+        try:
+            unit = Unit.objects.filter(id = unit_id).first()
+            rooms = Room.objects.filter(unit = unit)
+        except Exception:
+            raise Http404("Fehler beim Laden der Räume")
+        return JsonResponse(list(rooms.values('id', 'nummer')), safe = False) 
