@@ -119,7 +119,6 @@ def delete_User(request, nutzername):
 
 def get_rooms_ajax(request):
     if request.method == "POST":
-        print("Testlog")
         unit_id = request.POST['unit_id']
         try:
             unit = Unit.objects.filter(id = unit_id).first()
@@ -127,3 +126,14 @@ def get_rooms_ajax(request):
         except Exception:
             raise Http404("Fehler beim Laden der Räume")
         return JsonResponse(list(rooms.values('id', 'nummer')), safe = False) 
+
+def get_workplaces_ajax(request):
+    if request.method == "POST":
+        print("Testlog")
+        room_id = request.POST['room_id']
+        try:
+            room = Room.objects.filter(id = room_id).first()
+            workplaces = Workplace.objects.filter(raum = room)
+        except Exception:
+            raise Http404("Fehler beim Laden der Räume")
+        return JsonResponse(list(workplaces.values('id', 'nummer')), safe = False) 
