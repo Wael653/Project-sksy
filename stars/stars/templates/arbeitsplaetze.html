@@ -5,23 +5,23 @@
 <body>
   
 
-    <div class="background-cover"> 
-        <p class="textbox-headline aligncenter pt-5">Wähle einen Platz zum Reservieren aus</p><br>
-        <div class="aligncenter">
-        <select id="dropdown">
-          <option selected>Wähle ein Gebäude</option>
+<div class="background-cover"> 
+    <p class="textbox-headline aligncenter pt-5">Wähle einen Platz zum Reservieren aus</p><br>
+    <div class="aligncenter">
+      <form method="post" id="roomForm" room-url="{% url 'load_rooms' %}" >
+        {% csrf_token %}
+        <select name="units" id="units">
+          <option value="">Wähle ein Gebäude</option>
           {% for eachunit in units %}
-          <option>{{eachunit.name}}</option>
+          <option value="{{eachunit.id}}">{{eachunit.name}}</option>
           {% endfor%}
         </select>
-        <select id="dropdown" class="mx-2">
-          <option selected>Wähle einen Raum</option>
-         
-          {% for eachroom in rooms %}
-          
-          <option>{{eachroom.nummer}}</option>
-          {% endfor%}
+        
+        <select name="rooms" id="rooms"class="mx-2">
+    
         </select>
+      <!-- <button type="submit" class="btn btn-info">Search</button> -->
+      </form>
         </div>  
         <br><br>
         <div class="door doorText mx-auto">EXIT</div>
@@ -36,10 +36,29 @@
           {% endfor %}
         </div>
     </div>
-
+    
 
   <div class="box">
   </div> 
 </body>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>  
+<script>
+  $("#units").change(function () {
+      var url = $("#roomForm").attr("room-url");  // get the url of the `load_cities` view
+      var unitId = $(this).val();  // get the selected country ID from the HTML input
+
+      $.ajax({                       // initialize an AJAX request
+          url: url,                    // set the url of the request (= /members/ajax/load-cities/ )
+          data: {
+              'units': unitId       // GET parameters
+          },
+          success: function (data) {   
+              $("#rooms").html(data); 
+          }
+      });
+
+  });
+</script>
 
 {% endblock %}

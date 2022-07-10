@@ -33,6 +33,7 @@ urlpatterns = [
     path('settings/password/', views.change_password, name='password'),
     path('logout/', views.logout_user, name='logout'),
     path("accounts/", include("django.contrib.auth.urls")),
+    path('load_rooms/',views.load_rooms,name='load_rooms'), 
     path("accounts/login_user", views.login_user, name='login')
 
 ]

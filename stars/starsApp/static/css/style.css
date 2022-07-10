@@ -171,7 +171,7 @@ body {
     color: #283618;  
 }
 
-#dropdown{
+/* #dropdown1{
     display: box;
     width: auto;
     padding: 0.2rem 0.5rem;
@@ -186,6 +186,19 @@ body {
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
-
+#dropdown2{
+    display: box;
+    width: auto;
+    padding: 0.2rem 0.5rem;
+    font-size: 1rem;
+    font-family: Questrial;
+    line-height: 1.5;
+    color: #FEFAE0;
+    background-color: #BC6C25;
+    background-clip: padding-box;
+    border: 1px solid #BC6C25;
+    border-radius: 0.25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+} */
 
 

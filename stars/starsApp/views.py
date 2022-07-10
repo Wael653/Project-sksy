@@ -1,8 +1,13 @@
+import re
+from unicodedata import name
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404
 from django.forms.models import model_to_dict
+
+
+# from stars.stars.forms import UnitForm
 from .forms import UserForm, ProfileForm, PasswordForm, ReservationForm, LoginForm, ContactForm
 from .models import Reservation, Workplace, Unit, Room
 from django.contrib import messages
@@ -53,9 +58,13 @@ def support(request):
     return render(request, 'support.html', {'form': form})
 
 def arbeitsplaetze(request):
-    context = {'workplaces' : Workplace.objects.all(), 'units' : Unit.objects.all(), 'rooms': Room.objects.all()}
+    context = {'workplaces' : Workplace.objects.all(), 'units' : Unit.objects.all()}    
     return render(request, 'arbeitsplaetze.html', context)
 
+def load_rooms(request):
+    unit_id = request.GET.get('unit')
+    rooms = Room.objects.filter(unit_id = unit_id).order_by('nummer')
+    return render(request,'room_dropdown.html', {'rooms': rooms})
 
 def register(request):
     if request.method == 'POST':
@@ -115,4 +124,7 @@ def delete_User(request, nutzername):
     user = User.objects.get(username = nutzername)
     user.delete()
     return redirect('index')
+
+
+
 

@@ -1,0 +1,4 @@
+<option value="">Wähle einen Raum</option>
+{% for eachroom in rooms %}
+<option value="{{eachroom.pk}}">{{eachroom.nummer}} </option>
+{% endfor%}
