@@ -1,9 +1,10 @@
-﻿{% extends 'base.html' %}
+{% extends 'base.html' %}
 
 {% block title %}{{block.super}} Reservation-Slots{% endblock %}
 
 {% block content %}
     <article class="a-article">
+    <article>
         {% if set_res %}
         <h3>Such dir eine Zeitspanne aus.</h3>
         {% for r in set_res %}

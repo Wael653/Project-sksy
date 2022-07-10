@@ -48,6 +48,7 @@ class Reservation(models.Model):
     class Meta:
         ordering = ['user']
 
+
     # wird noch angepasst
     def __str__(self):
         return str(f'{self.user} --> {self.wp.first()}')
