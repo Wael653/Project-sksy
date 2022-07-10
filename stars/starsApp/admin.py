@@ -7,3 +7,4 @@ admin.site.register(Unit)
 admin.site.register(Room)
 admin.site.register(RoomDevice)
 admin.site.register(WorkplaceDevice)
+

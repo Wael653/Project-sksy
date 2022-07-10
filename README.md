@@ -40,9 +40,19 @@ Open a browser and point it to http://127.0.0.1:8000/
 
 Or for Administration point it to: http://127.0.0.1:8000/admin
 
+To import the given example data, run the following command:
+```
+python manage.py loaddata initialData.json
+```
+
 ## Hints for Developers:
 
-changing something on the models:
+### The database system of PostgreSQL is used:
+- Install PostgreSQL
+- Create a User named starsuser with the Password `stars123` and a Database named `starsdb`
+- Connect starsuser and starsdb
+
+### Changing something on the models:
 - Change your models (in models.py)
 - Run the following command to create migrations for those changes
 ```
@@ -53,7 +63,9 @@ python manage.py makemigrations
 python manage.py migrate
 ```
 
-If the models are still not properly created try the following steps:
+<details><summary><h3>If the models are still not properly created try the following steps:</h3></summary>
+<p>
+
 - Run 
 ```
 python manage.py migrate starsApp zero
@@ -67,11 +79,26 @@ python manage.py makemigrations
 ```
 python manage.py migrate
 ```
+  </p>
+ </details>
+<details><summary><h3>If all of this is not helping, try the following steps as well:</h3></summary>
+<p>
+- Run your PostgreSQL admin tool and delete all tables starting with `starsApp` manually
 
-The database system of PostgreSQL is used:
-- Install PostgreSQL
-- Create a User named starsuser with the Password `stars123` and a Database named `starsdb`
-- Connect starsuser and starsdb
+- delete the 0001_initial.py file in the migrations folder
+- Run the following command to create migrations for those changes
+```
+python manage.py makemigrations
+```
+- Run following command to apply those changes to the database
+```
+python manage.py migrate
+```
+</p>
+ </details>
+
+
+
 
 ## Used Apps:
 `star_ratings`, an app to create star rating fields more easily -> `https://django-star-ratings.readthedocs.io/en/latest/`

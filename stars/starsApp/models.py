@@ -24,7 +24,7 @@ class Room(models.Model):
     geraete = models.ManyToManyField(RoomDevice)
     unit = models.ForeignKey(Unit, on_delete=models.PROTECT)
     def __str__(self):
-        return str(self.nummer)
+        return 'Raum {} in {}'.format(self.nummer, self.unit)
 
 class WorkplaceDevice(models.Model):
     bezeichnung = models.CharField(("Bezeichnung"), max_length=160)
@@ -34,11 +34,11 @@ class WorkplaceDevice(models.Model):
 
 class Workplace(models.Model):
     nummer = models.PositiveIntegerField()
-    geraete = models.ManyToManyField(WorkplaceDevice)
+    geraete = models.ManyToManyField(WorkplaceDevice, blank=True)
     anzahlPersonen = models.PositiveIntegerField(default=1)
-    sonstiges = models.CharField(max_length=160)
+    sonstiges = models.CharField(max_length=160, null=True, blank=True)
     raum = models.ForeignKey(Room, on_delete=models.PROTECT)
-    barrierefrei = models.BooleanField(("Barrierefrei"), null=True)
+    barrierefrei = models.BooleanField(("Barrierefrei"), null=True, blank=True, default=True)
     def __str__(self):
         return str(self.nummer)
 
@@ -47,10 +47,6 @@ class Reservation(models.Model):
     wp = models.ForeignKey(Workplace, on_delete=models.PROTECT)
     von = models.DateTimeField()
     bis = models.DateTimeField()
-    sonstiges = models.CharField(max_length=160, null=True)
+    sonstiges = models.CharField(max_length=160, null=True, blank=True)
     def __str__(self):
         return str(self.user + self.wp + " from " + self.von + " bis " + self.bis)
-
-class Rating(models.Model):
-    user = models.ForeignKey(User, on_delete=models.PROTECT)
-    wp = models.ForeignKey(Workplace, on_delete=models.PROTECT)
