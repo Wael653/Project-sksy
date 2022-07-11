@@ -178,16 +178,17 @@ def get_rooms_ajax(request):
             unit = Unit.objects.filter(id = unit_id).first()
             rooms = Room.objects.filter(unit = unit)
         except Exception:
+            #TODO: Richtige Fehlermeldung ausgeben
             raise Http404("Fehler beim Laden der Räume")
         return JsonResponse(list(rooms.values('id', 'nummer')), safe = False) 
 
 def get_workplaces_ajax(request):
     if request.method == "POST":
-        print("Testlog")
         room_id = request.POST['room_id']
         try:
             room = Room.objects.filter(id = room_id).first()
             workplaces = Workplace.objects.filter(raum = room)
         except Exception:
-            raise Http404("Fehler beim Laden der Räume")
+            #TODO: Richtige Fehlermeldung ausgeben
+            raise Http404("Fehler beim Laden der Arbeitsplätze")
         return JsonResponse(list(workplaces.values('id', 'nummer')), safe = False) 

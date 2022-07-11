@@ -47,13 +47,11 @@ class Workplace(models.Model):
         return str(self.nummer)
 
 class Reservation(models.Model):
-    user = models.ForeignKey(User, on_delete=models.PROTECT)
-    wp = models.ForeignKey(Workplace, on_delete=models.PROTECT)
-    von = models.DateTimeField()
-    bis = models.DateTimeField()
-    sonstiges = models.CharField(max_length=160, null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    wp = models.ManyToManyField(Workplace)
+    date = models.DateField()
+    time = models.PositiveIntegerField(validators=[MaxValueValidator(14)])
+    sonstiges = models.CharField(max_length=160, null=True)
+
     class Meta:
         ordering = ['user']
-        
-    def __str__(self):
-        return str(self.user + self.wp + " from " + self.von + " bis " + self.bis)
