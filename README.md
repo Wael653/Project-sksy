@@ -63,6 +63,7 @@ python manage.py makemigrations
 python manage.py migrate
 ```
 
+
 # If you switch your branch to a branch with a different model file, be sure to follow these steps:
 - Run this command while being in the old branch
 ```

@@ -1,26 +1,131 @@
 {% extends 'base.html' %}
 {% block title %}Stars-Arbeitsplätze{% endblock %}
 {% block content %}
-<table class="table">
-    <thead>
-      <tr>
-        <th scope="col">Nummer</th>
-        <th scope="col">Geräte</th>
-        <th scope="col">Anzahl Personen</th>
-        <th scope="col">Sonstiges</th>
-      </tr>
-    </thead>
+{% load static %}
+<!-- <link rel="shortcut icon" href="#" /> -->
 
-    <tbody>
-    {% for eachworkplace in workplaces %}
-        <tr>
-            <th scope="row">{{eachworkplace.nummer}}</th>
-            <td>{{eachworkplace.geraete}}</td>
-            <td>{{eachworkplace.anzahlPersonen}}</td>
-            <td>{{eachworkplace.sonstiges}}</td>
-        </tr>
-    {% endfor %}
-    </tbody>
-  </table>        
-{% endblock %}
+<body>
 
+  {% csrf_token %}
+  <div class="background-cover">
+    <p class="textbox-headline aligncenter pt-5">Wähle einen Platz zum Reservieren aus</p><br>
+    <div class="aligncenter">
+      <select id="unit-list" class="dropdown">
+        <option selected>Wähle ein Gebäude</option>
+        {% for eachunit in units %}
+        <option value="{{eachunit.id}}">{{eachunit.name}}</option>
+        {% endfor%}
+      </select>
+      <select id="room-dropdown" class="dropdown">
+        <option selected disabled>Bitte Gebäude auswählen</option>
+      </select>
+    </div>
+    <br><br>
+    
+    <div id="workplace-overview" class="row itemcenter justify-content-center">
+    </div>
+  </div>
+
+  <!-- Modal for Workplaces 
+  TODO: Load models for particlular workplaces -->
+  {% for eachworkplace in workplaces %}
+  <div class="modal fade" id="workplaceModal{{eachworkplace.id}}" tabindex="-1"
+    aria-labelledby="workplaceModalLabel{{eachworkplace.id}}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <img class="img-fluid" src="{% static 'images/workplace-popup.jpg' %}">
+        <div class="modal-header">
+          <h5 class="modal-title" id="workplaceModalLabel{{eachworkplace.id}}">Arbeitsplatz: {{eachworkplace.nummer}}
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
+        </div>
+        <div class="modal-body">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">Geräte:
+              {% for geraete in eachworkplace.geraete.all%}
+              {{geraete.bezeichnung}}
+              {% if not forloop.last %},{% endif %}
+              {% endfor%}</li>
+            <li class="list-group-item">Anzahl der Personen: {{eachworkplace.anzahlPersonen}}</li>
+            <li class="list-group-item">Barrierefrei: {{eachworkplace.barrierefrei|yesno:"Ja,Nein"}}</li>
+            <li class="list-group-item">Sonstiges: {{eachworkplace.sonstiges}}</li>
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schließen</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+
+</body>
+{% endblock content %}
+
+{% block javascript %}
+<script>
+  $(document).ready(function () {
+    $("#unit-list").change(function () {
+      const unitId = $(this).val();  // get the selected subject ID from the HTML dropdown list 
+      console.log(unitId);
+      $.ajax({                       // initialize an AJAX request
+        type: "POST",
+        url: '{% url "get_rooms_ajax" %}',
+        data: {
+          'unit_id': unitId,       // add the unit id to the POST parameters
+          'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
+        },
+        success: function (data) {   // `data` is from `get_rooms_ajax` view function
+          let html_data = '<option value="">Wähle einen Raum</option>';
+          data.forEach(function (data) {
+            html_data += `<option value="${data.id}">${data.nummer}</option>`
+          });
+          $("#room-dropdown").html(html_data); // replace the contents of the topic input with the data that came from the server
+        }
+
+      });
+    });
+
+    $("#room-dropdown").change(function () {
+      const roomId = $(this).val();  // get the selected subject ID from the HTML dropdown list 
+      console.log(roomId);
+      $.ajax({                       // initialize an AJAX request
+        type: "POST",
+        url: '{% url "get_workplaces_ajax" %}',
+        data: {
+          'room_id': roomId,       // add the unit id to the POST parameters
+          'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
+        },
+        success: function (data) {   // `data` is from `get_rooms_ajax` view function
+          let html_data = '';
+          let cnt = 0;
+          data.forEach(function (data) {
+            if (cnt % 5 == 0) {
+              //new line not working 
+              html_data += `<div class="row itemcenter justify-content-center">` + generateWorkplace(data);
+              cnt = Number(cnt) + 1;
+            } else {
+              html_data += `<br><br>` + generateWorkplace(data);
+              cnt = Number(cnt) + 1;
+            }
+          });
+
+          $("#workplace-overview").html(html_data); // replace the contents of the topic input with the data that came from the server
+        }
+
+      });
+    });
+
+    function generateWorkplace(data){
+      let html_data = '';
+      //html_data += `<a href="" data-bs-toggle="modal" data-bs-target="#workplaceModal${data.id}" class="seat">${data.nummer}</a>`
+      html_data += `<a href="" data-bs-toggle="modal" data-bs-target="#workplaceModal${data.id}" class="seat"></a>`
+      return html_data;
+    }
+    function generateWorkplacePopup(html_data, data){
+      html_data += `<div class="seat" value=${data.id}></div>`
+      return html_data;
+    }
+  }); 
+</script>
+{% endblock javascript %}
