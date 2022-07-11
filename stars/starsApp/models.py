@@ -39,6 +39,10 @@ class Workplace(models.Model):
     sonstiges = models.CharField(max_length=160, null=True, blank=True)
     raum = models.ForeignKey(Room, on_delete=models.PROTECT)
     barrierefrei = models.BooleanField(("Barrierefrei"), null=True, blank=True, default=True)
+
+    class Meta:
+        ordering =['nummer']
+
     def __str__(self):
         return str(self.nummer)
 
@@ -48,5 +52,8 @@ class Reservation(models.Model):
     von = models.DateTimeField()
     bis = models.DateTimeField()
     sonstiges = models.CharField(max_length=160, null=True, blank=True)
+    class Meta:
+        ordering = ['user']
+        
     def __str__(self):
         return str(self.user + self.wp + " from " + self.von + " bis " + self.bis)

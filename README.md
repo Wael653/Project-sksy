@@ -63,6 +63,18 @@ python manage.py makemigrations
 python manage.py migrate
 ```
 
+
+# If you switch your branch to a branch with a different model file, be sure to follow these steps:
+- Run this command while being in the old branch
+```
+python manage.py migrate starsApp zero
+```
+- Switch branch
+- Run the following command to create migrations for those changes
+```
+python manage.py migrate
+```
+
 <details><summary><h3>If the models are still not properly created try the following steps:</h3></summary>
 <p>
 
