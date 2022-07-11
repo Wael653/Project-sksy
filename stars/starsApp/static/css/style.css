@@ -96,7 +96,8 @@ a:hover {
     position: relative;
     background-image: url('/static/images/home-1.jpeg');
 }
-.background-cover{
+
+.background-cover {
     background-color: #283618;
     background-size: cover;
     top: 0%;
@@ -104,7 +105,7 @@ a:hover {
     width: 100%;
     position: relative;
     display: block;
-    
+
 }
 
 .box {
@@ -139,11 +140,12 @@ a:hover {
     height: 14px;
     width: 25px;
     margin: 3px;
+    transition: all 0.2s ease-in-out;
 }
 
 body {
     background: #283618;
-} 
+}
 
 .pensum_font {
     font-family: Pensum
@@ -153,25 +155,27 @@ body {
     align-items: center
 }
 
-.row{
+.row {
     display: flex;
 }
-.door{
+
+.door {
     display: flex;
     vertical-align: middle;
     justify-content: center;
     background-color: #99AC5D;
     height: 15px;
     width: 40px;
-    
-}
-.doorText{
-    font-size: 12px;
-    font-family: Questrial;
-    color: #283618;  
+
 }
 
-.dropdown{
+.doorText {
+    font-size: 12px;
+    font-family: Questrial;
+    color: #283618;
+}
+
+.dropdown {
     display: box;
     width: auto;
     padding: 0.2rem 0.5rem;
@@ -183,9 +187,22 @@ body {
     background-clip: padding-box;
     border: 1px solid #BC6C25;
     border-radius: 0.25rem;
-    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
 
-
-
-
+.seat:hover {
+    color: #BC6C25 !important;
+    background-color: #DDA15E !important;
+    border-color: #DDA15E !important;
+    color: rgba(255, 255, 255, 1);
+    box-shadow: 0 5px 15px rgba(145, 92, 182, .4);
+}
+.modal-title{
+    font-size: 30px;
+    color: black;
+    font-family: Pensum;
+   
+}
+[data-id]  {
+    display:none;
+}
