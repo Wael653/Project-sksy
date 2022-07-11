@@ -35,6 +35,8 @@ urlpatterns = [
     path('settings/password/', views.change_password, name='password'),
     path('logout/', views.logout_user, name='logout'),
     path("accounts/", include("django.contrib.auth.urls")),
-    path("accounts/login_user", views.login_user, name='login')
-
+    path("accounts/login_user", views.login_user, name='login'),
+    #path('ratings/', include('star_ratings.urls', namespace='ratings')),
+    path('get-rooms-ajax/', views.get_rooms_ajax, name='get_rooms_ajax'),
+    path('get-workplaces-ajax/', views.get_workplaces_ajax, name='get_workplaces_ajax'),
 ]
