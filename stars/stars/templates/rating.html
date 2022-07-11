@@ -91,16 +91,22 @@
     <div class="toast2" data-bs-autohide="false" style="border-color: #606c38;">
         <div class="toast-header">
           {% if review.user.username == 'jasper32' %}
-            <img = src="{% static 'images/1282.png' %}" class = "rounded float-start" width="30" height="30">
+            <img = src="{% static 'images/1282.png' %}" class = "rounded float-start" width="40" height="40">
           {% elif review.user.username == 'Ahmed21' %}
-            <img = src="{% static 'images/chess.png' %}" class="rounded float-start" width="30" height="30">
-            {% elif review.user.username == 'Marry_9' %}
-            <img = src="{% static 'images/m999.png' %}" class="rounded float-start" width="30" height="30">
-            {% else %}
-            <img = src="{% static 'images/anonymous.jpg' %}" class="rounded float-start" width="30" height="30">
+            <img = src="{% static 'images/chess.png' %}" class="rounded float-start" width="40" height="40">
+            {% elif review.user.username == 'Marry9' %}
+            <img = src="{% static 'images/pokemon.png' %}" class="rounded float-start" width="40" height="40">
+          {% elif review.user.username == 'Wael653' %}
+            <img = src="{% static 'images/magician.jpg' %}" class="rounded float-start" width="40" height="40">
+          {% elif review.user.username == 'Blau3' %} 
+            <img = src="{% static 'images/blau.jpeg' %}" class="rounded float-start" width="40" height="40">
+          {% elif review.user.username == 'Hassan' %} 
+            <img = src="{% static 'images/fire.jpg' %}" class="rounded float-start" width="40" height="40">
+          {% else %}
+            <img = src="{% static 'images/anonymous.jpg' %}" class="rounded float-start" width="40" height="40">
           {% endif %}
           <strong class="mr-auto" style="margin-left: 10px">{{review.user}}</strong>
-          <small class="text-muted" style="margin-left: 310px">{{review.created_at}}</small>
+          <small class="text-muted" style="margin-left: 280px">{{review.created_at}}</small>
         </div>
         <div class="toast-body">
           {{review.text}}

@@ -12,9 +12,9 @@ class Unit(models.Model):
     def __str__(self):
         return str(self.name)
 
-
+    
 class Room(models.Model):
-    nummer = models.CharField(max_length=1, choices= [('A','A'),('B','B'),('C','C')], unique= True)
+    nummer = models.CharField(max_length=1, choices= [('A','A'),('B','B'),('C','C'),('D','D'),('E','E'),('F','F')], unique= True)
     unit = models.ForeignKey(Unit, on_delete=models.PROTECT, blank = True)
     def __str__(self):
         return str(self.nummer)

@@ -67,7 +67,7 @@ def reservations(request):
     else:
         return render(request, 'reservierungen.html')
 
-def timeslots(request, wp_nr):
+def timeslots(request, wp_id):
     slots_times = {
         1: '8:00-9:00',
         2: '9:00-10:00',
@@ -85,7 +85,7 @@ def timeslots(request, wp_nr):
         14: '21:00-22:00'
     }
     times = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14}
-    wp1 = Workplace.objects.get(nummer=wp_nr)
+    wp1 = Workplace.objects.get(id = wp_id)
 
     for wp_res in wp1.reservation_set.all():
         times.remove(wp_res.time)
@@ -93,8 +93,8 @@ def timeslots(request, wp_nr):
     return render(request, 'reservieren.html', {'wp': wp1, 'slots_times': slots_times, 'set_res': times})
 
 
-def reserve(request, time_slot, wp_nr):
-    wp1 = Workplace.objects.get(nummer=wp_nr)
+def reserve(request, time_slot, wp_id):
+    wp1 = Workplace.objects.get(id=wp_id)
     wp1.reservation_set.create(user=request.user, date=date.today(), time=time_slot)
     return redirect('reservations')
 

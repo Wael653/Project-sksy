@@ -8,7 +8,7 @@
         <h3>Such dir eine Zeitspanne aus.</h3>
         {% for r in set_res %}
         <p>
-        <a class="container" href="{% url 'reserve' r wp.nummer %}" >
+        <a class="container" href="{% url 'reserve' r wp.id %}" >
             {% for key,value in slots_times.items %}
             {% if key == r %}
             Zeit: {{value}}
