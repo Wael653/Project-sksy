@@ -3,7 +3,26 @@
 {% block title %}{{block.super}} Impressum{% endblock %}
 
 {% block content %}
-    <article>
-        Platzhalter für den Inhalt der Impressum Seite
-    </article>
+{% load static %}
+
+<body>
+    <div class="box-imp">
+        <div class="col"><br>
+            <h-imp class="mx-5">Impressum</h-imp><br><br>
+            <c-imp-bold class="mx-5">Product Owner</c-imp-bold><br>
+            <c-imp class="mx-5">Pauline von Olberg</c-imp><br><br>
+            <c-imp-bold class="mx-5">Scrum Master</c-imp-bold><br>
+            <c-imp class="mx-5">Cihat Sariyar</c-imp><br><br>
+            <c-imp-bold class="mx-5">Entwicklerteam</c-imp-bold><br>
+            <c-imp class="mx-5">Jan Heimendahl</c-imp><br>
+            <c-imp class="mx-5">Wael Muhsen</c-imp><br>
+            <c-imp class="mx-5">Leandra Großpietsch</c-imp><br><br><br>
+            <c-imp-bold class="mx-5">STARS GmbH</c-imp-bold><br>
+            <c-imp class="mx-5">Musterstraße 1</c-imp><br>
+            <c-imp class="mx-5">12345 Musterstadt</c-imp><br>
+        </div>
+        <div class="cover-imp"></div>
+
+    </div>
+</body>
 {% endblock %}
