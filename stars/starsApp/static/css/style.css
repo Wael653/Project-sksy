@@ -143,8 +143,16 @@ a:hover {
     text-align: center;
 }
 
-.seat {
+.seat{
     background-color: #99AC5D;
+    height: 14px;
+    width: 25px;
+    margin: 3px;
+    transition: all 0.2s ease-in-out;
+}
+
+.seat-highlight{
+    background-color: #BC6C25;
     height: 14px;
     width: 25px;
     margin: 3px;

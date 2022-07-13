@@ -20,14 +20,26 @@
         <option selected disabled>Bitte Gebäude auswählen</option>
       </select>
     </div>
+    <br>
+    <div class="aligncenter">
+      <select id="filter-list" class="dropdown">
+      <!-- <select id="filter-list" class="multi-dropdown" name="devices[]" multiple="multiple"> 
+        Option for multiselect. Further information: https://select2.org/appearance-->
+        <option selected disabled>Filter</option>
+      </select>
+    </div>
     <br><br>
-    
+
+    <div id="workplace-overview" class="row itemcenter justify-content-center">
+    </div>
+    <br><br>
+
+
     <div id="workplace-overview" class="row itemcenter justify-content-center">
     </div>
   </div>
 
-  <!-- Modal for Workplaces 
-  TODO: Load models for particlular workplaces -->
+  <!-- Modal for Workplaces -->
   {% for eachworkplace in workplaces %}
   <div class="modal fade" id="workplaceModal{{eachworkplace.id}}" tabindex="-1"
     aria-labelledby="workplaceModalLabel{{eachworkplace.id}}" aria-hidden="true">
@@ -52,13 +64,16 @@
           </ul>
         </div>
         <div class="modal-footer">
-          <a type="button" href="{% url 'timeslots' eachworkplace.nummer %}" class="btn btn-info" >Reservieren</a>
+          <a type="button" href="{% url 'timeslots' eachworkplace.nummer %}" class="btn btn-info">Reservieren</a>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schließen</button>
         </div>
       </div>
     </div>
   </div>
   {% endfor %}
+
+
+
 
 </body>
 {% endblock content %}
@@ -89,7 +104,6 @@
 
     $("#room-dropdown").change(function () {
       const roomId = $(this).val();  // get the selected subject ID from the HTML dropdown list 
-      console.log(roomId);
       $.ajax({                       // initialize an AJAX request
         type: "POST",
         url: '{% url "get_workplaces_ajax" %}',
@@ -115,15 +129,90 @@
         }
 
       });
+      $.ajax({                       // initialize an AJAX request
+        type: "POST",
+        url: '{% url "get_filteroptions_ajax" %}',
+        data: {
+          'room_id': roomId,       // add the unit id to the POST parameters
+          'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
+        },
+        success: function (data) {   // `data` is from `get_rooms_ajax` view function
+          let html_data = '<option value="0">Alle Arbeitsplätze</option>';
+          data.forEach(function (data) {
+            html_data += `<option value="${data.id}">Plätze mit ${data.bezeichnung}</option>`;
+          });
+
+          $("#filter-list").html(html_data); // replace the contents of the topic input with the data that came from the server
+        }
+
+      });
     });
 
-    function generateWorkplace(data){
+    $("#filter-list").change(function () {
+      const filterId = $(this).val();  // get the selected subject ID from the HTML dropdown list 
+      const roomId= $("#room-dropdown").val(); // get the selected subject ID from the HTML dropdown list
+      console.log("Room: "+roomId +", Filter: "+filterId);
+      if (filterId > 0){
+        $.ajax({                       // initialize an AJAX request
+        type: "POST",
+        url: '{% url "get_filtered_workplaces_ajax" %}',
+        data: {
+          'room_id': roomId,       // add the unit id to the POST parameters
+          'device_id': filterId,       // add the unit id to the POST parameters
+          'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
+        },
+        success: function (data) {   // `data` is from `get_rooms_ajax` view function
+          let html_data = '';
+          let cnt = 0;
+          data.forEach(function (data) {
+            if (cnt % 5 == 0) {
+              //new line not working 
+              html_data += `<div class="row itemcenter justify-content-center">` + generateWorkplace(data);
+              cnt = Number(cnt) + 1;
+            } else {
+              html_data += `<br><br>` + generateWorkplace(data);
+              cnt = Number(cnt) + 1;
+            }
+          });
+          $("#workplace-overview").html(html_data); // replace the contents of the topic input with the data that came from the server
+        }
+      });
+      } else {
+        $.ajax({                       // initialize an AJAX request
+        type: "POST",
+        url: '{% url "get_workplaces_ajax" %}',
+        data: {
+          'room_id': roomId,       // add the unit id to the POST parameters
+          'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
+        },
+        success: function (data) {   // `data` is from `get_rooms_ajax` view function
+          let html_data = '';
+          let cnt = 0;
+          data.forEach(function (data) {
+            if (cnt % 5 == 0) {
+              //new line not working 
+              html_data += `<div class="row itemcenter justify-content-center">` + generateWorkplace(data);
+              cnt = Number(cnt) + 1;
+            } else {
+              html_data += `<br><br>` + generateWorkplace(data);
+              cnt = Number(cnt) + 1;
+            }
+          });
+
+          $("#workplace-overview").html(html_data); // replace the contents of the topic input with the data that came from the server
+        }
+
+      });
+      }
+    });
+
+    function generateWorkplace(data) {
       let html_data = '';
       //html_data += `<a href="" data-bs-toggle="modal" data-bs-target="#workplaceModal${data.id}" class="seat">${data.nummer}</a>`
       html_data += `<a href="" data-bs-toggle="modal" data-bs-target="#workplaceModal${data.id}" class="seat"></a>`
       return html_data;
     }
-    function generateWorkplacePopup(html_data, data){
+    function generateWorkplacePopup(html_data, data) {
       html_data += `<div class="seat" value=${data.id}></div>`
       return html_data;
     }
