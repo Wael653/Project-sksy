@@ -6,10 +6,15 @@ from django.http import HttpResponseRedirect, Http404, JsonResponse, HttpRespons
 from django.forms.models import model_to_dict
 from .forms import UserForm, ProfileForm, PasswordForm, LoginForm, ContactForm
 from .models import Reservation, Workplace, Unit, Room, Review
+from django.http import HttpResponse, Http404, JsonResponse
+from django.forms.models import model_to_dict
+from .forms import UserForm, ProfileForm, PasswordForm, LoginForm, ContactForm
+from .models import Reservation, Workplace, Unit, Room
 from django.contrib import messages
 from django.views.generic import FormView, TemplateView
 from django.urls import reverse
 from django .contrib.auth.decorators import login_required 
+
 
 # Create your views here.
 def index(request):
@@ -228,3 +233,4 @@ def rating(request, wp_id):
 
      else:
         return render(request, 'rating.html', context)
+        return JsonResponse(list(workplaces.values('id', 'nummer')), safe = False) 
