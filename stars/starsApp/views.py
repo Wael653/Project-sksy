@@ -1,16 +1,15 @@
-
 from datetime import date, datetime
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404, JsonResponse, HttpResponse
 from django.forms.models import model_to_dict
 from .forms import UserForm, ProfileForm, PasswordForm, LoginForm, ContactForm
-from .models import Reservation, Workplace, Review
+from .models import Reservation, Workplace, Unit, Room, Review
 from django.contrib import messages
 from django.views.generic import FormView, TemplateView
-from django.urls import reverse_lazy, reverse
-
+from django.urls import reverse
+from django .contrib.auth.decorators import login_required 
 
 # Create your views here.
 def index(request):
@@ -24,22 +23,6 @@ def imprint(request):
 
 def user(request):
     return render(request, 'nutzer.html', {'current_user': request.user})
-
-def reservation_end(time):
-    if time == 1: return 9
-    elif time == 2: return 10
-    elif time == 3: return 11
-    elif time == 4: return 12
-    elif time == 5: return 13
-    elif time == 6: return 14
-    elif time == 7: return 15
-    elif time == 8: return 16
-    elif time == 9: return 17
-    elif time == 10: return 18
-    elif time == 11: return 19
-    elif time == 12: return 20
-    elif time == 13: return 21
-    else: return 22
 
 
 def reservations(request):
@@ -67,7 +50,7 @@ def reservations(request):
     else:
         return render(request, 'reservierungen.html')
 
-def timeslots(request, wp_id):
+def timeslots(request, wp_nr):
     slots_times = {
         1: '8:00-9:00',
         2: '9:00-10:00',
@@ -85,7 +68,7 @@ def timeslots(request, wp_id):
         14: '21:00-22:00'
     }
     times = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14}
-    wp1 = Workplace.objects.get(id = wp_id)
+    wp1 = Workplace.objects.get(nummer=wp_nr)
 
     for wp_res in wp1.reservation_set.all():
         times.remove(wp_res.time)
@@ -93,8 +76,8 @@ def timeslots(request, wp_id):
     return render(request, 'reservieren.html', {'wp': wp1, 'slots_times': slots_times, 'set_res': times})
 
 
-def reserve(request, time_slot, wp_id):
-    wp1 = Workplace.objects.get(id=wp_id)
+def reserve(request, time_slot, wp_nr):
+    wp1 = Workplace.objects.get(nummer=wp_nr)
     wp1.reservation_set.create(user=request.user, date=date.today(), time=time_slot)
     return redirect('reservations')
 
@@ -103,6 +86,21 @@ def delete_reserve(request, r_id):
     Reservation.objects.get(pk=r_id).delete()
     return redirect('reservations')
 
+def reservation_end(time):
+    if time == 1: return 9
+    elif time == 2: return 10
+    elif time == 3: return 11
+    elif time == 4: return 12
+    elif time == 5: return 13
+    elif time == 6: return 14
+    elif time == 7: return 15
+    elif time == 8: return 16
+    elif time == 9: return 17
+    elif time == 10: return 18
+    elif time == 11: return 19
+    elif time == 12: return 20
+    elif time == 13: return 21
+    else: return 22
 
 
 def support(request):
@@ -117,7 +115,7 @@ def support(request):
     return render(request, 'support.html', {'form': form})
 
 def arbeitsplaetze(request):
-    context = {'workplaces' : Workplace.objects.all()}
+    context = {'workplaces' : Workplace.objects.all(), 'units' : Unit.objects.all(), 'rooms': Room.objects.all()}
     return render(request, 'arbeitsplaetze.html', context)
 
 
@@ -180,6 +178,29 @@ def delete_User(request, nutzername):
     user.delete()
     return redirect('index')
 
+def get_rooms_ajax(request):
+    if request.method == "POST":
+        unit_id = request.POST['unit_id']
+        try:
+            unit = Unit.objects.filter(id = unit_id).first()
+            rooms = Room.objects.filter(unit = unit)
+        except Exception:
+            #TODO: Richtige Fehlermeldung ausgeben
+            raise Http404("Fehler beim Laden der Räume")
+        return JsonResponse(list(rooms.values('id', 'nummer')), safe = False) 
+
+def get_workplaces_ajax(request):
+    if request.method == "POST":
+        room_id = request.POST['room_id']
+        try:
+            room = Room.objects.filter(id = room_id).first()
+            workplaces = Workplace.objects.filter(raum = room)
+        except Exception:
+            #TODO: Richtige Fehlermeldung ausgeben
+            raise Http404("Fehler beim Laden der Arbeitsplätze")
+        return JsonResponse(list(workplaces.values('id', 'nummer')), safe = False) 
+
+@login_required(login_url= 'login')
 def rating(request, wp_id):
      workplace = Workplace.objects.get(pk = wp_id)
      reservierungen = Reservation.objects.all().filter(user = request.user, wp = workplace)
@@ -200,12 +221,7 @@ def rating(request, wp_id):
             messages.error(request, f'Du kannst den Arbeitsplaz {workplace} nicht bewerten, denn du hast diesen noch nicht reserviert.')
             return HttpResponseRedirect(reverse('wp-rate', args = [workplace.id]))
         
-        f = list(filter(lambda r: r.date < date.today(), reservierungen))  
-        r = min(reservierungen, key=lambda x:x.time)
-        if len(f) == 0 and key_time <= r.time:
-            messages.info(request, f'Du kannst deinen reservierten Arbeitsplatz aktuell nicht bewerten, denn das Ende deiner Reservierung ist noch nicht um {reservation_end(time = r.time)}:00 Uhr erreicht.')
-            return HttpResponseRedirect(reverse('wp-rate', args = [workplace.id]))
-
+       
         Review(user = user, wp = workplace, text = comment, rate = rate).save()
         messages.success(request, ("Vielen Dank für dein Feedback!"))
         return HttpResponseRedirect(reverse('wp-rate', args = [wp_id]))         

@@ -3,12 +3,12 @@
 {% block title %}{{block.super}} Reservation-Slots{% endblock %}
 
 {% block content %}
-    <article class="a-article">
+    <article>
         {% if set_res %}
-        <h3>Such dir eine Zeitspanne aus.</h3>
+        <p class="textbox-headline aligncenter pt-5">Such dir eine Zeitspanne aus.</p><br>
         {% for r in set_res %}
-        <p>
-        <a class="container" href="{% url 'reserve' r wp.id %}" >
+        <p class="aligncenter">
+        <a class="container f1 aligncenter" href="{% url 'reserve' r wp.nummer %}" >
             {% for key,value in slots_times.items %}
             {% if key == r %}
             Zeit: {{value}}

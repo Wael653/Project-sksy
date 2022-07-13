@@ -5,113 +5,113 @@
 
 
 {% block content %}
-
-        {% if request.user.id is None %}
-            <h1 class = "aligncenter">Bitte logge dich ein.</h1>
-        {% else %}
-<div class="a-article">
-    <!-- Reservation -->
-    <h3>Deine Reservierungen:</h3>
-    <!-- Button trigger modal for Reservation -->
-    {% for r in reservations %}
-    <p style="border: thin solid green">
-        <p style="margin-right: 40%;">
-            Reservierung des Arbeitsplatzes
+    {% if request.user.id is None %}
+        <h1 class = "aligncenter">Bitte logge dich ein.</h1>
+    {% else %}
+<!-- Reservation 
+<h3>Deine Reservierungen:</h3>-->
+<p class="textbox-headline aligncenter pt-5">Deine Reservierungen:</p><br>
+<!-- Button trigger modal for Reservation -->
+{% for r in reservations %}
+    <p class="aligncenter">
+        
+        <a class="container f1 aligncenter" type="button" data-bs-toggle="modal" data-bs-target="#reservationModal{{r.id}}">
+          <h3 class="f1 aligncenter">{{r.id}}. Reservierung des Arbeitsplatzes 
             {% for res_wp in r.wp.all %}
-            {{res_wp}}
+            {{res_wp}} :
+            </h3>
+        </a>
+        {% endfor %}
+        
+        <p>
+            {% for key,value in slots.items %}
+            {% if key == r.time %}
+            <h5 class="container f1 aligncenter">Zeit: {{value}}</h5>
+            {% endif %}
             {% endfor %}
-            <a class="container" type="button" data-bs-toggle="modal" data-bs-target="#reservationModal{{r.id}}">
-                &#9432;
-            </a>
-            :
-            <p>
+        </p>
+      
+    </p>
+
+<!-- Modal for Reservation -->
+<div class="modal fade" id="reservationModal{{r.id}}" tabindex="-1" aria-labelledby="reservationModalLabel{{r.id}}" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="reservationModalLabel{{r.id}}">Reservierung: {{r.id}}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
+      </div>
+      <div class="modal-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">User: {{r.user}}</li>
+            <li class="list-group-item">Arbeitsplatz:
+                {% for wpr in r.wp.all %}
+                {{wpr}}
+                {% endfor %}
+            </li>
+            <li class="list-group-item">Tag: {{r.date|date:"D, d M Y"}}</li>
+            <li class="list-group-item">Zeit:
                 {% for key,value in slots.items %}
                 {% if key == r.time %}
-                Zeit: {{value}}
+                {{value}}
                 {% endif %}
                 {% endfor %}
-            </p>
-        </p>
-    </p>
-
-    <!-- Modal for Reservation -->
-    <div class="modal fade" id="reservationModal{{r.id}}" tabindex="-1" aria-labelledby="reservationModalLabel{{r.id}}" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="reservationModalLabel{{r.id}}">Reservierung: {{r.id}}</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
-          </div>
-          <div class="modal-body">
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">User: {{r.user}}</li>
-                <li class="list-group-item">Arbeitsplatz:
-                    {% for wpr in r.wp.all %}
-                    {{wpr}}
-                    {% endfor %}
-                </li>
-                <li class="list-group-item">Tag: {{r.date|date:"D, d M Y"}}</li>
-                <li class="list-group-item">Zeit:
-                    {% for key,value in slots.items %}
-                    {% if key == r.time %}
-                    {{value}}
-                    {% endif %}
-                    {% endfor %}
-                </li>
-            </ul>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schließen</button>
-            <a href="{% url 'delete_reserve' r.id %}" type="button" class="btn btn-danger">Reservierung stornieren</a>
-          </div>
-        </div>
+            </li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schließen</button>
+        <a href="{% url 'delete_reserve' r.id %}" type="button" class="btn btn-danger">Reservierung stornieren</a>
       </div>
     </div>
-    {% empty %}
-    <h5>Keine Reservierungen vorhanden.</h5>
-    {% endfor %}
-
-    <!-- Workplace -->
-    <h3>Verfügbare Arbeitsplätze:</h3>
-    <!-- Button trigger modal for Workplaces -->
-    {% for w in workplaces %}
-    <p style="border: thin solid #606c38">
-        <p>
-            Arbeitsplatz: {{w}}
-            <a class="container" type="button"  data-bs-toggle="modal" data-bs-target="#workplaceModal{{w.id}}">
-            &#9432
-            </a>
-        </p>
-        <p>
-            <a href="{% url 'timeslots' w.id %}">
-            &#9654; Hier klicken für das Reservieren des Arbeitsplatzes {{w}} &#9664;
-            </a>
-        </p>
-    </p>
-    <!-- Modal for Workplaces-->
-    <div class="modal fade" id="workplaceModal{{w.id}}" tabindex="-1" aria-labelledby="workplaceModalLabel{{w.id}}" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="workplaceModalLabel{{w.id}}">Arbeitsplatz: {{w}}</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
-          </div>
-          <div class="modal-body">
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">Geräte: {{w.geraete}}</li>
-                <li class="list-group-item">Anzahl der Personen: {{w.anzahlPersonen}}</li>
-                <li class="list-group-item">Sonstiges: {{w.sonstiges}}</li>
-            </ul>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schließen</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    {% empty %}
-    <h5>Keine Arbeitzplätze vorhanden.</h5>
-    {% endfor %}
-        {% endif %}
+  </div>
 </div>
+{% empty %}
+<h5>Keine Reservierungen vorhanden.</h5>
+{% endfor %}
+
+<!-- Workplace 
+<h3>Verfügbare Arbeitsplätze:</h3>-->
+<!-- Button trigger modal for Workplaces 
+{% for w in workplaces %}
+<p style="border: thin solid green">
+    <p>
+        Arbeitsplatz: {{w.nummer}}
+        <a class="container" type="button"  data-bs-toggle="modal" data-bs-target="#workplaceModal{{w.id}}">
+        &#9432
+        </a>
+    </p>
+    <p>
+        <a href="{% url 'timeslots' w.nummer %}">
+         &#9654; Hier klicken für das Reservieren des Arbeitsplatzes {{w.nummer}} &#9664;
+        </a>
+    </p>
+</p>-->
+<!-- Modal for Workplaces
+<div class="modal fade" id="workplaceModal{{w.id}}" tabindex="-1" aria-labelledby="workplaceModalLabel{{w.id}}" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="workplaceModalLabel{{w.id}}">Arbeitsplatz: {{w.nummer}}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
+      </div>
+      <div class="modal-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Geräte: {{w.geraete}}</li>
+            <li class="list-group-item">Anzahl der Personen: {{w.anzahlPersonen}}</li>
+            <li class="list-group-item">Sonstiges: {{w.sonstiges}}</li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schließen</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% empty %}
+<h5>Keine Arbeitzplätze vorhanden.</h5>
+{% endfor %}
+-->
+    {% endif %}
 {% endblock %}

@@ -2,10 +2,9 @@
 {% block title %}Stars-Register{% endblock %}
 {% block content_2 %}
 
-    <article>    
-      <section class="mb-4">
-          <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4 pensum_font" style="color: rgb(49, 151, 139)">Registration</p> 
-          <br>
+      <section class="mb-5 pb-5">
+        <p class="textbox-headline aligncenter pb-5 pt-5 pensum_font" style="color: rgb(49, 151, 139)">Registrieren</p>
+          
             <form method="POST">
               {% csrf_token %} 
                 {% for field in form %}
@@ -61,5 +60,4 @@
             <br>
             <p class = 'text-center'>Bist du schon registriert? <a href="{% url 'login' %}" class="loginhere-link" style="color: rgb(49, 151, 139)"><b>hier einloggen</b></a></p>  
       </section>     
-    </article>
 {% endblock %}

@@ -1,51 +1,46 @@
 {% extends 'base.html' %}
 
 {% block content_2 %}
+	<article>
+	
+		<section class="mb-4">
 
-	{% if request.user.id is None %}
-	<h1 class = "aligncenter">Bitte logge dich ein.</h1>
-	{% else %}
-		<article>
+			<h2 class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4 pensum_font" style="color: rgb(49, 151, 139)">Kontaktiert uns gerne!</h2>
 		
-			<section class="mb-4">
-
-				<h2 class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4 pensum_font" style="color: rgb(49, 151, 139)">Kontaktiert uns gerne!</h2>
-			
-				<p class="text-center w-responsive mx-auto mb-5">
-					Habt ihr Fragen oder Probleme mit STARS, dann schickt uns gerne durch das nachfolgende Kontaktformular eine Nachricht. Wir werden
-					uns werktags innerhalb von 48 Stunden bei euch zurückmelden.
-				</p>
-					<div class = "form-group">
-						<form action="" method="post">
-							{% csrf_token %}
-							<div class="mb-4">
-								<div class="row g-3">
-									<div class="col" style="margin: 0 0 0 0">
-										<b>{{form.vorname.label_tag}}</b>
-										{{form.vorname}}
-									</div>
-									<div class="col" style="margin: 0 0 0 5%">
-										<b>{{form.nachname.label_tag}}</b>
-										{{form.nachname}}
-									</div>
+			<p class="text-center w-responsive mx-auto mb-5">
+				Habt ihr Fragen oder Probleme mit STARS, dann schickt uns gerne durch das nachfolgende Kontaktformular eine Nachricht. Wir werden
+				uns werktags innerhalb von 48 Stunden bei euch zurückmelden.
+			</p>
+				<div class = "form-group">
+					<form action="" method="post">
+						{% csrf_token %}
+						  <div class="mb-4">
+							<div class="row g-3">
+								<div class="col" style="margin: 0 0 0 0">
+									<b>{{form.vorname.label_tag}}</b>
+									{{form.vorname}}
+								</div>
+								<div class="col" style="margin: 0 0 0 5%">
+									<b>{{form.nachname.label_tag}}</b>
+									{{form.nachname}}
 								</div>
 							</div>
-								{% for field in form %}
-									{% if field != form.vorname and field != form.nachname %}
-										<div class="mb-4">
-											<b>{{ field.label_tag }}</b>
-											{{ field }}
-											{% for error in field.errors %}
-											<p style="color:rgb(188, 83, 23)">{{error}}</p>
-											{% endfor %}
-										</div>
-									{% endif %}								
-								{% endfor %}
-							<button class="btn btn-success my-3" type="submit" style="background-color: rgb(49, 151, 139)">Senden</button>
-						</form>
-					<div class = "form-group">
-			</section>
-		
-		</article>
-    {% endif %}
+						  </div>
+							{% for field in form %}
+						    	{% if field != form.vorname and field != form.nachname %}
+									<div class="mb-4">
+										<b>{{ field.label_tag }}</b>
+										{{ field }}
+										{% for error in field.errors %}
+                                 		  <p style="color:rgb(188, 83, 23)">{{error}}</p>
+						    			{% endfor %}
+								    </div>
+								{% endif %}								
+							{% endfor %}
+						<button class="btn btn-success my-3" type="submit" style="background-color: rgb(49, 151, 139)">Senden</button>
+					</form>
+				<div class = "form-group">
+		</section>
+	
+	</article>
 {% endblock %}
