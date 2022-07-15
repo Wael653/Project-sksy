@@ -2,23 +2,17 @@ from xmlrpc.client import boolean
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator
 from django.db import models
-##from star_ratings import AbstractBaseRating
 
 class Unit(models.Model):
-    name = models.CharField(("Name"), max_length=150, null=False, choices = [('FH','Frauenhofer'),('EW','Eugene-Paul-Wigner-Gebäude'), ('TEL', 'TU-Hochhaus')], unique= True)
-    straße = models.CharField(("Straße"), max_length=50, default="Straße des 17. Juni", null=False)
-    hausnummer = models.CharField(("Hausnummer"), max_length=10, default="135", null=False) 
     name = models.CharField(("Name"), max_length=150, null=False)
     straße = models.CharField(("Straße"), max_length=50, default="Straße des 17. Juni", null=False)
-    hausnummer = models.CharField(("Hausnummer"), max_length=10, default="135", null=False)
+    hausnummer = models.CharField(("Hausnummer"), max_length=10, default="135", null=False) 
     postleitzahl = models.CharField(("Postleitzahl"), max_length=5, default="10623", null=False)
     etage = models.IntegerField(("Etage"), default=0, null=False)
     def __str__(self):
         return str(self.name)
 
 
-class Room(models.Model):
-    nummer = models.CharField(("Nummer"), max_length=15, null=False)
 class RoomDevice(models.Model):
     bezeichnung = models.CharField(("Bezeichnung"), max_length=160)
     anzahl = models.PositiveIntegerField(("Anzahl"), null=False, default=1)
@@ -69,6 +63,10 @@ class Review(models.Model):
     created_at = models.DateTimeField(auto_now_add= True)
     text = models.TextField(max_length = 3000, blank = True)
     rate = models.IntegerField(default = 0)
+    class Meta:
+        ordering = ['user']
+
     def __str__(self):   
       return self.user.username
-        ordering = ['user']
+    
+    

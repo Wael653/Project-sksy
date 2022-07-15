@@ -6,7 +6,6 @@ from .models import Unit, Room, RoomDevice, Workplace, WorkplaceDevice
 admin.site.register(Workplace)
 admin.site.register(Unit)
 admin.site.register(Room)
-admin.site.register(WorkplaceDevice)
 admin.site.register(Review)
 admin.site.register(RoomDevice)
 admin.site.register(WorkplaceDevice)
