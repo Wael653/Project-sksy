@@ -40,4 +40,7 @@ urlpatterns = [
     path('get-rooms-ajax/', views.get_rooms_ajax, name='get_rooms_ajax'),
     path('get-workplaces-ajax/', views.get_workplaces_ajax, name='get_workplaces_ajax'),
     path("arbeitsplaetze/rate/<int:wp_id>", views.rating, name='wp-rate'),
+    path('get-filteroptions-ajax/', views.get_filteroptions_ajax, name='get_filteroptions_ajax'),
+    path('get-filtered-workplaces-ajax/', views.get_filtered_workplaces_ajax, name='get_filtered_workplaces_ajax'),
+
 ]

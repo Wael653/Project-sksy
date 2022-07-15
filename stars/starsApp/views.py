@@ -9,7 +9,9 @@ from .models import Reservation, Workplace, Unit, Room, Review
 from django.http import HttpResponse, Http404, JsonResponse
 from django.forms.models import model_to_dict
 from .forms import UserForm, ProfileForm, PasswordForm, LoginForm, ContactForm
-from .models import Reservation, Workplace, Unit, Room
+from .models import Reservation, Workplace, Unit, Room, WorkplaceDevice
+
+
 from django.contrib import messages
 from django.views.generic import FormView, TemplateView
 from django.urls import reverse
@@ -205,6 +207,7 @@ def get_workplaces_ajax(request):
             raise Http404("Fehler beim Laden der Arbeitsplätze")
         return JsonResponse(list(workplaces.values('id', 'nummer')), safe = False) 
 
+
 @login_required(login_url= 'login')
 def rating(request, wp_id):
      workplace = Workplace.objects.get(pk = wp_id)
@@ -234,3 +237,30 @@ def rating(request, wp_id):
      else:
         return render(request, 'rating.html', context)
         return JsonResponse(list(workplaces.values('id', 'nummer')), safe = False) 
+
+def get_filteroptions_ajax(request):
+    if request.method == "POST":
+        room_id = request.POST['room_id']
+        try:
+            room = Room.objects.filter(id = room_id).first()
+            workplaces = Workplace.objects.filter(raum = room)
+            workplaceDevices = WorkplaceDevice.objects.none()
+            for workplace in workplaces:
+                workplaceDevices = workplaceDevices | workplace.geraete.all()
+        except Exception:
+            print(Exception)
+            raise HttpResponse(status=500)
+        return JsonResponse(list(workplaceDevices.distinct().values('id', 'bezeichnung')), safe = False) 
+
+def get_filtered_workplaces_ajax(request):
+    if request.method == "POST":
+        room_id = request.POST['room_id']
+        device_id = request.POST['device_id']
+        try:
+            room = Room.objects.filter(id = room_id).first()
+            workplaces = Workplace.objects.filter(raum = room, geraete__id = device_id)
+        except Exception:
+            #TODO: Richtige Fehlermeldung ausgeben
+            raise Http404("Fehler beim Laden der Arbeitsplätze")
+        return JsonResponse(list(workplaces.values('id', 'nummer')), safe = False) 
+
