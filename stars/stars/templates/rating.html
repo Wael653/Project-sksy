@@ -41,10 +41,10 @@
 
 
 <div style="margin: 2% 2%">
-  <h1 style="color: #606c38">Arbeitsplatz: {{wp}}</h1>
+  <h1 class="textbox-headline aligncenter pt-5">Arbeitsplatz: {{wp}}</h1>
 </br>
 </br>
-    <h5 >Teile deine Erfahrung, um anderen zu helfen<h5>
+    <h5 class="f1" >Teile deine Erfahrung, um anderen zu helfen<h5>
     <form method="post">
         {% csrf_token %}
         <div class="rating">
@@ -72,7 +72,7 @@
             <label for="floatingTextarea" style="opacity: .6; font-size: medium;">Schreibe deinen Kommentar ...</label>
         </div>
         <br/>
-        <button onclick="func()" class="btn btn-success my-3" type="submit" style="background-color: #606c38">bewerten</button>
+        <button onclick="func()" class="btn btn-info my-2" type="submit" style="background-color: #606c38">Bewertung senden</button>
     </form>
     </div>
 
