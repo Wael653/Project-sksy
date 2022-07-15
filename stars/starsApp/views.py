@@ -1,22 +1,21 @@
-
-from datetime import date
-
-
+from datetime import date, datetime
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect, Http404, JsonResponse, HttpResponse
+from django.forms.models import model_to_dict
+from .forms import UserForm, ProfileForm, PasswordForm, LoginForm, ContactForm
+from .models import Reservation, Workplace, Unit, Room, Review
 from django.http import HttpResponse, Http404, JsonResponse
 from django.forms.models import model_to_dict
-
-
 from .forms import UserForm, ProfileForm, PasswordForm, LoginForm, ContactForm
 from .models import Reservation, Workplace, Unit, Room, WorkplaceDevice
 
+
 from django.contrib import messages
-
 from django.views.generic import FormView, TemplateView
-from django.urls import reverse_lazy
-
+from django.urls import reverse
+from django .contrib.auth.decorators import login_required 
 
 
 # Create your views here.
@@ -94,6 +93,21 @@ def delete_reserve(request, r_id):
     Reservation.objects.get(pk=r_id).delete()
     return redirect('reservations')
 
+def reservation_end(time):
+    if time == 1: return 9
+    elif time == 2: return 10
+    elif time == 3: return 11
+    elif time == 4: return 12
+    elif time == 5: return 13
+    elif time == 6: return 14
+    elif time == 7: return 15
+    elif time == 8: return 16
+    elif time == 9: return 17
+    elif time == 10: return 18
+    elif time == 11: return 19
+    elif time == 12: return 20
+    elif time == 13: return 21
+    else: return 22
 
 
 def support(request):
@@ -193,6 +207,37 @@ def get_workplaces_ajax(request):
             raise Http404("Fehler beim Laden der Arbeitsplätze")
         return JsonResponse(list(workplaces.values('id', 'nummer')), safe = False) 
 
+
+@login_required(login_url= 'login')
+def rating(request, wp_id):
+     workplace = Workplace.objects.get(pk = wp_id)
+     reservierungen = Reservation.objects.all().filter(user = request.user, wp = workplace)
+     previous_reviews = Review.objects.filter( wp = workplace) 
+     user = request.user
+     context = {'wp': workplace, 'previous_reviews': previous_reviews}
+       
+     if request.method == 'POST':
+        rate = request.POST.get('rating')    
+        comment = request.POST.get('comment')
+        if rate is None:
+           messages.warning(request, ("Keine Option wurde ausgewählt!"))
+           return HttpResponseRedirect(reverse('wp-rate', args = [workplace.id]))
+
+        current_time = datetime.now().strftime("%H")
+        key_time = int(current_time) - 7
+        if len(reservierungen) == 0:
+            messages.error(request, f'Du kannst den Arbeitsplaz {workplace} nicht bewerten, denn du hast diesen noch nicht reserviert.')
+            return HttpResponseRedirect(reverse('wp-rate', args = [workplace.id]))
+        
+       
+        Review(user = user, wp = workplace, text = comment, rate = rate).save()
+        messages.success(request, ("Vielen Dank für dein Feedback!"))
+        return HttpResponseRedirect(reverse('wp-rate', args = [wp_id]))         
+
+     else:
+        return render(request, 'rating.html', context)
+        return JsonResponse(list(workplaces.values('id', 'nummer')), safe = False) 
+
 def get_filteroptions_ajax(request):
     if request.method == "POST":
         room_id = request.POST['room_id']
@@ -218,3 +263,4 @@ def get_filtered_workplaces_ajax(request):
             #TODO: Richtige Fehlermeldung ausgeben
             raise Http404("Fehler beim Laden der Arbeitsplätze")
         return JsonResponse(list(workplaces.values('id', 'nummer')), safe = False) 
+
