@@ -1,6 +1,5 @@
-
 from datetime import date
-
+import datetime
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
@@ -8,8 +7,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404, JsonResponse
 from django.forms.models import model_to_dict
 
-
-from .forms import UserForm, ProfileForm, PasswordForm, LoginForm, ContactForm
+from .forms import UserForm, ProfileForm, PasswordForm, LoginForm, ContactForm, DateForm
 from .models import Reservation, Workplace, Unit, Room
 
 from django.contrib import messages
@@ -58,6 +56,7 @@ def reservations(request):
     else:
         return render(request, 'reservierungen.html')
 
+
 def timeslots(request, wp_nr):
     slots_times = {
         1: '8:00-9:00',
@@ -75,18 +74,28 @@ def timeslots(request, wp_nr):
         13: '20:00-21:00',
         14: '21:00-22:00'
     }
+    date_form = DateForm()
+    selected_date = date.today()
+    if request.GET:
+        selected_date = request.GET['date']
+        date_split = selected_date.split("-")
+        selected_date = datetime.date(int(date_split[0]), int(date_split[1]), int(date_split[2]))
+
     times = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14}
     wp1 = Workplace.objects.get(nummer=wp_nr)
+    times2 = {0}
 
-    for wp_res in wp1.reservation_set.all():
-        times.remove(wp_res.time)
+    for wp_res in wp1.reservation_set.all().filter(date=selected_date):
+        times2.add(wp_res.time)
 
-    return render(request, 'reservieren.html', {'wp': wp1, 'slots_times': slots_times, 'set_res': times})
+    return render(request, 'reservieren.html', {'wp': wp1, 'slots_times': slots_times,
+                                                'times': times-times2, 'sunday': selected_date.weekday(),
+                                                'selected_date': selected_date, 'date_form': date_form})
 
 
-def reserve(request, time_slot, wp_nr):
+def reserve(request, time_slot, wp_nr, datum):
     wp1 = Workplace.objects.get(nummer=wp_nr)
-    wp1.reservation_set.create(user=request.user, date=date.today(), time=time_slot)
+    wp1.reservation_set.create(user=request.user, date=datum, time=time_slot)
     return redirect('reservations')
 
 
