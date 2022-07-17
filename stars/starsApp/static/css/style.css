@@ -97,6 +97,17 @@ a:hover {
     background-image: url('/static/images/home-1.jpeg');
 }
 
+.cover-imp {
+    background-size: cover;
+    align-self:flex-end;
+    background-position: center¸;
+    top: 0;
+    height: 90vh;
+    width: 60%;
+    position: relative;
+    background-image: url('/static/images/impressum.jpg');
+}
+
 .background-cover {
     background-color: #283618;
     background-size: cover;
@@ -105,7 +116,6 @@ a:hover {
     width: 100%;
     position: relative;
     display: block;
-
 }
 
 .box {
@@ -129,14 +139,20 @@ a:hover {
     line-height: 65px;
 }
 
-
-
 .aligncenter {
     text-align: center;
 }
 
-.seat {
+.seat{
     background-color: #99AC5D;
+    height: 14px;
+    width: 25px;
+    margin: 3px;
+    transition: all 0.2s ease-in-out;
+}
+
+.seat-highlight{
+    background-color: #BC6C25;
     height: 14px;
     width: 25px;
     margin: 3px;
@@ -166,7 +182,6 @@ body {
     background-color: #99AC5D;
     height: 15px;
     width: 40px;
-
 }
 
 .doorText {
@@ -197,12 +212,38 @@ body {
     color: rgba(255, 255, 255, 1);
     box-shadow: 0 5px 15px rgba(145, 92, 182, .4);
 }
+
 .modal-title{
     font-size: 30px;
     color: black;
-    font-family: Pensum;
-   
+    font-family: Pensum;  
 }
-[data-id]  {
-    display:none;
+
+.box-imp {
+    top: 0;
+    height: 90vh;
+    width: 100%;
+   
+    background-color: #283618;
+    display: flex;    
+}
+
+h-imp{
+    font-family: Pensum;
+    font-size: 50px;
+    color: #FEFAE0;
+}
+
+c-imp-bold{
+    font-family: Questrial;
+    font-size: 26px;
+    color: #FEFAE0;
+    font-weight: 800;
+}
+
+c-imp{
+    font-family: Questrial;
+    font-size: 18px;
+    color: #FEFAE0;
+    font-weight: 400;
 }
