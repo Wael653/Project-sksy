@@ -23,7 +23,7 @@
         </a>
         {% endfor %}
         
-        <p>
+        <p><h5 class="container f1 aligncenter">Datum: {{r.date|date:"D, d M Y"}}</h5>
             {% for key,value in slots.items %}
             {% if key == r.time %}
             <h5 class="container f1 aligncenter">Zeit: {{value}}</h5>
@@ -67,7 +67,7 @@
   </div>
 </div>
 {% empty %}
-<h5>Keine Reservierungen vorhanden.</h5>
+<h5 class="container f1 aligncenter">Keine Reservierungen vorhanden.</h5>
 {% endfor %}
 
 <!-- Workplace 

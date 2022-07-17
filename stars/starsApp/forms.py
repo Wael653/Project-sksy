@@ -1,4 +1,5 @@
 from django import forms
+from datetime import date
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.forms import ModelForm, SelectDateWidget
@@ -99,6 +100,15 @@ class PasswordForm(UserCreationForm):
         fields = ('password1', 'password2')
 
 
+class DateForm(forms.ModelForm):
 
-
-
+    class Meta:
+        model = Reservation
+        fields = ['date']
+        widgets = {
+            'date': forms.DateInput(format=('%d-%m-%Y'), attrs={'class': 'btn btn-secondary aligncenter',
+                                                                'type': 'date', 'min': date.today()})
+        }
+        labels = {
+            'date': '',
+        }
