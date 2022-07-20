@@ -12,7 +12,7 @@ from .models import Reservation, Workplace, Unit, Room, Review
 from django.http import HttpResponse, Http404, JsonResponse
 from django.forms.models import model_to_dict
 
-from .forms import UserForm, ProfileForm, PasswordForm, LoginForm, ContactForm, DateForm
+from .forms import UserForm, ProfileForm, PasswordForm, LoginForm, ContactForm, DateForm, DateWorkplaceForm
 from .models import Reservation, Workplace, Unit, Room, WorkplaceDevice
 
 
@@ -55,10 +55,29 @@ def reservations(request):
             13: '20:00-21:00',
             14: '21:00-22:00'
         }
+        date_workplace_form = DateWorkplaceForm()
+        user_reservation = Reservation.objects.filter(user=request.user)
+
+        if request.GET:
+            if request.GET['wp'] and request.GET['date']:
+                selected_wp = request.GET['wp']
+                selected_date = request.GET['date']
+                date_split = selected_date.split("-")
+                selected_date = datetime.date(int(date_split[0]), int(date_split[1]), int(date_split[2]))
+                user_reservation = Reservation.objects.filter(user=request.user, date=selected_date, wp=selected_wp)
+            elif request.GET['wp']:
+                selected_wp = request.GET['wp']
+                user_reservation = Reservation.objects.filter(user=request.user, wp=selected_wp)
+            elif request.GET['date']:
+                selected_date = request.GET['date']
+                date_split = selected_date.split("-")
+                selected_date = datetime.date(int(date_split[0]), int(date_split[1]), int(date_split[2]))
+                user_reservation = Reservation.objects.filter(user=request.user, date=selected_date)
+
         workplace = Workplace.objects.all()
-        user_reservation = Reservation.objects.all().filter(user=request.user)
+
         return render(request, 'reservierungen.html', {'reservations': user_reservation, 'workplaces': workplace,
-                                                       'slots': slots})
+                                                       'slots': slots, 'date_workplace_form': date_workplace_form})
     else:
         return render(request, 'reservierungen.html')
 
@@ -240,6 +259,64 @@ def rating(request, wp_id):
            return HttpResponseRedirect(reverse('wp-rate', args = [workplace.id]))
 
         current_time = datetime.now().strftime("%H")
+        key_time = int(current_time) - 7
+        if len(reservierungen) == 0:
+            messages.error(request, f'Du kannst den Arbeitsplaz {workplace} nicht bewerten, denn du hast diesen noch nicht reserviert.')
+            return HttpResponseRedirect(reverse('wp-rate', args = [workplace.id]))
+        
+       
+        Review(user = user, wp = workplace, text = comment, rate = rate).save()
+        messages.success(request, ("Vielen Dank für dein Feedback!"))
+        return HttpResponseRedirect(reverse('wp-rate', args = [wp_id]))         
+
+     else:
+        return render(request, 'rating.html', context)
+        return JsonResponse(list(workplaces.values('id', 'nummer')), safe = False) 
+
+def get_filteroptions_ajax(request):
+    if request.method == "POST":
+        room_id = request.POST['room_id']
+        try:
+            room = Room.objects.filter(id = room_id).first()
+            workplaces = Workplace.objects.filter(raum = room)
+            workplaceDevices = WorkplaceDevice.objects.none()
+            for workplace in workplaces:
+                workplaceDevices = workplaceDevices | workplace.geraete.all()
+        except Exception:
+            print(Exception)
+            raise HttpResponse(status=500)
+        return JsonResponse(list(workplaceDevices.distinct().values('id', 'bezeichnung')), safe = False) 
+
+def get_filtered_workplaces_ajax(request):
+    if request.method == "POST":
+        room_id = request.POST['room_id']
+        device_id = request.POST['device_id']
+        try:
+            room = Room.objects.filter(id = room_id).first()
+            workplaces = Workplace.objects.filter(raum = room, geraete__id = device_id)
+        except Exception:
+            #TODO: Richtige Fehlermeldung ausgeben
+            raise Http404("Fehler beim Laden der Arbeitsplätze")
+        return JsonResponse(list(workplaces.values('id', 'nummer')), safe = False) 
+
+
+
+@login_required(login_url= 'login')
+def rating(request, wp_id):
+     workplace = Workplace.objects.get(pk = wp_id)
+     reservierungen = Reservation.objects.all().filter(user = request.user, wp = workplace)
+     previous_reviews = Review.objects.filter( wp = workplace) 
+     user = request.user
+     context = {'wp': workplace, 'previous_reviews': previous_reviews}
+       
+     if request.method == 'POST':
+        rate = request.POST.get('rating')    
+        comment = request.POST.get('comment')
+        if rate is None:
+           messages.warning(request, ("Keine Option wurde ausgewählt!"))
+           return HttpResponseRedirect(reverse('wp-rate', args = [workplace.id]))
+
+        current_time = datetime.datetime.now().strftime("%H")
         key_time = int(current_time) - 7
         if len(reservierungen) == 0:
             messages.error(request, f'Du kannst den Arbeitsplaz {workplace} nicht bewerten, denn du hast diesen noch nicht reserviert.')
