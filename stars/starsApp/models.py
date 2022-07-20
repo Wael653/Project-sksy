@@ -81,6 +81,3 @@ class ProfileUser(models.Model):
 	     return str(self.username)
 
     
-
-
-     
