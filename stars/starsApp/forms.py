@@ -1,8 +1,9 @@
 from django import forms
+from datetime import date
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.forms import ModelForm, SelectDateWidget
-from .models import Reservation
+from .models import *
 from django.core.exceptions import ValidationError
 from django.forms.fields import EmailField
 from django.forms.forms import Form
@@ -89,9 +90,9 @@ class ContactForm(forms.Form):
 
 class ProfileForm(ModelForm):
     class Meta:
-        model = User
-        fields = ('first_name', 'last_name', 'username', 'email')
-
+        model = ProfileUser
+        fields = '__all__'
+        exclude = ['user']
 
 class PasswordForm(UserCreationForm):
     class Meta:
@@ -99,6 +100,15 @@ class PasswordForm(UserCreationForm):
         fields = ('password1', 'password2')
 
 
+class DateForm(forms.ModelForm):
 
-
-
+    class Meta:
+        model = Reservation
+        fields = ['date']
+        widgets = {
+            'date': forms.DateInput(format=('%d-%m-%Y'), attrs={'class': 'btn btn-secondary aligncenter',
+                                                                'type': 'date', 'min': date.today()})
+        }
+        labels = {
+            'date': '',
+        }
