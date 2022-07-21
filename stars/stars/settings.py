@@ -12,24 +12,74 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import environ
+import io
+import os
+import google.auth
+from google.cloud import secretmanager
 
-env = environ.Env()
-environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+#BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+env = environ.Env(
+    SECRET_KEY=(str, os.getenv("SECRET_KEY")),
+    DATABASE_URL=(str, os.getenv("DATABASE_URL")),
+    GS_BUCKET_NAME=(str, os.getenv("GS_BUCKET_NAME")),
+    EMAIL_HOST=(str, os.getenv("EMAIL_HOST")),
+    EMAIL_HOST_USER=(str, os.getenv("EMAIL_HOST_USER")),
+    EMAIL_HOST_PASSWORD=(str, os.getenv("EMAIL_HOST_PASSWORD")),
+    RECIPIENT_ADDRESS=(str, os.getenv("RECIPIENT_ADDRESS")),
+    )
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
+#environ.Env.read_env()
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-gc+3l@5xb6bp+rn27b9p2*ud5gh^)18i8j@&y1a*wky)@59-d8'
+# Attempt to load the Project ID into the environment, safely failing on error.
+try:
+    _, os.environ["GOOGLE_CLOUD_PROJECT"] = google.auth.default()
+except google.auth.exceptions.DefaultCredentialsError:
+    pass
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+if os.getenv("PYTHON_ENV") == "dev":
+    DEBUG = True
+
+# Use GCP secret manager in prod mode
+elif os.getenv("GOOGLE_CLOUD_PROJECT", None):
+    project_id = os.getenv("GOOGLE_CLOUD_PROJECT")
+
+    client = secretmanager.SecretManagerServiceClient()
+    settings_name = os.getenv("SETTINGS_NAME", "django_settings")
+    name = f"projects/{project_id}/secrets/{settings_name}/versions/latest"
+    payload = client.access_secret_version(name=name).payload.data.decode(
+        "UTF-8"
+    )
+
+    env.read_env(io.StringIO(payload))
+else:
+    raise Exception(
+        "No local .env or GOOGLE_CLOUD_PROJECT detected. No secrets found."
+    )
+
+SECRET_KEY = env("SECRET_KEY")
+
+
+# [START cloudrun_django_csrf]
+# SECURITY WARNING: It's recommended that you use this when
+# running in production. The URL will be known once you first deploy
+# to Cloud Run. This code takes the URL and converts it to both these settings formats.
+CLOUDRUN_SERVICE_URL = env("CLOUDRUN_SERVICE_URL", default=None)
+if CLOUDRUN_SERVICE_URL:
+    ALLOWED_HOSTS = [urlparse(CLOUDRUN_SERVICE_URL).netloc]
+    CSRF_TRUSTED_ORIGINS = [CLOUDRUN_SERVICE_URL]
+    SECURE_SSL_REDIRECT = True
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+else:
+    ALLOWED_HOSTS = ["*"]
+# [END cloudrun_django_csrf]
 
 
 # Application definition
@@ -77,20 +127,16 @@ WSGI_APPLICATION = 'stars.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'starsdb',
-        'USER': 'starsuser',
-        'PASSWORD': 'stars123',
-        'HOST': 'localhost',
-        'PORT': '5432',
-       #'ENGINE': 'django.db.backends.sqlite3',
-       #'NAME': BASE_DIR/ 'db.sqlite3',
-    }
+# [START cloudrun_django_database_config]
+# Use django-environ to parse the connection string
+DATABASES = {"default": env.db()}
 }
+
+
+# If the flag as been set, configure to use proxy
+if os.getenv("USE_CLOUD_SQL_AUTH_PROXY", None):
+    DATABASES["default"]["HOST"] = "cloudsql-proxy"
+    DATABASES["default"]["PORT"] = 5432
 
 
 # Password validation
@@ -134,6 +180,10 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+GS_BUCKET_NAME = env("GS_BUCKET_NAME")
+STATICFILES_DIRS = []
+DEFAULT_FILE_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
 
 LOGIN_REDIRECT_URL = '/nutzer/'
 LOGOUT_REDIRECT_URL = '/logout/'
