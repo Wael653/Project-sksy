@@ -1,3 +1,4 @@
+from distutils.command.upload import upload
 from xmlrpc.client import boolean
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator
@@ -75,9 +76,12 @@ class ProfileUser(models.Model):
     last_name = models.CharField(("Nachname"), max_length=150, null= False, blank = True)
     username = models.CharField(("Benutzername"), max_length=100, null=True)
     email = models.EmailField(("Email-Adresse"), max_length=100, null=True)
-    avatar = models.ImageField(default="anonymous.jpg", null=True, blank=True)
+    avatar = models.ImageField(default="anonymous.jpg", null=True, blank=True, upload_to = 'images/')
 
     def __str__(self):
 	     return str(self.username)
 
     
+
+
+     

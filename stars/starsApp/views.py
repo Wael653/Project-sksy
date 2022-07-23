@@ -1,9 +1,5 @@
 from datetime import date, datetime
 import datetime
-
-from datetime import date
-import datetime
-
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
@@ -13,17 +9,17 @@ from .forms import UserForm, ProfileForm, PasswordForm, LoginForm, ContactForm
 from .models import Reservation, Workplace, Unit, Room, Review, ProfileUser
 from django.http import HttpResponse, Http404, JsonResponse
 from django.forms.models import model_to_dict
-
+from django.template.loader import render_to_string
 from .forms import UserForm, ProfileForm, PasswordForm, LoginForm, ContactForm, DateForm
 from .models import Reservation, Workplace, Unit, Room, WorkplaceDevice
-
-
-
+from django.conf import settings
 from django.contrib import messages
 from django.views.generic import FormView, TemplateView
 from django.urls import reverse
 from django .contrib.auth.decorators import login_required 
-
+from django.utils.html import strip_tags
+from django.core.mail import send_mail, EmailMessage
+import re
 
 # Create your views here.
 def index(request):
@@ -103,7 +99,22 @@ def timeslots(request, wp_nr):
 
 def reserve(request, time_slot, wp_nr, datum):
     wp1 = Workplace.objects.get(nummer=wp_nr)
-    wp1.reservation_set.create(user=request.user, date=datum, time=time_slot)
+    res1 = wp1.reservation_set.create(user=request.user, date=datum, time=time_slot)
+    name = request.user.first_name
+    subject = 'Bestätigung deiner Rservierung'
+    msg = render_to_string('email_support.html', {'name': name , 'wp_nummer': wp1.nummer, 'raum_nummer': wp1.raum, 'datum': res1.date, 'wp':wp1, 'timeslote': get_timeslot(res1.time) }) 
+    plain_msg = msg.replace("\r\n", "<br>")
+    plain_msg = strip_tags(msg)
+    msg_object = EmailMessage (
+        subject = subject,
+        body = plain_msg,
+        from_email = "Stars <stars@example.com>",
+        to = [request.user.email]
+    )
+    file = open("stars-logo-01.png", "rb")
+    msg_object.attach('stars-logo-01.png', file.read(), 'image/png')
+    msg_object.send()
+    messages.info(request, ("Vielen Dank, wir haben dir eine Bestätigungsemail für deine Reservierung geschickt."))
     return redirect('reservations')
 
 
@@ -126,6 +137,24 @@ def reservation_end(time):
     elif time == 12: return 20
     elif time == 13: return 21
     else: return 22
+
+
+def get_timeslot(time):
+    if time == 1: return "8:00-9:00"
+    elif time == 2: return "9:00-10:00"
+    elif time == 3: return "10:00-11:00"
+    elif time == 4: return "11:00-12:00"
+    elif time == 5: return "12:00-13:00"
+    elif time == 6: return "13:00-14:00"
+    elif time == 7: return "14:00-15:00"
+    elif time == 8: return "15:00-16:00"
+    elif time == 9: return "16:00-17:00"
+    elif time == 10: return "17:00-18:00"
+    elif time == 11: return "18:00-19:00"
+    elif time == 12: return "19:00-20:00"
+    elif time == 13: return "20:00-21:00"
+    else: return "21:00-22:00"
+
 
 
 def support(request):
@@ -301,3 +330,9 @@ def get_filtered_workplaces_ajax(request):
             raise Http404("Fehler beim Laden der Arbeitsplätze")
         return JsonResponse(list(workplaces.values('id', 'nummer')), safe = False) 
 
+def reservation_email(request):
+    wp = Workplace.objects.all().first()
+    print(f'Photo: {request.user.profile_user.avatar}')
+    current_datum = date.today() 
+    return render(request, 'email_support.html', {'wp': wp, 'name': "Wael", 'datum': current_datum, 'wp_nummer': 12, 'raum_nummer': "T"})
+    

@@ -43,6 +43,7 @@ urlpatterns = [
     path("arbeitsplaetze/rate/<int:wp_id>", views.rating, name='wp-rate'),
     path('get-filteroptions-ajax/', views.get_filteroptions_ajax, name='get_filteroptions_ajax'),
     path('get-filtered-workplaces-ajax/', views.get_filtered_workplaces_ajax, name='get_filtered_workplaces_ajax'),
+    path('reservierungsemail/', views.reservation_email, name = 'reservierungsemail'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

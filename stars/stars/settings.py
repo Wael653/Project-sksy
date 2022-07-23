@@ -81,14 +81,14 @@ WSGI_APPLICATION = 'stars.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'starsdb',
-        'USER': 'starsuser',
-        'PASSWORD': 'stars123',
-        'HOST': 'localhost',
-        'PORT': '5432',
-       #'ENGINE': 'django.db.backends.sqlite3',
-       #'NAME': BASE_DIR/ 'db.sqlite3',
+       # 'ENGINE': 'django.db.backends.postgresql',
+       # 'NAME': 'starsdb',
+       # 'USER': 'starsuser',
+       # 'PASSWORD': 'stars123',
+       # 'HOST': 'localhost',
+       # 'PORT': '5432',
+       'ENGINE': 'django.db.backends.sqlite3',
+       'NAME': BASE_DIR/ 'db.sqlite3',
     }
 }
 
@@ -151,6 +151,5 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = env('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
-RECIPIENT_ADDRESS = env('RECIPIENT_ADDRESS')
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'starsApp/static/images')
