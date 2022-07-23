@@ -19,7 +19,7 @@ box-shadow: 2px  1px  20px 5px #BC6C25;
 
 <body>
     {% if current_user.id is None %}
-    <h1 class="aligncenter">Bitte logge dich ein.</h1>
+    <h1 class="aligncenter pt-5 pb-5" style="color: white">Bitte logge dich ein.</h1>
     {% else %}
         <div class="card-header">
             <h5>Kontoinformationen:</h5>
@@ -49,10 +49,29 @@ box-shadow: 2px  1px  20px 5px #BC6C25;
             <div class="text-end">
                 <a href="{% url 'profile' %}" class="btn btn-info">Profil ändern</a>
                 <a href="{% url 'password' %}" class="btn btn-info">Passwort ändern</a>
-                <a href="{% url 'delete-user' current_user.username %}" class="btn btn-danger">Profil löschen</a>
+                <a data-bs-toggle="modal" data-bs-target="#userModal" class="btn btn-danger">Profil löschen</a>
                 <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
             </div>
         </div>
+
+        <!-- Modal for User Delete -->
+    <div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="userModalLabel">Profil löschen</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
+                </div>
+                <div class="modal-body">
+                <p>Achtung! Wenn du dein Profil löschst gehen alle deine Informationen und Reservierungen verloren.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schließen</button>
+                    <a href="{% url 'delete-user' current_user.username %}" type="button" class="btn btn-danger">Profil löschen</a>
+                </div>
+            </div>
+        </div>
+    </div>
         {%endif%}
 
 </body>

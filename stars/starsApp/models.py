@@ -23,7 +23,7 @@ class RoomDevice(models.Model):
 class Room(models.Model):
     nummer = models.CharField(("Nummer"), max_length=15, null=False)
     geraete = models.ManyToManyField(RoomDevice)
-    unit = models.ForeignKey(Unit, on_delete=models.PROTECT)
+    unit = models.ForeignKey(Unit, on_delete=models.CASCADE)
     def __str__(self):
         return 'Raum {} in {}'.format(self.nummer, self.unit)
 
@@ -38,7 +38,7 @@ class Workplace(models.Model):
     geraete = models.ManyToManyField(WorkplaceDevice, blank=True)
     anzahlPersonen = models.PositiveIntegerField(default=1)
     sonstiges = models.CharField(max_length=160, null=True, blank=True)
-    raum = models.ForeignKey(Room, on_delete=models.PROTECT)
+    raum = models.ForeignKey(Room, on_delete=models.CASCADE)
     barrierefrei = models.BooleanField(("Barrierefrei"), null=True, blank=True, default=True)
 
     class Meta:
@@ -59,8 +59,8 @@ class Reservation(models.Model):
 
 
 class Review(models.Model):
-    user = models.ForeignKey(User, on_delete=models.PROTECT)
-    wp = models.ForeignKey(Workplace, on_delete=models.PROTECT)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    wp = models.ForeignKey(Workplace, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add= True)
     text = models.TextField(max_length = 3000, blank = True)
     rate = models.IntegerField(default = 0)

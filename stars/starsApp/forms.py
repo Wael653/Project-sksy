@@ -112,3 +112,24 @@ class DateForm(forms.ModelForm):
         labels = {
             'date': '',
         }
+
+
+class DateWorkplaceForm(forms.ModelForm):
+
+    class Meta:
+        model = Reservation
+        fields = ['date', 'wp']
+        widgets = {
+            'date': forms.DateInput(format=('%d-%m-%Y'), attrs={'class': 'btn btn-secondary aligncenter',
+                                                                'type': 'date', 'min': date.today()}),
+            'wp': forms.NumberInput(attrs={'class': 'btn btn-secondary'})
+        }
+        labels = {
+            'date': '',
+            'wp': ''
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(DateWorkplaceForm, self).__init__(*args, **kwargs)
+        self.fields['date'].required = False
+        self.fields['wp'].required = False

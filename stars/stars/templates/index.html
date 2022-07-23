@@ -13,7 +13,11 @@
 
     <div class="box">
         <p class="textbox-headline aligncenter">Noch verfügbare Plätze:<br>{{workplaces.count}}<br>
+            {% if request.user.id is None %}
             <a class="btn btn-secondary btn-lg mt-3 " href="{% url 'login' %}">Jetzt buchen!</a>
+            {% else %}
+            <a class="btn btn-secondary btn-lg mt-3 " href="{% url 'arbeitsplaetze' %}">Jetzt buchen!</a>
+            {% endif %}
         </p>
     </div>
 
