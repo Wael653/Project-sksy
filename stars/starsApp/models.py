@@ -1,3 +1,4 @@
+from distutils.command.upload import upload
 from xmlrpc.client import boolean
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator
@@ -54,7 +55,7 @@ class Reservation(models.Model):
     sonstiges = models.CharField(max_length=160, null=True)
 
     class Meta:
-        ordering = ['user']
+        ordering = ['date']
 
 
 class Review(models.Model):
@@ -69,4 +70,18 @@ class Review(models.Model):
     def __str__(self):   
       return self.user.username
     
+class ProfileUser(models.Model):
+    user = models.OneToOneField(User, null = True, blank = True, on_delete = models.CASCADE, related_name= "profile_user")
+    first_name = models.CharField(("Vorname"), max_length=150, null= False, blank= True)
+    last_name = models.CharField(("Nachname"), max_length=150, null= False, blank = True)
+    username = models.CharField(("Benutzername"), max_length=100, null=True)
+    email = models.EmailField(("Email-Adresse"), max_length=100, null=True)
+    avatar = models.ImageField(default="anonymous.jpg", null=True, blank=True, upload_to = 'images/')
+
+    def __str__(self):
+	     return str(self.username)
+
     
+
+
+     

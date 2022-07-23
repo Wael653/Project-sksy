@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% block title %}{{block.super}} Einstellungen - Profil{% endblock %}
 {% block content %}
-    <article>
+    <article class="card-header">
         <h1>Benutzer: {{form.instance}}</h1>
-        <form method="POST">
+        <form method="POST" action = "" enctype="multipart/form-data">
             {% csrf_token %}
             {{form.as_p}}
             <br>

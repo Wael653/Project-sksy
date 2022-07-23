@@ -1,0 +1,16 @@
+<div style="text-align: justify">Hallo {{ name }},
+<br>vielen Dank für deine Reservierung, welche wir hiermit bestätigt haben.
+<br>Die folgenden Informationen geben einen Überblick über deine Reservierung:
+<br>Arbeitsplatznummer: {{wp_nummer}}
+<br>Raumnummer: {{raum_nummer}}
+<br>Geräte:<ul>{% for device in wp.geraete.all %}
+      <li>* {{device}}</li>{% endfor %}
+</ul>
+<br>Datum deiner Reservierung: {{datum}} 
+<br>Zeitslot: {{timeslote}} Uhr
+<br>
+<br>Dies ist eine automatisch generierte Nachricht. Wenn du Fragen hast, Kontakiere uns gerne über das Kontaktformular auf der Support Seite.
+</div>
+<br>
+<p>Mit besten Grüßen
+<p>Dein Stars Team
