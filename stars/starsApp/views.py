@@ -55,6 +55,7 @@ def reservations(request):
             13: '20:00-21:00',
             14: '21:00-22:00'
         }
+
         date_workplace_form = DateWorkplaceForm()
         user_reservation = Reservation.objects.filter(user=request.user)
 
