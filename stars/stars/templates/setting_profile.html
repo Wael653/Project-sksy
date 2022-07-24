@@ -2,12 +2,14 @@
 {% block title %}{{block.super}} Einstellungen - Profil{% endblock %}
 {% block content %}
     <article>
-        <h1>Benutzer: {{form.instance}}</h1>
+        <div class="input-box questrial_font mt-4" style="color:#FEFAE0;">
+        <h3>Benutzer: {{form.instance}}</h3>
         <form method="POST">
             {% csrf_token %}
             {{form.as_p}}
             <br>
-            <input type="submit" value ="Änderungen Speichern"/>
+            <input class="btn btn-secondary my-3" type="submit" value ="Änderungen Speichern"/>
         </form>
+        <br>
     </article>
 {% endblock %}
