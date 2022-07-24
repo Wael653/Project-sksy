@@ -76,7 +76,7 @@ class ProfileUser(models.Model):
     last_name = models.CharField(("Nachname"), max_length=150, null= False, blank = True)
     username = models.CharField(("Benutzername"), max_length=100, null=True)
     email = models.EmailField(("Email-Adresse"), max_length=100, null=True)
-    avatar = models.ImageField(default="anonymous.jpg", null=True, blank=True, upload_to = 'images/')
+    avatar = models.ImageField(default="anonymous.jpg", null=True, blank=True, upload_to = 'profile images/')
 
     def __str__(self):
 	     return str(self.username)
