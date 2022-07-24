@@ -29,9 +29,9 @@
                 {% for t in times %}
                     {% for key,value in slots_times.items %}
                     {% if key == t %}
-                    <button class="btn btn-light f1 questrial_font" href="{% url 'reserve' t wp.nummer selected_date %}"> 
+                    <a class="btn btn-light f1 questrial_font" href="{% url 'reserve' t wp.nummer selected_date %}"> 
                     {{value}} <br>
-                    </button> <br>
+                    </a> <br>
                     {% endif %} 
                     {% endfor %}
                     {% endfor %}
