@@ -154,3 +154,4 @@ EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 #RECIPIENT_ADDRESS = env('RECIPIENT_ADDRESS')
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'starsApp/static/images')
+
