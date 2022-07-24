@@ -7,146 +7,152 @@
 {% block content %}
 
 <style>
-  .toast2{
-  --bs-toast-padding-x: 0.75rem;
-  --bs-toast-padding-y: 0.5rem;
-  --bs-toast-spacing: 1.5rem;
-  --bs-toast-max-width: 350px;
-  --bs-toast-font-size: 0.875rem;
-  --bs-toast-color: ;
-  --bs-toast-bg: rgba(255, 255, 255, 0.85);
-  --bs-toast-border-width: 1px;
-  --bs-toast-border-color: var(--bs-border-color-translucent);
-  --bs-toast-border-radius: 0.375rem;
-  --bs-toast-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-  --bs-toast-header-color: #6c757d;
-  --bs-toast-header-bg: rgba(255, 255, 255, 0.85);
-  --bs-toast-header-border-color: rgba(0, 0, 0, 0.05);
-  width: 400px;
-  max-width: 100%;
-  font-size: auto;
-  color: var(--bs-toast-color);
-  pointer-events: auto;
-  background-color: var(--bs-toast-bg);
-  background-clip: padding-box;
-  border: 2px solid #73AD21;
-  box-shadow: var(--bs-toast-box-shadow);
-  border-radius: var(--bs-toast-border-radius);
-  
-  }
+  .toast2 {
+    --bs-toast-padding-x: 0.75rem;
+    --bs-toast-padding-y: 0.5rem;
+    --bs-toast-spacing: 1.5rem;
+    --bs-toast-max-width: 350px;
+    --bs-toast-font-size: 0.875rem;
+    --bs-toast-color: ;
+    --bs-toast-bg: rgba(255, 255, 255, 0.85);
+    --bs-toast-border-width: 1px;
+    --bs-toast-border-color: var(--bs-border-color-translucent);
+    --bs-toast-border-radius: 0.375rem;
+    --bs-toast-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    --bs-toast-header-color: #6c757d;
+    --bs-toast-header-bg: rgba(255, 255, 255, 0.85);
+    --bs-toast-header-border-color: rgba(0, 0, 0, 0.05);
+    width: 400px;
+    max-width: 100%;
+    font-size: auto;
+    color: var(--bs-toast-color);
+    pointer-events: auto;
+    background-color: #FEFAE0;
+    background-clip: padding-box;
+    border: 2px solid #606c38;
+    box-shadow: var(--bs-toast-box-shadow);
+    border-radius: var(--bs-toast-border-radius);
 
-  
+  }
 </style>
 
 
 
 <div style="margin: 2% 2%">
   <h1 class="textbox-headline aligncenter pt-5">Arbeitsplatz: {{wp}}</h1>
-</br>
-</br>
-    <h5 class="f1" >Teile deine Erfahrung, um anderen zu helfen<h5>
-    <form method="post">
-        {% csrf_token %}
-        <div class="rating">
-        
-        <input type="radio" id="rate1" name="rating" value="5"/>
-        <label for="rate1"></label>
+  </br>
+  <div class="input-box">
+    <h5 class="f1 aligncenter">Teile deine Erfahrung, um anderen zu helfen.<h5><br>
+        <form method="post">
+          {% csrf_token %}
+          <div class="rating">
 
-        <input type="radio" id="rate2" name="rating" value="4"/>
-        <label for="rate2"></label>
+            <input type="radio" id="rate1" name="rating" value="5" />
+            <label for="rate1"></label>
 
-        <input type="radio" id="rate3" name="rating" value="3"/>
-        <label for="rate3"></label>
+            <input type="radio" id="rate2" name="rating" value="4" />
+            <label for="rate2"></label>
 
-        <input type="radio" id="rate4" name="rating" value="2"/>
-        <label for="rate4"></label>
+            <input type="radio" id="rate3" name="rating" value="3" />
+            <label for="rate3"></label>
 
-        <input type="radio" id="rate5" name="rating" value="1"/>
-        <label for="rate5"></label>
-        </div>
-        <br/>
-        <br/>
-        <br/>
-        <div class="form-floating">
+            <input type="radio" id="rate4" name="rating" value="2" />
+            <label for="rate4"></label>
+
+            <input type="radio" id="rate5" name="rating" value="1" />
+            <label for="rate5"></label>
+          </div>
+          <br />
+          <br />
+          <br />
+          <div class="form-floating">
             <textarea class="form-control" placeholder="Leave a comment here" name="comment"></textarea>
             <label for="floatingTextarea" style="opacity: .6; font-size: medium;">Schreibe deinen Kommentar ...</label>
-        </div>
-        <br/>
-        <button onclick="func()" class="btn btn-info my-2" type="submit" style="background-color: #606c38">Bewertung senden</button>
-    </form>
-    </div>
+          </div>
+          <br />
+          <button onclick="func()" class="btn btn-secondary my-3" type="submit">Bewertung
+            senden</button>
+        </form>
+       
+ 
 
-    {% if messages  %}
-        {% for message in messages %}
-          {% if message.level == 25 %} 
-            <div class="alert alert-success" role="alert" style="margin: -40px 0px 0px 330px; width: 40%;">
-                {{ message }}
-                <button type="button" class="btn-close " aria-label="Close" data-bs-dismiss = "alert" style="margin-left: 340px"></button>
-            </div>
-          {% elif message.level ==  30 %}
-            <div class="alert alert-warning" role="alert" style="margin: -40px 0 0 330px; width: 40%;">
-                {{ message }}
-            <button type="button" class="btn-close " aria-label="Close" data-bs-dismiss = "alert" style="margin-left: 330px"></button>
-            </div>
-          {% elif message.level == 40 %}
-            <div class="alert alert-danger" role="alert" style="margin: -40px 0 0 330px; width: 45%;">
-                {{ message }}
-               <button type="button" class="btn-close " aria-label="Close" data-bs-dismiss = "alert" style="margin-left: 25px"></button> 
-            </div>
-          {% else %}
-            <div class="alert alert-dark" role="alert" style="margin: -40px 0 0 270px; width: 69%;">
-                {{message}}
-                <button type="button" class="btn-close " aria-label="Close" data-bs-dismiss = "alert" style="margin-left: 15px"></button>
-            </div>
-          {% endif %}
-        {% endfor %}
-    {% endif %}
-<br/>
-<br/>
+  {% if messages %}
+  {% for message in messages %}
+  {% if message.level == 25 %}
+  <div class="alert alert-success" role="alert" style="margin: -40px 0px 0px 330px; width: 45%;">
+    {{ message }}
+    <button type="button" class="btn-close " aria-label="Close" data-bs-dismiss="alert"
+      ></button>
+  </div>
+  {% elif message.level == 30 %}
+  <div class="alert alert-warning" role="alert" style="margin: -40px 0 0 330px; width: 45%;">
+    {{ message }}
+    <button type="button" class="btn-close " aria-label="Close" data-bs-dismiss="alert"
+      ></button>
+  </div>
+  {% elif message.level == 40 %}
+  <div class="alert alert-danger" role="alert" style="margin: -40px 0 0 330px; width: 45%;">
+    {{ message }}
+    <button type="button" class="btn-close " aria-label="Close" data-bs-dismiss="alert"
+      ></button>
+  </div>
+  {% else %}
+  <div class="alert alert-dark" role="alert" style="margin: -40px 0 0 270px; width: 45%;">
+    {{message}}
+    <button type="button" class="btn-close " aria-label="Close" data-bs-dismiss="alert"
+      ></button>
+  </div>
+  {% endif %}
+  {% endfor %}
+  {% endif %}
+  <br />
+  <br />
 
-<h4 style="color: #606c38; margin: 2% 2%">Bewertungen:</h4>
-</br>
 
-{% for review in previous_reviews %}
-  <fieldset style="margin: 1% 2%">
+  <h4><u class="weight" style="color: #FEFAE0; font-family: Questrial;">Bewertungen:</u></h4>
+  </br>
+
+  {% for review in previous_reviews %}
+  <fieldset>
     <div class="toast2" data-bs-autohide="false" style="border-color: #606c38;">
-        <div class="toast-header">
-          {% if review.user.username == 'jasper32' %}
-            <img = src="{% static 'images/1282.png' %}" class = "rounded float-start" width="40" height="40">
-          {% elif review.user.username == 'Ahmed21' %}
-            <img = src="{% static 'images/chess.png' %}" class="rounded float-start" width="40" height="40">
-            {% elif review.user.username == 'Marry9' %}
-            <img = src="{% static 'images/pokemon.png' %}" class="rounded float-start" width="40" height="40">
-          {% elif review.user.username == 'Wael653' %}
-            <img = src="{% static 'images/magician.jpg' %}" class="rounded float-start" width="40" height="40">
-          {% elif review.user.username == 'Blau3' %} 
-            <img = src="{% static 'images/blau.jpeg' %}" class="rounded float-start" width="40" height="40">
-          {% elif review.user.username == 'Hassan' %} 
-            <img = src="{% static 'images/fire.jpg' %}" class="rounded float-start" width="40" height="40">
-            {% elif review.user.username == 'Yasmin' %}
-            <img = src="{% static 'images/yasmin.jpg' %}" class="rounded float-start" width="40" height="40">
-            {% else %}
-            <img = src="{% static 'images/anonymous.jpg' %}" class="rounded float-start" width="40" height="40">
-          {% endif %}
-          <strong class="mr-auto" style="margin-left: 2%">{{review.user}}</strong>
-          <small class="text-muted" style="margin-left: 47%">{{review.created_at}}</small>
-        </div>
-        <div class="toast-body">
-          {{review.text}}
-        </div>
-        <div style= "margin-left: 80%; color: #606c38;">
-        <i class = "material-icons">star</i>
+      <div class="toast-header">
+        {% if review.user.username == 'jasper32' %}
+        <img=src="{% static 'images/1282.png' %}" class="rounded float-start" width="40" height="40">
+        {% elif review.user.username == 'Ahmed21' %}
+        <img=src="{% static 'images/chess.png' %}" class="rounded float-start" width="40" height="40">
+        {% elif review.user.username == 'Marry9' %}
+        <img=src="{% static 'images/pokemon.png' %}" class="rounded float-start" width="40" height="40">
+        {% elif review.user.username == 'Wael653' %}
+        <img=src="{% static 'images/magician.jpg' %}" class="rounded float-start" width="40" height="40">
+        {% elif review.user.username == 'Blau3' %}
+        <img=src="{% static 'images/blau.jpeg' %}" class="rounded float-start" width="40" height="40">
+        {% elif review.user.username == 'Hassan' %}
+        <img=src="{% static 'images/fire.jpg' %}" class="rounded float-start" width="40" height="40">
+        {% elif review.user.username == 'Yasmin' %}
+        <img=src="{% static 'images/yasmin.jpg' %}" class="rounded float-start" width="40" height="40">
+        {% else %}
+        <img=src="{% static 'images/anonymous.jpg' %}" class="rounded float-start" width="40" height="40">
+        {% endif %}
+        <strong class="mr-auto">{{review.user}}</strong><br>
+        <small class="f1" style="opacity: 75%;">{{review.created_at}}</small>
+      </div>
+      <div class="toast-body questrial_font" style="color: #283618;">
+        {{review.text}}
+      </div>
+      <div style="margin-left: 80%; color: #606c38;">
+        <i class="material-icons" style="color:#DDA15E;">star</i>
         <i> {{review.rate}} / 5<i>
-        </div>
+      </div>
     </div>
   </fieldset>
-</br>
-{% endfor %}
-
+  </br>
+  {% endfor %}
+</div>
+</div>
 </br>
 <script>
   let myAlert = document.querySelector('.toast');
-  let bsAlert = new bootstrap.Toast(myAlert); 
+  let bsAlert = new bootstrap.Toast(myAlert);
   bsAlert.show();
-</script> 
+</script>
 {% endblock %}
