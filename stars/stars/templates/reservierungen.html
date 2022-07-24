@@ -11,6 +11,7 @@
 <!-- Reservation 
 <h3>Deine Reservierungen:</h3>-->
 <p class="textbox-headline aligncenter pt-5">Deine Reservierungen:</p><br>
+<!-- Filter for Reservation -->
 <p class="aligncenter">
             <form method="get" class="aligncenter">
             <label for="id_date" class="btn btn-secondary">
@@ -30,6 +31,7 @@
             <input class="btn btn-secondary" type="Submit" value="Filter anwenden" style="margin-left: 2%">
             </form>
         </p>
+<!-- End of filter -->
 <!-- Button trigger modal for Reservation -->
 {% for r in reservations %}
     <p class="aligncenter">
