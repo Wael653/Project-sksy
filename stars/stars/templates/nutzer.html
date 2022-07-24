@@ -22,7 +22,7 @@ box-shadow: 2px  1px  20px 5px #BC6C25;
     <h1 class="aligncenter pt-5 pb-5" style="color: white">Bitte logge dich ein.</h1>
     {% else %}
         <div class="card-header">
-            <h5>Kontoinformationen:</h5>
+            <p class="textbox-headline aligncenter pt-5">Kontoinformationen:</p><br>
         </div>
         <div class="aligncenter pt-5">
             {% if request.user.profile_user.avatar %}
@@ -31,11 +31,11 @@ box-shadow: 2px  1px  20px 5px #BC6C25;
                 <img src="{% static 'images/anonymous.jpg' %}" class="rounded-circle">
             {% endif %}
             
-            <h1 class="pt-2">{{current_user.username}}<h1>
+            <h2 class="f1 aligncenter">{{current_user.username}}</h2>
         </div>
         <br>
         <div class="card-body" style="margin-left:5%; margin-right:5%;">
-            <h2 class="card-title">Benutzer Informationen:</h2>
+            <h2 class="f1 aligncenter card-title">Benutzer Informationen:</h2>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">Vorname: {{current_user.first_name}}</li>
                 <li class="list-group-item">Nachname: {{current_user.last_name}}</li>
