@@ -72,13 +72,7 @@
           </ul>
         </div>
         <div class="modal-footer">
-          {% if request.user.id is not None %}
           <a type="button" href="{% url 'timeslots' eachworkplace.nummer %}" class="btn btn-info">Reservieren</a>
-          {% else %}
-          <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-placement="top" data-bs-trigger="hover focus" data-bs-content="Bitte logge dich ein.">
-            <button class="btn btn-info" type="button" disabled>Reservieren</button>
-          </span>
-          {% endif %}
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schließen</button>
         </div>
       </div>
@@ -86,14 +80,14 @@
   </div>
   {% endfor %}
 
+
+
+
 </body>
 {% endblock content %}
 
 {% block javascript %}
 <script>
-  const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
-const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
-
   $(document).ready(function () {
     $("#unit-list").change(function () {
       const unitId = $(this).val();  // get the selected subject ID from the HTML dropdown list 
