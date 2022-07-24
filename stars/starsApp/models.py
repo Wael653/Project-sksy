@@ -23,7 +23,7 @@ class RoomDevice(models.Model):
 class Room(models.Model):
     nummer = models.CharField(("Nummer"), max_length=15, null=False)
     geraete = models.ManyToManyField(RoomDevice)
-    unit = models.ForeignKey(Unit, on_delete=models.CASCADE)
+    unit = models.ForeignKey(Unit, on_delete=models.PROTECT)
     def __str__(self):
         return 'Raum {} in {}'.format(self.nummer, self.unit)
 
@@ -38,7 +38,7 @@ class Workplace(models.Model):
     geraete = models.ManyToManyField(WorkplaceDevice, blank=True)
     anzahlPersonen = models.PositiveIntegerField(default=1)
     sonstiges = models.CharField(max_length=160, null=True, blank=True)
-    raum = models.ForeignKey(Room, on_delete=models.CASCADE)
+    raum = models.ForeignKey(Room, on_delete=models.PROTECT)
     barrierefrei = models.BooleanField(("Barrierefrei"), null=True, blank=True, default=True)
 
     class Meta:
@@ -59,8 +59,8 @@ class Reservation(models.Model):
 
 
 class Review(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    wp = models.ForeignKey(Workplace, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    wp = models.ForeignKey(Workplace, on_delete=models.PROTECT)
     created_at = models.DateTimeField(auto_now_add= True)
     text = models.TextField(max_length = 3000, blank = True)
     rate = models.IntegerField(default = 0)
@@ -76,7 +76,7 @@ class ProfileUser(models.Model):
     last_name = models.CharField(("Nachname"), max_length=150, null= False, blank = True)
     username = models.CharField(("Benutzername"), max_length=100, null=True)
     email = models.EmailField(("Email-Adresse"), max_length=100, null=True)
-    avatar = models.ImageField(default="anonymous.jpg", null=True, blank=True, upload_to = 'profile images/')
+    avatar = models.ImageField(default="anonymous.jpg", null=True, blank=True, upload_to = "profile images/")
 
     def __str__(self):
 	     return str(self.username)
