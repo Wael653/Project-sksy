@@ -121,7 +121,7 @@ class DateWorkplaceForm(forms.ModelForm):
         fields = ['date', 'wp']
         widgets = {
             'date': forms.DateInput(format=('%d-%m-%Y'), attrs={'class': 'btn btn-secondary aligncenter',
-                                                                'type': 'date', 'min': date.today()}),
+                                                                'type': 'date'}),
             'wp': forms.NumberInput(attrs={'class': 'btn btn-secondary'})
         }
         labels = {
