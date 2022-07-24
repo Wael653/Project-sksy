@@ -60,7 +60,7 @@ def reservations(request):
         return render(request, 'reservierungen.html')
 
 
-def timeslots(request, wp_nr):
+def timeslots(request, wp_id):
     slots_times = {
         1: '8:00-9:00',
         2: '9:00-10:00',
@@ -85,7 +85,7 @@ def timeslots(request, wp_nr):
         selected_date = datetime.date(int(date_split[0]), int(date_split[1]), int(date_split[2]))
 
     times = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14}
-    wp1 = Workplace.objects.get(nummer=wp_nr)
+    wp1 = Workplace.objects.get(id=wp_id)
     times2 = {0}
 
     for wp_res in wp1.reservation_set.all().filter(date=selected_date):
@@ -96,8 +96,8 @@ def timeslots(request, wp_nr):
                                                 'selected_date': selected_date, 'date_form': date_form})
 
 
-def reserve(request, time_slot, wp_nr, datum):
-    wp1 = Workplace.objects.get(nummer=wp_nr)
+def reserve(request, time_slot, wp_id, datum):
+    wp1 = Workplace.objects.get(id=wp_id)
     res1 = wp1.reservation_set.create(user=request.user, date=datum, time=time_slot)
     name = request.user.first_name
     subject = 'Bestätigung deiner Rservierung'
