@@ -6,7 +6,7 @@
 
 {% block content %}
     {% if request.user.id is None %}
-        <h1 class = "aligncenter">Bitte logge dich ein.</h1>
+      <h1 class="aligncenter pt-5 pb-5" style="color: white">Bitte logge dich ein.</h1>
     {% else %}
     {% if messages %}
     <ul>
