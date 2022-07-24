@@ -18,6 +18,12 @@
     font-family: Questrial;
 }
 
+h3{
+    font-family: Questrial;
+}
+h5{
+    font-family: Questrial;
+}
 .bar {
     background: #606c38;
     z-index: 1;
@@ -33,15 +39,15 @@ a:hover {
 }
 
 .btn-outline-info:hover {
-    color: #BC6C25 !important;
-    background-color: #DDA15E !important;
-    border-color: #DDA15E !important;
+    color: #FEFAE0 !important;
+    background-color: #BC6C25 !important;
+    border-color: #BC6C25 !important;
 }
 
 .btn-info:hover {
-    color: #BC6C25 !important;
-    background-color: #DDA15E !important;
-    border-color: #DDA15E !important;
+    color: #FEFAE0 !important;
+    background-color: #BC6C25 !important;
+    border-color: #BC6C25 !important;
 }
 
 .btn-info {
@@ -49,6 +55,11 @@ a:hover {
     color: #FEFAE0 !important;
     background-color: #283618 !important;
     border-color: #283618 !important;
+}
+.btn-danger:hover{
+    color:red !important;
+    background-color: white;
+    border-color: red;
 }
 
 .btn-outline-info {
@@ -65,10 +76,30 @@ a:hover {
 }
 
 .btn-secondary:hover {
-    color: #BC6C25 !important;
-    background-color: #DDA15E !important;
-    border-color: #DDA15E !important;
+    color: #FEFAE0!important;
+    background-color: #BC6C25 !important;
+    border-color: #BC6C25 !important;
 }
+.btn-light{
+    width: 200px;
+    margin: 5px;
+    font-family: Questrial;
+    color: #FEFAE0 !important;
+    background-color: #283618 !important;
+    border-color: #606c38 !important;
+}
+.btn-light:hover{
+    color: #FEFAE0 !important;
+    background-color: #BC6C25 !important;
+    border-color: #BC6C25 !important;
+}
+
+
+.form-control {
+    background-color: #FEFAE0;
+    border-color: #FEFAE0;
+}
+
 
 .centered-content {
     width: 100%;
@@ -99,7 +130,7 @@ a:hover {
 
 .cover-imp {
     background-size: cover;
-    align-self:flex-end;
+    align-self: flex-end;
     background-position: center¸;
     top: 0;
     height: 90vh;
@@ -107,6 +138,7 @@ a:hover {
     position: relative;
     background-image: url('/static/images/impressum.jpg');
 }
+
 
 .background-cover {
     background-color: #283618;
@@ -130,6 +162,22 @@ a:hover {
     align-items: center;
 }
 
+.input-box {
+    background-color: #283618;
+    margin-left: 20% !important;
+    margin-right: 20% !important;
+    justify-content: center;
+}
+
+input[type="text"] {
+    max-width: 100%;
+    display: block;
+}
+input[type="password"] {
+    max-width: 100%;
+    display: block;
+}
+
 .textbox-headline {
     width: 100%;
     font-family: Questrial;
@@ -138,33 +186,87 @@ a:hover {
     color: #FEFAE0;
     line-height: 65px;
 }
+.weight{
+    font-weight: 800;
+}
+
+.daytime {
+    font-family: Questrial;
+    color: #FEFAE0;
+    font-size: 30px;
+    margin: 30px;
+    display: inline-block;
+}
+
+.login-link {
+    color: #DDA15E;
+}
+
+.login-link:hover {
+    color: #BC6C25 !important;
+}
+.reserve-link{
+    color:#FEFAE0;
+}
+.reserve-link:hover{
+    color: #DDA15E !important;
+}
+.modal-body{
+    font-family: Questrial;
+}
 
 .aligncenter {
     text-align: center;
 }
 
-.seat{
+.seat {
     background-color: #99AC5D;
     height: 14px;
     width: 25px;
     margin: 3px;
     transition: all 0.2s ease-in-out;
+    font-family: Questrial;
+    font-size: 12px;
+    text-align: center;
+    text-decoration: none;
+    color: #283618;
 }
 
-.seat-highlight{
+.seat-highlight {
     background-color: #BC6C25;
     height: 14px;
     width: 25px;
     margin: 3px;
     transition: all 0.2s ease-in-out;
 }
+.a-link{
+    color: #FEFAE0;
+}
+.a-link:hover{
+    color: #DDA15E;
+}
 
 body {
     background: #283618;
+    height: 100vh;
 }
 
 .pensum_font {
-    font-family: Pensum
+    font-family: Pensum;
+}
+
+.questrial_font {
+    font-family: Questrial;
+}
+
+.background-input {
+    background-color: #99AC5D;
+    border-color: #99AC5D;
+}
+
+.text-input-headline {
+    font-family: Questrial;
+    color: #FEFAE0;
 }
 
 .itemcenter {
@@ -213,35 +315,35 @@ body {
     box-shadow: 0 5px 15px rgba(145, 92, 182, .4);
 }
 
-.modal-title{
+.modal-title {
     font-size: 30px;
     color: black;
-    font-family: Pensum;  
+    font-family: Pensum;
 }
 
 .box-imp {
     top: 0;
     height: 90vh;
     width: 100%;
-   
+
     background-color: #283618;
-    display: flex;    
+    display: flex;
 }
 
-h-imp{
+h-imp {
     font-family: Pensum;
     font-size: 50px;
     color: #FEFAE0;
 }
 
-c-imp-bold{
+c-imp-bold {
     font-family: Questrial;
     font-size: 26px;
     color: #FEFAE0;
     font-weight: 800;
 }
 
-c-imp{
+c-imp {
     font-family: Questrial;
     font-size: 18px;
     color: #FEFAE0;

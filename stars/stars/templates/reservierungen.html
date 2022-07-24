@@ -6,11 +6,24 @@
 
 {% block content %}
     {% if request.user.id is None %}
-        <h1 class="aligncenter pt-5 pb-5" style="color: white">Bitte logge dich ein.</h1>
+      <h1 class="aligncenter pt-5 pb-5" style="color: white">Bitte logge dich ein.</h1>
     {% else %}
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+              <div class="alert alert-info" id="message_container" role="alert" style="width: 45%; margin: auto">
+                 {{ message }}
+              </div>
+         <!--     <span aria-hidden="true">&times;</span> -->
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+
 <!-- Reservation 
 <h3>Deine Reservierungen:</h3>-->
 <p class="textbox-headline aligncenter pt-5">Deine Reservierungen:</p><br>
+
 <!--  Filter for Reservation  -->
 <p class="aligncenter">
             <form method="get" class="aligncenter">
@@ -32,10 +45,13 @@
             </form>
         </p>
 <!--  End of filter  -->
+
 <!-- Button trigger modal for Reservation -->
 {% for r in reservations %}
     <p class="aligncenter">
-        <a class="container f1 aligncenter" type="button" data-bs-toggle="modal" data-bs-target="#reservationModal{{r.id}}">
+<!-- 1 aligncenter">{{r.id}}. Reservierung des Arbeitsplatzes  -->
+
+        <a class="reserve-link container f1 aligncenter" type="button" data-bs-toggle="modal" data-bs-target="#reservationModal{{r.id}}">
             <h3 class="f1 aligncenter">{{r.id}}. Reservierung des Arbeitsplatzes
             {% for res_wp in r.wp.all %}
             {{res_wp}} :
@@ -133,5 +149,12 @@
 <h5>Keine Arbeitzplätze vorhanden.</h5>
 {% endfor %}
 -->
+<script>
+  var message_ele = document.getElementById("message_container");
+
+setTimeout(function(){ 
+   message_ele.style.display = "none"; 
+}, 4000);
+</script>
     {% endif %}
 {% endblock %}
