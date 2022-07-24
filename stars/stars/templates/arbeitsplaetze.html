@@ -61,7 +61,7 @@
             <li class="list-group-item">Anzahl der Personen: {{eachworkplace.anzahlPersonen}}</li>
             <li class="list-group-item">Barrierefrei: {{eachworkplace.barrierefrei|yesno:"Ja,Nein"}}</li>
             <li class="list-group-item">Sonstiges: {{eachworkplace.sonstiges}}</li>
-            <li class = "list-group-item pt-3 pb-0" style="color:#606c38; display: flex;">
+            <li class = "list-group-item pt-3 pb-0" style="display: flex;">
               <p style="margin-right: 10px">Gehe zu Bewertungen</p>  
               <form action ="{% url 'wp-rate' eachworkplace.id  %}">
               <button class="btn btn-success material-icons" type="submit" style="background-color: #606c38; padding: 0.25rem 0.5rem; border: 0.5px">star</button>
@@ -72,13 +72,7 @@
           </ul>
         </div>
         <div class="modal-footer">
-          {% if request.user.id is not None %}
           <a type="button" href="{% url 'timeslots' eachworkplace.nummer %}" class="btn btn-info">Reservieren</a>
-          {% else %}
-          <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-placement="top" data-bs-trigger="hover focus" data-bs-content="Bitte logge dich ein.">
-            <button class="btn btn-info" type="button" disabled>Reservieren</button>
-          </span>
-          {% endif %}
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schließen</button>
         </div>
       </div>
@@ -86,14 +80,14 @@
   </div>
   {% endfor %}
 
+
+
+
 </body>
 {% endblock content %}
 
 {% block javascript %}
 <script>
-  const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
-const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
-
   $(document).ready(function () {
     $("#unit-list").change(function () {
       const unitId = $(this).val();  // get the selected subject ID from the HTML dropdown list 
@@ -223,7 +217,7 @@ const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstra
     function generateWorkplace(data) {
       let html_data = '';
       //html_data += `<a href="" data-bs-toggle="modal" data-bs-target="#workplaceModal${data.id}" class="seat">${data.nummer}</a>`
-      html_data += `<a href="" data-bs-toggle="modal" data-bs-target="#workplaceModal${data.id}" class="seat"></a>`
+      html_data += `<a href="" data-bs-toggle="modal" data-bs-target="#workplaceModal${data.id}" class="seat">${data.nummer}</a>`
       return html_data;
     }
     function generateWorkplacePopup(html_data, data) {

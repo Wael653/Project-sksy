@@ -15,7 +15,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from starsApp import views
-
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -42,5 +43,6 @@ urlpatterns = [
     path("arbeitsplaetze/rate/<int:wp_id>", views.rating, name='wp-rate'),
     path('get-filteroptions-ajax/', views.get_filteroptions_ajax, name='get_filteroptions_ajax'),
     path('get-filtered-workplaces-ajax/', views.get_filtered_workplaces_ajax, name='get_filtered_workplaces_ajax'),
-
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

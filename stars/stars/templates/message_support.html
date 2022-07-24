@@ -3,7 +3,9 @@
 {% block title %}{{block.super}}Success Message{% endblock %}
 
 {% block content %}
-    <article>
-        <h1 style="color: #606c38; margin: 1% 1%">Vielen Dank! Deine Anfrage wurde erfolgreich versendet.</h1>
-    </article>
+    <div class="box">
+        <p class="textbox-headline aligncenter justify-content-center">Vielen Dank! Deine Anfrage wurde erfolgreich versendet. <br>
+            <a class="btn btn-secondary btn-lg mt-3 " href="{% url 'index' %}">Zurück zur Homepage</a>
+        </p>
+    </div>
 {% endblock %}

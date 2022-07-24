@@ -1,62 +1,59 @@
 {% extends 'base.html' %}
 
-
 {% block title %}{{block.super}} Nutzer{% endblock %}
 
+{% load static %}
+
 {% block content %}
+<style>
+
+.rounded-circle {
+border: 3px solid #c06020;
+padding: 5px;
+border-radius: 50% !important;
+width: 270px;
+box-shadow: 2px  1px  20px 5px #BC6C25;
+}
+
+</style>
 
 <body>
     {% if current_user.id is None %}
     <h1 class="aligncenter pt-5 pb-5" style="color: white">Bitte logge dich ein.</h1>
     {% else %}
-    <div class="card" >
         <div class="card-header">
-            <h5>Kontoinformationen:</h5>
+            <p class="textbox-headline aligncenter pt-5">Kontoinformationen</p><br>
         </div>
-        <p class="aligncenter">
-            <img src="https://cdn.pixabay.com/photo/2017/10/07/07/27/thumbs-up-2825687_960_720.jpg" class="card-img-top"
-            alt="Thumps Up" style="width: 40rem">
-        </p>
-        
-        <div class="card-body">
-            <h1 class="card-title">Benutzername: {{current_user.username}}</h1>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">Vorname: {{current_user.first_name}}</li>
-                <li class="list-group-item">Nachname: {{current_user.last_name}}</li>
-                <li class="list-group-item">E-Mail: {{current_user.email}}</li>
-                <li class="list-group-item">Letzer Login: {{current_user.last_login}}</li>
-                <li class="list-group-item">Kontoerstellung: {{current_user.date_joined}}</li>
-            </ul>
+        <div class="aligncenter pt-5">
+            {% if request.user.profile_user.avatar %}
+                <img src="{{request.user.profile_user.avatar.url}}" class="rounded-circle">
+            {% else %}
+                <img src="{% static 'images/anonymous.jpg' %}" class="rounded-circle">
+            {% endif %}
+            
+            <h2 class="f1 aligncenter">{{current_user.username}}</h2>
+        </div>
+        <br>
+        <div class="card-body" style="margin-left:5%; margin-right:5%;">
+            <h2 class="f1 aligncenter card-title">Benutzerinformationen:</h2>
+            <div class="input-box aligncenter">
+                <p class="f1">Vorname: {{current_user.first_name}}</p>
+                <p class="f1">Nachname: {{current_user.last_name}}</p>
+                <p class="f1">E-Mail: {{current_user.email}}</p>
+                <p class="f1">Letzer Login: {{current_user.last_login}}</p>
+                <p class="f1">Kontoerstellung: {{current_user.date_joined}}</p>
+            </div>
         </div>
         
-        <div class="card-footer">
-            <div class="text-end">
-                <a href="{% url 'profile' %}" class="btn btn-info">Profil ändern</a>
-                <a href="{% url 'password' %}" class="btn btn-info">Passwort ändern</a>
-                <a data-bs-toggle="modal" data-bs-target="#userModal" class="btn btn-danger">Profil löschen</a>
+        
+            <div class="aligncenter">
+                <a href="{% url 'profile' %}" class="btn btn-secondary">Profil ändern</a>
+                <a href="{% url 'password' %}" class="btn btn-secondary">Passwort ändern</a>
+                <a href="{% url 'delete-user' current_user.username %}" class="btn btn-danger">Profil löschen</a>
                 <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
             </div>
-        </div>
-
-        <!-- Modal for User Delete -->
-    <div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="userModalLabel">Profil löschen</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
-                </div>
-                <div class="modal-body">
-                <p>Achtung! Wenn du dein Profil löschst gehen alle deine Informationen und Reservierungen verloren.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schließen</button>
-                    <a href="{% url 'delete-user' current_user.username %}" type="button" class="btn btn-danger">Profil löschen</a>
-                </div>
-            </div>
-        </div>
-    </div>
+        </div><br>
         {%endif%}
-    </div>
+
 </body>
 {% endblock %}

@@ -20,7 +20,8 @@
     position: relative;
     display: block;
     font-size:40px;
-    color:rgb(171, 163, 171)
+    color: #DDA15E;
+    opacity: 30%;
 } 
 .rating label:after {
     content: "\f005";
@@ -28,14 +29,19 @@
     position: absolute;
     display: block;
     font-size:40px;
-    color:#606c38;
+    color:#DDA15E;
     top:0;
     opacity: 0;
     transition: .5s;
-    text-shadow: 0 3px 5px rgb(134, 129, 126); 
+    text-shadow: 0 3px 5px #BC6C25; 
 }
 .rating label:hover:after,
 .rating label:hover ~ label:after,
 .rating input:checked ~ label:after {
     opacity: 1;
+}
+
+.toast-header{
+    background-color: #606c38;
+    color: #FEFAE0;
 }

@@ -3,7 +3,7 @@ from datetime import date
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.forms import ModelForm, SelectDateWidget
-from .models import Reservation
+from .models import *
 from django.core.exceptions import ValidationError
 from django.forms.fields import EmailField
 from django.forms.forms import Form
@@ -72,27 +72,27 @@ class ContactForm(forms.Form):
         nachname = cl_data.get('nachname').strip()
         from_email = cl_data.get('email')
         betreff = cl_data.get('betreff')
-        msg = f'{vorname} {nachname} mit der E-Mail-Adresse: {from_email} schrieb: '
+        msg = f'{vorname} {nachname} mit der E-Mail-Adresse: {from_email} schrieb:\r\n\n'
         msg += cl_data.get('nachricht')
 
-        return betreff, msg
+        return betreff, msg, vorname, nachname
 
     def send(self):
 
-        betreff, msg = self.get_info()
+        betreff, msg, vorname, nachname = self.get_info()
 
         send_mail(
             subject=betreff,
             message=msg,
-            from_email=settings.EMAIL_HOST_USER,
-            recipient_list=[settings.RECIPIENT_ADDRESS]
+            from_email= f'{vorname} {nachname} <stars@example.com>',
+            recipient_list=[settings.EMAIL_HOST_USER]
         )
 
 class ProfileForm(ModelForm):
     class Meta:
-        model = User
-        fields = ('first_name', 'last_name', 'username', 'email')
-
+        model = ProfileUser
+        fields = '__all__'
+        exclude = ['user']
 
 class PasswordForm(UserCreationForm):
     class Meta:
@@ -113,7 +113,6 @@ class DateForm(forms.ModelForm):
             'date': '',
         }
 
-
 class DateWorkplaceForm(forms.ModelForm):
 
     class Meta:
@@ -121,7 +120,7 @@ class DateWorkplaceForm(forms.ModelForm):
         fields = ['date', 'wp']
         widgets = {
             'date': forms.DateInput(format=('%d-%m-%Y'), attrs={'class': 'btn btn-secondary aligncenter',
-                                                                'type': 'date', 'min': date.today()}),
+                                                                'type': 'date'}),
             'wp': forms.NumberInput(attrs={'class': 'btn btn-secondary'})
         }
         labels = {
