@@ -225,6 +225,11 @@ input[type="password"] {
     width: 25px;
     margin: 3px;
     transition: all 0.2s ease-in-out;
+    font-family: Questrial;
+    font-size: 12px;
+    text-align: center;
+    text-decoration: none;
+    color: #283618;
 }
 
 .seat-highlight {
